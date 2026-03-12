@@ -7,488 +7,1151 @@
     <link rel="icon" type="image/svg+xml" href="https://i.postimg.cc/WpdXPrZx/android-chrome-192x192.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        
-        body {
-            font-family: 'Inter', sans-serif;
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --cyan: #06b6d4;
+            --cyan-dark: #0891b2;
+            --bg-dark: #060d1a;
+            --bg-card: rgba(15, 25, 45, 0.8);
         }
-        
+
+        * { box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Space Grotesk', 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            overflow-x: hidden;
+        }
+
+        /* ── NOISE OVERLAY ── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.4;
+        }
+
+        /* ── GRADIENT BG ── */
         .gradient-bg {
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://i.postimg.cc/vZgCFgWX/zulfugar-karimov-n-BCl-Eq-KKVM-unsplash.jpg');
+            background:
+                radial-gradient(ellipse 80% 50% at 50% -20%, rgba(6,182,212,0.15) 0%, transparent 60%),
+                linear-gradient(rgba(6,13,26,0.95), rgba(6,13,26,0.95)),
+                url('https://i.postimg.cc/vZgCFgWX/zulfugar-karimov-n-BCl-Eq-KKVM-unsplash.jpg');
             background-size: cover;
             background-position: center;
-            background-attachment: fixed; /* Makes the background fixed */
+            background-attachment: fixed;
         }
-        
-        .floating-animation {
-            animation: float 6s ease-in-out infinite;
+
+        /* ── PARTICLE CANVAS ── */
+        #particle-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.5;
         }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
+
+        /* ── SECTIONS z-index ── */
+        section, nav, footer { position: relative; z-index: 2; }
+
+        /* ── GLITCH ── */
+        .glitch {
+            position: relative;
         }
-        
-        .pulse-animation {
-            animation: pulse 2s infinite;
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
         }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
+        .glitch::before {
+            color: #f0f;
+            clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+            transform: translate(-3px, -2px);
+            animation: glitch1 4s infinite linear;
         }
-        
-        /* --- TYPEWRITER CSS --- */
+        .glitch::after {
+            color: #0ff;
+            clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+            transform: translate(3px, 2px);
+            animation: glitch2 4s infinite linear;
+        }
+        @keyframes glitch1 {
+            0%,94%,100% { transform: translate(0); opacity: 0; }
+            95% { transform: translate(-4px,-2px); opacity: 0.8; }
+            97% { transform: translate(4px,2px); opacity: 0.8; }
+        }
+        @keyframes glitch2 {
+            0%,94%,100% { transform: translate(0); opacity: 0; }
+            95% { transform: translate(4px,2px); opacity: 0.8; }
+            97% { transform: translate(-4px,-2px); opacity: 0.8; }
+        }
+
+        /* ── TYPEWRITER ── */
         .typewriter-container {
             display: inline-block;
-            border-right: 3px solid #06b6d4;
+            border-right: 3px solid var(--cyan);
             animation: blink-caret 0.75s step-end infinite;
             padding-right: 2px;
         }
-
-        .typewriter {
-            overflow: hidden;
-            white-space: nowrap;
-            display: inline-block;
-            vertical-align: bottom;
-        }
-
+        .typewriter { overflow: hidden; white-space: nowrap; display: inline-block; vertical-align: bottom; }
         @keyframes blink-caret {
-            from, to { border-color: transparent }
-            50% { border-color: #06b6d4; }
+            from, to { border-color: transparent; }
+            50% { border-color: var(--cyan); }
         }
 
-        .ripple {
+        /* ── FLOATING ── */
+        .floating-animation { animation: float 6s ease-in-out infinite; }
+        @keyframes float {
+            0%,100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* ── PULSE ── */
+        .pulse-animation { animation: pulse 2s infinite; }
+        @keyframes pulse {
+            0%,100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* ── GLOW RING on avatar ── */
+        .avatar-ring {
+            position: relative;
+        }
+        .avatar-ring::before {
+            content: '';
             position: absolute;
+            inset: -6px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(0);
-            animation: ripple-animation 0.6s linear;
-            pointer-events: none;
+            background: conic-gradient(var(--cyan), #a855f7, #ec4899, var(--cyan));
+            animation: spin-ring 4s linear infinite;
+            z-index: -1;
         }
-        
-        @keyframes ripple-animation {
-            to {
-                transform: scale(4);
-                opacity: 0;
-            }
+        .avatar-ring::after {
+            content: '';
+            position: absolute;
+            inset: -12px;
+            border-radius: 50%;
+            background: conic-gradient(transparent 60%, rgba(6,182,212,0.4) 100%);
+            animation: spin-ring 6s linear infinite reverse;
+            z-index: -1;
+        }
+        @keyframes spin-ring {
+            to { transform: rotate(360deg); }
         }
 
-        /* --- CARD ANIMATION --- */
-        .project-card, .cert-card, .experience-card, .expertise-col, .tool-category, .section-title {
+        /* ── NEON BUTTON ── */
+        .btn-neon {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        .btn-neon::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.15) 50%, transparent 100%);
+            transform: translateX(-100%);
+            transition: transform 0.5s;
+        }
+        .btn-neon:hover::before { transform: translateX(100%); }
+        .btn-neon:hover {
+            box-shadow: 0 0 20px rgba(6,182,212,0.6), 0 0 40px rgba(6,182,212,0.3);
+            transform: translateY(-2px) scale(1.03);
+        }
+
+        /* ── CARDS ── */
+        .card-glow {
+            background: var(--bg-card);
+            border: 1px solid rgba(6,182,212,0.15);
+            backdrop-filter: blur(12px);
+            transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+        }
+        .card-glow:hover {
+            border-color: rgba(6,182,212,0.5);
+            box-shadow: 0 0 30px rgba(6,182,212,0.15), 0 20px 40px rgba(0,0,0,0.4);
+            transform: translateY(-4px);
+        }
+
+        /* ── PROJECT CARDS ── */
+        .project-card {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out, box-shadow 0.3s;
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid rgba(6,182,212,0.1);
+        }
+        .project-card.is-visible { opacity: 1; transform: translateY(0); }
+        .project-card:hover {
+            box-shadow: 0 0 40px rgba(6,182,212,0.2), 0 20px 60px rgba(0,0,0,0.5);
+            transform: translateY(-6px) scale(1.02);
+        }
+
+        /* ── CERT CARDS ── */
+        .cert-card {
             opacity: 0;
             transform: translateY(30px);
             transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
+        .cert-card.is-visible { opacity: 1; transform: translateY(0); }
 
-        .project-card.is-visible, .cert-card.is-visible, .experience-card.is-visible, .expertise-col.is-visible, .tool-category.is-visible, .section-title.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .section-title span {
-            display: inline-block;
+        /* ── EXPERIENCE CARD ── */
+        .experience-card {
             opacity: 0;
-            transform: translateY(20px) scale(0.9);
-            transition: opacity 0.5s, transform 0.5s;
+            transform: translateX(-40px);
+            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+        }
+        .experience-card.is-visible { opacity: 1; transform: translateX(0); }
+        .experience-card:nth-child(even) { transform: translateX(40px); }
+        .experience-card:nth-child(even).is-visible { transform: translateX(0); }
+
+        /* ── EXPERTISE / TOOL ── */
+        .expertise-col, .tool-category, .section-title {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .expertise-col.is-visible, .tool-category.is-visible, .section-title.is-visible {
+            opacity: 1; transform: translateY(0);
+        }
+        .section-title span { display: inline-block; opacity: 0; transform: translateY(20px) scale(0.9); transition: opacity 0.5s, transform 0.5s; }
+
+        /* ── TIMELINE ── */
+        .timeline-line {
+            background: linear-gradient(to bottom, transparent, var(--cyan), transparent);
+        }
+        .timeline-dot {
+            box-shadow: 0 0 0 4px rgba(6,182,212,0.2), 0 0 20px rgba(6,182,212,0.4);
+            animation: dot-pulse 2s ease-in-out infinite;
+        }
+        @keyframes dot-pulse {
+            0%,100% { box-shadow: 0 0 0 4px rgba(6,182,212,0.2), 0 0 20px rgba(6,182,212,0.4); }
+            50% { box-shadow: 0 0 0 8px rgba(6,182,212,0.1), 0 0 30px rgba(6,182,212,0.6); }
         }
 
-        /* --- SWIPER CAROUSEL STYLES --- */
-        .swiper-container, .swiper-logo-container {
-            padding-bottom: 40px;
+        /* ── BADGE ── */
+        .badge-animated {
+            background: linear-gradient(135deg, var(--cyan), #a855f7);
+            animation: badge-glow 3s ease-in-out infinite;
         }
-        .swiper-pagination-bullet {
-            background-color: #fff;
+        @keyframes badge-glow {
+            0%,100% { box-shadow: 0 0 8px rgba(6,182,212,0.5); }
+            50% { box-shadow: 0 0 20px rgba(168,85,247,0.7); }
         }
-        .swiper-pagination-bullet-active {
-            background-color: #06b6d4;
+
+        /* ── ABOUT SKILL TAGS ── */
+        .skill-tag {
+            background: rgba(6,182,212,0.08);
+            border: 1px solid rgba(6,182,212,0.25);
+            transition: all 0.3s;
+            cursor: default;
         }
-        .swiper-logo-container .swiper-slide {
-            filter: grayscale(100%);
-            opacity: 0.6;
-            transition: filter 0.3s, opacity 0.3s;
+        .skill-tag:hover {
+            background: rgba(6,182,212,0.2);
+            border-color: var(--cyan);
+            box-shadow: 0 0 15px rgba(6,182,212,0.3);
+            transform: translateY(-3px) scale(1.05);
         }
-        .swiper-logo-container .swiper-slide:hover {
-            filter: grayscale(0%);
-            opacity: 1;
+
+        /* ── TOOL CATEGORY ── */
+        .tool-item {
+            position: relative;
+            padding-left: 1.25rem;
+            transition: color 0.3s, padding-left 0.3s;
         }
-        
-        /* --- PRELOADER STYLES --- */
-        #preloader {
-            position: fixed;
-            top: 0;
+        .tool-item::before {
+            content: '›';
+            position: absolute;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #0c1524;
+            color: var(--cyan);
+            font-weight: bold;
+            transition: transform 0.3s;
+        }
+        .tool-item:hover { color: #e2e8f0; padding-left: 1.5rem; }
+        .tool-item:hover::before { transform: translateX(4px); }
+
+        /* ── SWIPER ── */
+        .swiper-container { padding-bottom: 40px; }
+        .swiper-pagination-bullet { background-color: #fff; }
+        .swiper-pagination-bullet-active { background-color: var(--cyan); }
+
+        /* ── PRELOADER ── */
+        #preloader {
+            position: fixed; inset: 0;
+            background: var(--bg-dark);
             z-index: 9999;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: opacity 0.5s ease-out;
+            flex-direction: column;
+            gap: 20px;
+            transition: opacity 0.6s ease-out;
+        }
+        .preloader-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--cyan);
+            letter-spacing: 4px;
+            animation: preloader-pulse 1.5s ease-in-out infinite;
+        }
+        @keyframes preloader-pulse {
+            0%,100% { opacity: 1; text-shadow: 0 0 20px rgba(6,182,212,0.8); }
+            50% { opacity: 0.6; text-shadow: 0 0 40px rgba(6,182,212,1); }
         }
         .spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid rgba(6, 182, 212, 0.3);
-            border-top-color: #06b6d4;
+            width: 50px; height: 50px;
+            border: 3px solid rgba(6,182,212,0.1);
+            border-top-color: var(--cyan);
+            border-right-color: rgba(168,85,247,0.6);
             border-radius: 50%;
-            animation: spin 1s linear infinite;
+            animation: spin 0.8s linear infinite;
         }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        .preloader-bar {
+            width: 200px; height: 2px;
+            background: rgba(6,182,212,0.15);
+            border-radius: 2px;
+            overflow: hidden;
         }
-        /* --- NAVIGATION MENU STYLES --- */
-        .nav-link {
-            color: #9ca3af; /* gray-400 */
+        .preloader-bar-inner {
+            height: 100%;
+            background: linear-gradient(90deg, var(--cyan), #a855f7);
+            border-radius: 2px;
+            animation: bar-load 1.8s ease-in-out forwards;
         }
+        @keyframes bar-load {
+            from { width: 0%; }
+            to { width: 100%; }
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ── NAV ── */
+        .nav-link { color: #6b7280; transition: all 0.3s; }
         .nav-link.active,
         .nav-link:hover {
-            background-color: rgba(6, 182, 212, 0.2);
-            color: #06b6d4; /* cyan-400 */
+            background-color: rgba(6,182,212,0.15);
+            color: var(--cyan);
+            box-shadow: 0 0 12px rgba(6,182,212,0.2);
+        }
+
+        /* ── RIPPLE ── */
+        .ripple {
+            position: absolute; border-radius: 50%;
+            background: rgba(255,255,255,0.25);
+            transform: scale(0);
+            animation: ripple-anim 0.6s linear;
+            pointer-events: none;
+        }
+        @keyframes ripple-anim { to { transform: scale(4); opacity: 0; } }
+
+        /* ── SECTION DIVIDER ── */
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(6,182,212,0.3), transparent);
+            margin: 0 auto;
+            max-width: 600px;
+        }
+
+        /* ── SCROLL INDICATOR ── */
+        .scroll-indicator {
+            position: fixed;
+            top: 0; left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--cyan), #a855f7);
+            z-index: 100;
+            transition: width 0.1s;
+            box-shadow: 0 0 10px rgba(6,182,212,0.6);
+        }
+
+        /* ── CURSOR ── */
+        .custom-cursor {
+            position: fixed;
+            width: 12px; height: 12px;
+            background: var(--cyan);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s, width 0.2s, height 0.2s, opacity 0.2s;
+            mix-blend-mode: screen;
+        }
+        .cursor-follower {
+            position: fixed;
+            width: 36px; height: 36px;
+            border: 1px solid rgba(6,182,212,0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: transform 0.15s ease-out, width 0.3s, height 0.3s;
+        }
+
+        /* ── NUMBER COUNTER ── */
+        .stat-number { font-variant-numeric: tabular-nums; }
+
+        /* Mobile: hide custom cursor */
+        @media (hover: none) {
+            .custom-cursor, .cursor-follower { display: none; }
+        }
+
+        /* ── ANIMATED BORDER ── */
+        .animated-border {
+            position: relative;
+        }
+        .animated-border::after {
+            content: '';
+            position: absolute;
+            bottom: -4px; left: 0;
+            width: 0; height: 2px;
+            background: linear-gradient(90deg, var(--cyan), #a855f7);
+            transition: width 0.4s ease;
+        }
+        .animated-border:hover::after { width: 100%; }
+
+        /* ── EXPERIENCE CONNECTOR ── */
+        .exp-connector { color: var(--cyan); }
+
+        /* ── ABOUT STATS ── */
+        .about-stat {
+            background: rgba(6,182,212,0.05);
+            border: 1px solid rgba(6,182,212,0.1);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .about-stat:hover {
+            background: rgba(6,182,212,0.1);
+            border-color: rgba(6,182,212,0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(6,182,212,0.15);
         }
     </style>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WLJNZ3N25J"></script>
     <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-WLJNZ3N25J');
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-WLJNZ3N25J');
     </script>
 </head>
 <body class="gradient-bg min-h-screen">
+
+    <!-- SCROLL PROGRESS -->
+    <div class="scroll-indicator" id="scroll-indicator"></div>
+
+    <!-- CUSTOM CURSOR -->
+    <div class="custom-cursor" id="custom-cursor"></div>
+    <div class="cursor-follower" id="cursor-follower"></div>
+
+    <!-- PARTICLE CANVAS -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- PRELOADER -->
     <div id="preloader">
+        <div class="preloader-logo">RH</div>
         <div class="spinner"></div>
+        <div class="preloader-bar"><div class="preloader-bar-inner"></div></div>
     </div>
 
-<div class="overflow-x-hidden opacity-0" id="main-content">
-    <nav id="navbar" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 md:left-4 md:top-1/2 md:-translate-y-1/2 md:translate-x-0">
-    <div class="bg-gray-900/50 backdrop-blur-md rounded-full shadow-lg border border-cyan-400/20 shadow-cyan-500/10">
-        <ul class="flex flex-row items-center justify-center p-2 space-x-2 md:flex-col md:space-y-2 md:space-x-0">
-            <li><a href="#hero-section" class="nav-link p-3 block rounded-full transition-colors duration-300"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" /></svg></a></li>
-            <li><a href="#about-section" class="nav-link p-3 block rounded-full transition-colors duration-300"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" /></svg></a></li>
-            <li><a href="#projects-section" class="nav-link p-3 block rounded-full transition-colors duration-300"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd" /></svg></a></li>
-            <li><a href="#certifications-section" class="nav-link p-3 block rounded-full transition-colors duration-300"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 2a1 1 0 00-1 1v1.618C6.707 5.022 6 6.223 6 7.5a1 1 0 002 0v-.585A3.5 3.5 0 1110 11a1 1 0 102 0 5.5 5.5 0 10-3-5.022V3a1 1 0 00-1-1zm-5.5 9.5a1 1 0 100 2 3.5 3.5 0 115.707-2.707 1 1 0 00-1.414-1.414A5.5 5.5 0 103.5 11.5zM10 6.5a1 1 0 112 0 1 1 0 01-2 0zM10 12.5a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd" /></svg></a></li>
-            <li><a href="#experience-section" class="nav-link p-3 block rounded-full transition-colors duration-300"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H6zm1 2a1 1 0 000 2h6a1 1 0 100-2H7zm6 4a1 1 0 011 1v4a1 1 0 11-2 0V9a1 1 0 011-1z" clip-rule="evenodd" /></svg></a></li>
-            <li><a href="#expertise-section" class="nav-link p-3 block rounded-full transition-colors duration-300"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" /></svg></a></li>
-            <li><a href="#tools-section" class="nav-link p-3 block rounded-full transition-colors duration-300"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" /></svg></a></li>
-        
-        </ul>
-    </div>
-</nav>
+    <div class="overflow-x-hidden opacity-0" id="main-content">
 
-    <section id="hero-section" class="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center">
-                <div class="floating-animation mb-8">
-                    <div class="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-cyan-400 shadow-2xl backdrop-blur-sm">
-                        <img src="https://i.postimg.cc/Bj1JPMyv/image.jpg" alt="Profile Photo" class="w-full h-full object-cover object-top">
-                    </div>
-                </div>
-                <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-6">Hi, I'm <span class="text-cyan-400">Rabiul Hasan</span></h1>
-                <div class="text-xl sm:text-2xl lg:text-3xl text-white mb-8 h-12">
-                    <div class="typewriter-container">
-                        <span class="typewriter"></span>
-                    </div>
-                </div>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
-                    <a href="#projects-section" id="view-work-button" class="bg-cyan-400 hover:bg-cyan-500 text-gray-900 font-semibold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">View My Work</a>
-                    <a href="https://drive.google.com/file/d/1jyPfzS0lwTpPeUhpGqC4Khx71FyDiZ9e/view?usp=sharing" target="_blank" class="border-2 border-white text-white hover:bg-white hover:text-gray-900 font-semibold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 inline-block">Download CV</a>
-                </div>
-                <div class="flex justify-center space-x-6">
-                    <a href="https://x.com/rabiul_hasann" target="_blank" class="text-white hover:text-cyan-400 transition-colors duration-300 transform hover:scale-110"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg></a>
-                    <a href="https://www.linkedin.com/in/rabiulislam32" target="_blank" class="text-white hover:text-cyan-400 transition-colors duration-300 transform hover:scale-110"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
-                    <a href="https://github.com/rabiulhasann" target="_blank" class="text-white hover:text-cyan-400 transition-colors duration-300 transform hover:scale-110"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>
-                </div>
-                <a href="#about-section" id="scroll-down-button" class="absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer">
-                    <div class="pulse-animation">
-                        <svg class="w-6 h-6 text-white animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
-                    </div>
-                </a>
+        <!-- ── NAV ── -->
+        <nav id="navbar" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 md:left-4 md:top-1/2 md:-translate-y-1/2 md:translate-x-0">
+            <div class="bg-gray-900/60 backdrop-blur-xl rounded-full shadow-lg border border-cyan-400/20 shadow-cyan-500/10">
+                <ul class="flex flex-row items-center justify-center p-2 space-x-1 md:flex-col md:space-y-1 md:space-x-0">
+                    <li><a href="#hero-section" title="Home" class="nav-link p-3 block rounded-full transition-all duration-300"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></svg></a></li>
+                    <li><a href="#about-section" title="About" class="nav-link p-3 block rounded-full transition-all duration-300"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/></svg></a></li>
+                    <li><a href="#projects-section" title="Projects" class="nav-link p-3 block rounded-full transition-all duration-300"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"/></svg></a></li>
+                    <li><a href="#certifications-section" title="Certifications" class="nav-link p-3 block rounded-full transition-all duration-300"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"/></svg></a></li>
+                    <li><a href="#experience-section" title="Experience" class="nav-link p-3 block rounded-full transition-all duration-300"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H6zm1 2a1 1 0 000 2h6a1 1 0 100-2H7zm6 4a1 1 0 011 1v4a1 1 0 11-2 0V9a1 1 0 011-1z" clip-rule="evenodd"/></svg></a></li>
+                    <li><a href="#expertise-section" title="Expertise" class="nav-link p-3 block rounded-full transition-all duration-300"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/></svg></a></li>
+                    <li><a href="#tools-section" title="Tools" class="nav-link p-3 block rounded-full transition-all duration-300"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/></svg></a></li>
+                </ul>
             </div>
-        </div>
-    </section>
+        </nav>
 
-    <section id="about-section" class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-900 bg-opacity-30">
-        <div class="max-w-4xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="section-title text-4xl sm:text-5xl font-bold text-white mb-4">About <span class="text-cyan-400">Me</span></h2>
-                <div class="w-24 h-1 bg-cyan-400 mx-auto rounded-full"></div>
-            </div>
-            <div class="bg-gray-800 bg-opacity-50 backdrop-blur-sm rounded-2xl p-8 sm:p-12 shadow-2xl border border-gray-700">
-                <div class="text-center mb-8">
-                    <h3 class="text-2xl sm:text-3xl font-bold text-white mb-8 pb-4 border-b-2 border-cyan-400 inline-block">Rabiul Hasan</h3>
-                </div>
-                <div class="text-center">
-                    <p class="text-lg text-gray-300 leading-relaxed max-w-3xl mx-auto">Cybersecurity Enthusiast with hands-on experience in SOC, penetration testing, vulnerability management, and incident response. Skilled in SIEM/IDS/SOAR automation (Wazuh, Suricata, n8n, TheHive, VirusTotal). Proficient in network & endpoint analysis (Wireshark, Velociraptor) and Python scripting for enhancing system security and automating threat detection/response. Committed to a safer digital world.</p>
-                </div>
-                <div class="mt-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-                    <div class="bg-gray-700 bg-opacity-50 rounded-lg p-4 text-center border border-gray-600 hover:border-cyan-400 transition-colors duration-300"><div class="text-cyan-400 text-2xl mb-2">🛡️</div><p class="text-white text-sm font-medium">SOC Analyst</p></div>
-                    <div class="bg-gray-700 bg-opacity-50 rounded-lg p-4 text-center border border-gray-600 hover:border-cyan-400 transition-colors duration-300"><div class="text-cyan-400 text-2xl mb-2">🔍</div><p class="text-white text-sm font-medium">Penetration Testing</p></div>
-                    <div class="bg-gray-700 bg-opacity-50 rounded-lg p-4 text-center border border-gray-600 hover:border-cyan-400 transition-colors duration-300"><div class="text-cyan-400 text-2xl mb-2">⚡</div><p class="text-white text-sm font-medium">SIEM/SOAR</p></div>
-                    <div class="bg-gray-700 bg-opacity-50 rounded-lg p-4 text-center border border-gray-600 hover:border-cyan-400 transition-colors duration-300"><div class="text-cyan-400 text-2xl mb-2">🐍</div><p class="text-white text-sm font-medium">Python Scripting</p></div>
-                    <div class="bg-gray-700 bg-opacity-50 rounded-lg p-4 text-center border border-gray-600 hover:border-cyan-400 transition-colors duration-300"><div class="text-cyan-400 text-2xl mb-2">🌐</div><p class="text-white text-sm font-medium">Network Analysis</p></div>
-                    <div class="bg-gray-700 bg-opacity-50 rounded-lg p-4 text-center border border-gray-600 hover:border-cyan-400 transition-colors duration-300"><div class="text-cyan-400 text-2xl mb-2">🚨</div><p class="text-white text-sm font-medium">Incident Response</p></div>
-                    <div class="bg-gray-700 bg-opacity-50 rounded-lg p-4 text-center border border-gray-600 hover:border-cyan-400 transition-colors duration-300"><div class="text-cyan-400 text-2xl mb-2">🐛</div><p class="text-white text-sm font-medium">Bug Hunting</p></div>
-                    <div class="bg-gray-700 bg-opacity-50 rounded-lg p-4 text-center border border-gray-600 hover:border-cyan-400 transition-colors duration-300"><div class="text-cyan-400 text-2xl mb-2">🔒</div><p class="text-white text-sm font-medium">VAPT</p></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="projects-section" class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-900 bg-opacity-30">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="section-title text-4xl sm:text-5xl font-bold text-white mb-4">Notable <span class="text-cyan-400">Projects</span></h2>
-                <div class="w-24 h-1 bg-cyan-400 mx-auto rounded-full"></div>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="project-card group relative rounded-lg overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-300"><img src="https://i.postimg.cc/jjQx3G84/wazuh.png" alt="Open Source SIEM Solution with Wazuh" class="w-full h-full object-contain"><div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all duration-300 flex flex-col items-center justify-center p-4 opacity-0 group-hover:opacity-100"><h3 class="text-white text-xl lg:text-2xl font-bold text-center">Open Source SIEM Solution with Wazuh</h3><a href="https://drive.google.com/file/d/1GJY3C9ud2n0qigC55_krOjG66LkecNy7/view" target="_blank"  class="mt-4 p-3 bg-cyan-400 rounded-full hover:bg-cyan-500 transition-colors"><svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a></div></div>
-                <div class="project-card group relative rounded-lg overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-300" style="transition-delay: 100ms;"><img src="https://i.postimg.cc/nrLhD0GY/pfsense.png" alt="pfSense Firewall + Snort IDS/IPS" class="w-full h-full object-contain"><div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all duration-300 flex flex-col items-center justify-center p-4 opacity-0 group-hover:opacity-100"><h3 class="text-white text-xl lg:text-2xl font-bold">pfSense Firewall + Snort IDS/IPS</h3><a href="https://drive.google.com/file/d/1feG7cjBitrwS1nPcUsAt5Ddi274O5BeR/view" target="_blank"  class="mt-4 p-3 bg-cyan-400 rounded-full hover:bg-cyan-500 transition-colors"><svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a></div></div>
-                <div class="project-card group relative rounded-lg overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-300" style="transition-delay: 200ms;"><img src="https://i.postimg.cc/T3bYgygS/velo.png" alt="Endpoint Threat Detection with Custom Velociraptor
-Artifacts" class="w-full h-full object-contain"><div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all duration-300 flex flex-col items-center justify-center p-4 opacity-0 group-hover:opacity-100"><h3 class="text-white text-xl lg:text-2xl font-bold">Endpoint Threat Detection with Custom Velociraptor
-Artifacts</h3><a href="https://drive.google.com/file/d/1v2u1QD6OZl0flnBNnF5nuXysz7cLcI89/view?usp=sharing" target="_blank"  class="mt-4 p-3 bg-cyan-400 rounded-full hover:bg-cyan-500 transition-colors"><svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a></div></div>
-                <div class="project-card group relative rounded-lg overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-300" style="transition-delay: 300ms;"><img src="https://i.postimg.cc/NMdrSyND/wireshark.jpg" alt="PCAP Analysis & Threat Hunting" class="w-full h-full object-contain"><div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all duration-300 flex flex-col items-center justify-center p-4 opacity-0 group-hover:opacity-100"><h3 class="text-white text-xl lg:text-2xl font-bold">PCAP Analysis & Threat Hunting</h3><a href="https://drive.google.com/file/d/1nrj05MkTRdKfWtzEgaP4nc_0KQfK6ZxT/view" target="_blank"  class="mt-4 p-3 bg-cyan-400 rounded-full hover:bg-cyan-500 transition-colors"><svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a></div></div>
-                <div class="project-card group relative rounded-lg overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-300" style="transition-delay: 400ms;"><img src="https://i.postimg.cc/h4CjBRKC/n8n.png" alt="SOAR Automation: Wazuh, n8n, TheHive, VirusTotal, &
-Telegram" class="w-full h-full object-contain"><div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all duration-300 flex flex-col items-center justify-center p-4 opacity-0 group-hover:opacity-100"><h3 class="text-white text-xl lg:text-2xl font-bold">SOAR Automation: Wazuh, n8n, TheHive, VirusTotal, &
-Telegram</h3><a href="https://drive.google.com/file/d/1bmE_OsdLQi87egPAGURLBZJKhck3cJTV/view?usp=sharing" target="_blank"  class="mt-4 p-3 bg-cyan-400 rounded-full hover:bg-cyan-500 transition-colors"><svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a></div></div>
-                <div class="project-card group relative rounded-lg overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-300" style="transition-delay: 500ms;"><img src="https://i.postimg.cc/Pqkf4tMq/py1.png" alt="Efficient Software Inventory Tracker for Windows
-Environments" class="w-full h-full object-contain"><div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all duration-300 flex flex-col items-center justify-center p-4 opacity-0 group-hover:opacity-100"><h3 class="text-white text-xl lg:text-2xl font-bold">Efficient Software Inventory Tracker for Windows
-Environments</h3><a href="https://drive.google.com/file/d/10iXmxwrWh_BKxmMZbKiwtPf9qBfAJWbF/view" target="_blank"  class="mt-4 p-3 bg-cyan-400 rounded-full hover:bg-cyan-500 transition-colors"><svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a></div></div>
-                <div class="project-card group relative rounded-lg overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-300" style="transition-delay: 600ms;"><img src="https://i.postimg.cc/sx0D97nF/py2.jpg" alt="Python Email Automation with Secure Attachment
-Handling" class="w-full h-full object-contain"><div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all duration-300 flex flex-col items-center justify-center p-4 opacity-0 group-hover:opacity-100"><h3 class="text-white text-xl lg:text-2xl font-bold">Python Email Automation with Secure Attachment
-Handling</h3><a href="https://drive.google.com/file/d/1NSSZMV0VK1_0pn_pey6r7o7yGEZck66p/view" target="_blank"  class="mt-4 p-3 bg-cyan-400 rounded-full hover:bg-cyan-500 transition-colors"><svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a></div></div>
-                <div class="project-card group relative rounded-lg overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-300" style="transition-delay: 700ms;"><img src="https://i.postimg.cc/YqZCvNGY/py3.png" alt="Automated Network Monitoring and IP Extraction" class="w-full h-full object-contain"><div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all duration-300 flex flex-col items-center justify-center p-4 opacity-0 group-hover:opacity-100"><h3 class="text-white text-xl lg:text-2xl font-bold">Automated Network Monitoring and IP Extraction</h3><a href="https://drive.google.com/file/d/1PXKD-7kduM1j5R94lzLyk-eoK6xWd8pN/view" target="_blank"  class="mt-4 p-3 bg-cyan-400 rounded-full hover:bg-cyan-500 transition-colors"><svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a></div></div>
-                <div class="project-card group relative rounded-lg overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-300" style="transition-delay: 800ms;"><img src="https://i.postimg.cc/5N6t9K0f/py4.jpg" alt="Instant Weather Reports with Python and Telegram" class="w-full h-full object-contain"><div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all duration-300 flex flex-col items-center justify-center p-4 opacity-0 group-hover:opacity-100"><h3 class="text-white text-xl lg:text-2xl font-bold">Instant Weather Reports with Python and Telegram</h3><a href="https://drive.google.com/file/d/1r9jIFd4nbG0RDKWtZshSggkrsCQSE2By/view" target="_blank"  class="mt-4 p-3 bg-cyan-400 rounded-full hover:bg-cyan-500 transition-colors"><svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a></div></div>
-            </div>
-        </div>
-    </section>
-
-    <section id="certifications-section" class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-900 bg-opacity-30">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="section-title text-4xl sm:text-5xl font-bold text-white mb-4">Professional Training & <span class="text-cyan-400">Certifications</span></h2>
-                <div class="w-24 h-1 bg-cyan-400 mx-auto rounded-full"></div>
-            </div>
-            <div class="swiper-container relative overflow-hidden">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide"><div class="cert-card group relative rounded-lg shadow-2xl h-48 bg-gray-800 bg-opacity-50 border border-gray-700 flex flex-col justify-center items-center p-6 text-center"><h3 class="text-xl font-semibold text-cyan-400">Networking Essentials</h3><p class="text-white mt-2 text-sm">Cisco</p><div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100"><a href="https://www.credly.com/badges/ff4fc074-f7df-4a00-9d39-2252540e4ce4/linked_in_profile" target="_blank"  class="p-3 bg-cyan-400 rounded-full hover:bg-cyan-500 transition-colors"><svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a></div></div></div>
-                    <div class="swiper-slide"><div class="cert-card group relative rounded-lg shadow-2xl h-48 bg-gray-800 bg-opacity-50 border border-gray-700 flex flex-col justify-center items-center p-6 text-center"><h3 class="text-xl font-semibold text-cyan-400">Web Attack Investigated</h3><p class="text-white mt-2 text-sm">LetsDefend</p><div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100"><a href="https://app.letsdefend.io/my-rewards/detail/a29f0182-9b36-419a-b7f3-33c225fe37b6" target="_blank"  class="p-3 bg-cyan-400 rounded-full hover:bg-cyan-500 transition-colors"><svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a></div></div></div>
-                    <div class="swiper-slide"><div class="cert-card group relative rounded-lg shadow-2xl h-48 bg-gray-800 bg-opacity-50 border border-gray-700 flex flex-col justify-center items-center p-6 text-center"><h3 class="text-xl font-semibold text-cyan-400">(ISC)2 Candidate</h3><p class="text-white mt-2 text-sm">(ISC)2</p><div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100"><a href="https://www.credly.com/badges/042bf390-020f-400b-af34-4edf405e25a7/public_url" target="_blank"  class="p-3 bg-cyan-400 rounded-full hover:bg-cyan-500 transition-colors"><svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a></div></div></div>
-                    <div class="swiper-slide"><div class="cert-card group relative rounded-lg shadow-2xl h-48 bg-gray-800 bg-opacity-50 border border-gray-700 flex flex-col justify-center items-center p-6 text-center"><h3 class="text-xl font-semibold text-cyan-400">SIEM 101</h3><p class="text-white mt-2 text-sm">LetsDefend</p><div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100"><a href="https://app.letsdefend.io/my-rewards/detail/a9a88c18-b956-4b0a-b081-37f4b39ebb54" target="_blank"  class="p-3 bg-cyan-400 rounded-full hover:bg-cyan-500 transition-colors"><svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a></div></div></div>
-                    <div class="swiper-slide"><div class="cert-card group relative rounded-lg shadow-2xl h-48 bg-gray-800 bg-opacity-50 border border-gray-700 flex flex-col justify-center items-center p-6 text-center"><h3 class="text-xl font-semibold text-cyan-400">NDG Linux Essentials</h3><p class="text-white mt-2 text-sm">NDG</p><div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100"><a href="https://drive.google.com/file/d/15bFVj5UfHmIzL-bRMaUwCm_NY59Wuo-5/view" target="_blank"  class="p-3 bg-cyan-400 rounded-full hover:bg-cyan-500 transition-colors"><svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a></div></div></div>
-                    <div class="swiper-slide"><div class="cert-card group relative rounded-lg shadow-2xl h-48 bg-gray-800 bg-opacity-50 border border-gray-700 flex flex-col justify-center items-center p-6 text-center"><h3 class="text-xl font-semibold text-cyan-400">NSE 1, 2, 3</h3><p class="text-white mt-2 text-sm">Fortinet</p><div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100"><a href="https://postimg.cc/gallery/49HFV38" target="_blank"  class="p-3 bg-cyan-400 rounded-full hover:bg-cyan-500 transition-colors"><svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a></div></div></div>
-                    <div class="swiper-slide"><div class="cert-card group relative rounded-lg shadow-2xl h-48 bg-gray-800 bg-opacity-50 border border-gray-700 flex flex-col justify-center items-center p-6 text-center"><h3 class="text-xl font-semibold text-cyan-400">Open-source Intelligence</h3><p class="text-white mt-2 text-sm">Basel Institute on Governance</p><div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100"><a href="https://drive.google.com/file/d/1x8TY-wbpB0AjPoxOEKuhIa6U-e__iZAR/view" target="_blank"  class="p-3 bg-cyan-400 rounded-full hover:bg-cyan-500 transition-colors"><svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a></div></div></div>
-                    <div class="swiper-slide"><div class="cert-card group relative rounded-lg shadow-2xl h-48 bg-gray-800 bg-opacity-50 border border-gray-700 flex flex-col justify-center items-center p-6 text-center"><h3 class="text-xl font-semibold text-cyan-400">EDR – Foundation</h3><p class="text-white mt-2 text-sm">Qualys</p><div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100"><a href="https://drive.google.com/file/d/1YcgMkqhTkYnySao2IQl0giCFaCLCX3Tv/view" target="_blank"  class="p-3 bg-cyan-400 rounded-full hover:bg-cyan-500 transition-colors"><svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a></div></div></div>
-                    <div class="swiper-slide"><div class="cert-card group relative rounded-lg shadow-2xl h-48 bg-gray-800 bg-opacity-50 border border-gray-700 flex flex-col justify-center items-center p-6 text-center"><h3 class="text-xl font-semibold text-cyan-400">Cyber Threat Intelligence 101</h3><p class="text-white mt-2 text-sm">arcX</p><div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100"><a href="https://arcx.io/verify-certificate?id=e384cdd89bcf0ad6382f8065c54e82fa959b4f1f&k=4d569e348a6f48108808ac8507bd48d5" target="_blank"  class="p-3 bg-cyan-400 rounded-full hover:bg-cyan-500 transition-colors"><svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a></div></div></div>
-                    <div class="swiper-slide"><div class="cert-card group relative rounded-lg shadow-2xl h-48 bg-gray-800 bg-opacity-50 border border-gray-700 flex flex-col justify-center items-center p-6 text-center"><h3 class="text-xl font-semibold text-cyan-400">Blue Team Junior Analyst Pathway</h3><p class="text-white mt-2 text-sm">Security Blue Team</p><div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100"><a href="https://drive.google.com/file/d/1cKRJ_liL0DwiKOhAqvbdPbG13b_4TblB/view" target="_blank"  class="p-3 bg-cyan-400 rounded-full hover:bg-cyan-500 transition-colors"><svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a></div></div></div>
-                    <div class="swiper-slide"><div class="cert-card group relative rounded-lg shadow-2xl h-48 bg-gray-800 bg-opacity-50 border border-gray-700 flex flex-col justify-center items-center p-6 text-center"><h3 class="text-xl font-semibold text-cyan-400">Ethical Hacker</h3><p class="text-white mt-2 text-sm">Cisco</p><div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100"><a href="https://www.credly.com/earner/earned/badge/3ed1b3d7-ef6a-48b2-8a2f-0f6065b51978" target="_blank"  class="p-3 bg-cyan-400 rounded-full hover:bg-cyan-500 transition-colors"><svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a></div></div></div>
-                    <div class="swiper-slide"><div class="cert-card group relative rounded-lg shadow-2xl h-48 bg-gray-800 bg-opacity-50 border border-gray-700 flex flex-col justify-center items-center p-6 text-center"><h3 class="text-xl font-semibold text-cyan-400">Vulnerability Management</h3><p class="text-white mt-2 text-sm">Qualys</p><div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100"><a href="https://drive.google.com/file/d/1nf2ncpO2sq-uIGACs5BeIqvTl_mSnjgE/view" target="_blank"  class="p-3 bg-cyan-400 rounded-full hover:bg-cyan-500 transition-colors"><svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a></div></div></div>
-                </div>
-                <div class="swiper-pagination mt-4"></div>
-            </div>
-        </div>
-    </section>
-
-    <section id="experience-section" class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-900 bg-opacity-30">
-        <div class="max-w-4xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="section-title text-4xl sm:text-5xl font-bold text-white mb-4">Professional <span class="text-cyan-400">Experience</span></h2>
-                <div class="w-24 h-1 bg-cyan-400 mx-auto rounded-full"></div>
-            </div>
-            <div class="relative">
-                <div class="absolute left-4 top-4 h-full w-0.5 bg-gray-700 md:left-1/2 md:-translate-x-1/2"></div>
-                <div class="experience-card relative">
-                    <div class="md:flex items-start">
-                        <div class="md:w-1/2 md:pr-8">
-                            <div class="bg-gray-800 bg-opacity-50 p-6 rounded-2xl border border-gray-700 md:text-right">
-                                <span class="inline-block bg-cyan-400 text-gray-900 text-sm font-semibold px-3 py-1 rounded-full mb-4">JUNE 2023 - PRESENT</span>
-                                <h3 class="text-3xl font-bold text-white"><a href="https://www.pointerit-ltd.com" target="_blank" class="hover:text-cyan-400 transition-colors duration-300">Pointer IT Limited</a></h3>
-                                <p class="text-lg text-cyan-400 mt-1">Digital Marketing and Cybersecurity Practitioner</p>
-                            </div>
-                        </div>
-                        <div class="absolute left-4 top-5 w-4 h-4 rounded-full bg-cyan-400 border-4 border-gray-900 md:left-1/2 md:-translate-x-1/2"></div>
-                        <div class="md:w-1/2 md:pl-8 mt-6 md:mt-0">
-                             <div class="bg-gray-800 bg-opacity-50 p-6 rounded-2xl border border-gray-700">
-                                <h4 class="font-semibold text-white mb-3 text-lg">Key Responsibilities:</h4>
-                                <ul class="space-y-3">
-                                    <li class="flex items-start"><svg class="w-5 h-5 text-cyan-400 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg><span class="text-gray-300">Collaborated with cross-functional teams to integrate security practices into digital marketing campaigns.</span></li>
-                                    <li class="flex items-start"><svg class="w-5 h-5 text-cyan-400 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg><span class="text-gray-300">Provided training and guidance to staff on cybersecurity awareness and best practices.</span></li>
-                                    <li class="flex items-start"><svg class="w-5 h-5 text-cyan-400 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg><span class="text-gray-300">Assisted in the development of cybersecurity policies and procedures to enhance organizational security posture.</span></li>
-                                </ul>
-                            </div>
+        <!-- ══════════════════════════════════════
+             HERO
+        ══════════════════════════════════════ -->
+        <section id="hero-section" class="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto w-full">
+                <div class="text-center" id="hero-content">
+                    <!-- Avatar -->
+                    <div class="floating-animation mb-8 flex justify-center">
+                        <div class="avatar-ring w-36 h-36 rounded-full overflow-hidden border-4 border-cyan-400 shadow-2xl" style="box-shadow: 0 0 40px rgba(6,182,212,0.4);">
+                            <img src="https://i.postimg.cc/Bj1JPMyv/image.jpg" alt="Rabiul Hasan" class="w-full h-full object-cover object-top">
                         </div>
                     </div>
+
+                    <!-- Name with glitch -->
+                    <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-6" id="hero-title">
+                        Hi, I'm <span class="text-cyan-400 glitch" data-text="Rabiul Hasan">Rabiul Hasan</span>
+                    </h1>
+
+                    <!-- Typewriter -->
+                    <div class="text-xl sm:text-2xl lg:text-3xl text-white mb-10 h-12">
+                        <div class="typewriter-container">
+                            <span class="typewriter"></span>
+                        </div>
+                    </div>
+
+                    <!-- Stats row -->
+                    <div class="flex justify-center gap-8 mb-10" id="hero-stats">
+                        <div class="about-stat px-6 py-3">
+                            <div class="text-2xl font-bold text-cyan-400 stat-number" data-target="2">0</div>
+                            <div class="text-xs text-gray-400 mt-1">Years Exp.</div>
+                        </div>
+                        <div class="about-stat px-6 py-3">
+                            <div class="text-2xl font-bold text-cyan-400 stat-number" data-target="9">0</div>
+                            <div class="text-xs text-gray-400 mt-1">Projects</div>
+                        </div>
+                        <div class="about-stat px-6 py-3">
+                            <div class="text-2xl font-bold text-cyan-400 stat-number" data-target="12">0</div>
+                            <div class="text-xs text-gray-400 mt-1">Certs</div>
+                        </div>
+                    </div>
+
+                    <!-- CTA Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+                        <a href="#projects-section" id="view-work-button"
+                           class="btn-neon bg-cyan-400 hover:bg-cyan-500 text-gray-900 font-semibold py-4 px-10 rounded-full shadow-lg"
+                           style="box-shadow: 0 0 25px rgba(6,182,212,0.4);">
+                            View My Work
+                        </a>
+                        <a href="https://drive.google.com/file/d/1jyPfzS0lwTpPeUhpGqC4Khx71FyDiZ9e/view?usp=sharing" target="_blank"
+                           class="btn-neon border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-gray-900 font-semibold py-4 px-10 rounded-full inline-block">
+                            Download CV
+                        </a>
+                    </div>
+
+                    <!-- Social Links -->
+                    <div class="flex justify-center space-x-6 mb-16">
+                        <a href="https://x.com/rabiul_hasann" target="_blank" class="text-gray-400 hover:text-cyan-400 transition-all duration-300 transform hover:scale-125 hover:drop-shadow-[0_0_8px_rgba(6,182,212,0.8)]"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg></a>
+                        <a href="https://www.linkedin.com/in/rabiulislam32" target="_blank" class="text-gray-400 hover:text-cyan-400 transition-all duration-300 transform hover:scale-125 hover:drop-shadow-[0_0_8px_rgba(6,182,212,0.8)]"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                        <a href="https://github.com/rabiulhasann" target="_blank" class="text-gray-400 hover:text-cyan-400 transition-all duration-300 transform hover:scale-125 hover:drop-shadow-[0_0_8px_rgba(6,182,212,0.8)]"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>
+                    </div>
+
+                    <!-- Scroll down -->
+                    <a href="#about-section" id="scroll-down-button" class="absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer">
+                        <div class="pulse-animation flex flex-col items-center gap-1">
+                            <span class="text-xs text-gray-500 tracking-widest uppercase">Scroll</span>
+                            <svg class="w-6 h-6 text-cyan-400 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                        </div>
+                    </a>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
+        <div class="section-divider"></div>
 
-    <section id ="expertise-section" class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-900 bg-opacity-30">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-12">
-                <h2 class="section-title text-4xl sm:text-5xl font-bold text-white mb-4">Technical <span class="text-cyan-400">Expertise</span></h2>
-                <div class="w-24 h-1 bg-cyan-400 mx-auto rounded-full"></div>
-            </div>
-            <div class="flex justify-center">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-x-16 lg:gap-x-24 text-gray-300">
-                    <div class="expertise-col"><ul class="list-disc list-inside space-y-2"><li>Junior SOC Analyst</li><li>Penetration Testing</li></ul></div>
-                    <div class="expertise-col" style="transition-delay: 100ms;"><ul class="list-disc list-inside space-y-2"><li>Vulnerability Management</li><li>Log Analysis</li></ul></div>
-                    <div class="expertise-col" style="transition-delay: 200ms;"><ul class="list-disc list-inside space-y-2"><li>Python | Bash | Shell</li><li>Networking</li></ul></div>
+        <!-- ══════════════════════════════════════
+             ABOUT
+        ══════════════════════════════════════ -->
+        <section id="about-section" class="py-24 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="section-title text-4xl sm:text-5xl font-bold text-white mb-4">About <span class="text-cyan-400">Me</span></h2>
+                    <div class="w-24 h-1 mx-auto rounded-full" style="background: linear-gradient(90deg, var(--cyan), #a855f7);"></div>
+                </div>
+                <div class="card-glow rounded-2xl p-8 sm:p-12 shadow-2xl">
+                    <div class="text-center mb-8">
+                        <h3 class="text-2xl sm:text-3xl font-bold text-white mb-2">Rabiul Hasan</h3>
+                        <p class="text-cyan-400 font-medium">Cybersecurity Professional</p>
+                    </div>
+                    <p class="text-lg text-gray-300 leading-relaxed text-center max-w-3xl mx-auto mb-10">
+                        Cybersecurity Enthusiast with hands-on experience in SOC, penetration testing, vulnerability management, and incident response. Skilled in SIEM/IDS/SOAR automation (Wazuh, Suricata, n8n, TheHive, VirusTotal). Proficient in network &amp; endpoint analysis (Wireshark, Velociraptor) and Python scripting for enhancing system security and automating threat detection/response. Committed to a safer digital world.
+                    </p>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                        <div class="skill-tag rounded-xl p-4 text-center"><div class="text-2xl mb-2">🛡️</div><p class="text-white text-sm font-medium">SOC Analyst</p></div>
+                        <div class="skill-tag rounded-xl p-4 text-center"><div class="text-2xl mb-2">🔍</div><p class="text-white text-sm font-medium">Penetration Testing</p></div>
+                        <div class="skill-tag rounded-xl p-4 text-center"><div class="text-2xl mb-2">⚡</div><p class="text-white text-sm font-medium">SIEM/SOAR</p></div>
+                        <div class="skill-tag rounded-xl p-4 text-center"><div class="text-2xl mb-2">🐍</div><p class="text-white text-sm font-medium">Python Scripting</p></div>
+                        <div class="skill-tag rounded-xl p-4 text-center"><div class="text-2xl mb-2">🌐</div><p class="text-white text-sm font-medium">Network Analysis</p></div>
+                        <div class="skill-tag rounded-xl p-4 text-center"><div class="text-2xl mb-2">🚨</div><p class="text-white text-sm font-medium">Incident Response</p></div>
+                        <div class="skill-tag rounded-xl p-4 text-center"><div class="text-2xl mb-2">🐛</div><p class="text-white text-sm font-medium">Bug Hunting</p></div>
+                        <div class="skill-tag rounded-xl p-4 text-center"><div class="text-2xl mb-2">🔒</div><p class="text-white text-sm font-medium">VAPT</p></div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="tools-section" class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-900 bg-opacity-30">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="section-title text-4xl sm:text-5xl font-bold text-white mb-4">Tools & <span class="text-cyan-400">Technologies</span></h2>
-                <div class="w-24 h-1 bg-cyan-400 mx-auto rounded-full"></div>
+        <div class="section-divider"></div>
+
+        <!-- ══════════════════════════════════════
+             PROJECTS
+        ══════════════════════════════════════ -->
+        <section id="projects-section" class="py-24 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="section-title text-4xl sm:text-5xl font-bold text-white mb-4">Notable <span class="text-cyan-400">Projects</span></h2>
+                    <div class="w-24 h-1 mx-auto rounded-full" style="background: linear-gradient(90deg, var(--cyan), #a855f7);"></div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="project-card group"><img src="https://i.postimg.cc/jjQx3G84/wazuh.png" alt="Open Source SIEM Solution with Wazuh" class="w-full h-full object-contain"><div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col items-center justify-center p-4"><h3 class="text-white text-xl font-bold text-center mb-4">Open Source SIEM Solution with Wazuh</h3><a href="https://drive.google.com/file/d/1GJY3C9ud2n0qigC55_krOjG66LkecNy7/view" target="_blank" class="btn-neon p-3 bg-cyan-400 rounded-full hover:bg-cyan-500 transition-colors"><svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a></div></div>
+                    <div class="project-card group" style="transition-delay:100ms;"><img src="https://i.postimg.cc/nrLhD0GY/pfsense.png" alt="pfSense Firewall + Snort IDS/IPS" class="w-full h-full object-contain"><div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col items-center justify-center p-4"><h3 class="text-white text-xl font-bold text-center mb-4">pfSense Firewall + Snort IDS/IPS</h3><a href="https://drive.google.com/file/d/1feG7cjBitrwS1nPcUsAt5Ddi274O5BeR/view" target="_blank" class="btn-neon p-3 bg-cyan-400 rounded-full hover:bg-cyan-500 transition-colors"><svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a></div></div>
+                    <div class="project-card group" style="transition-delay:200ms;"><img src="https://i.postimg.cc/T3bYgygS/velo.png" alt="Endpoint Threat Detection with Custom Velociraptor Artifacts" class="w-full h-full object-contain"><div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col items-center justify-center p-4"><h3 class="text-white text-xl font-bold text-center mb-4">Endpoint Threat Detection with Custom Velociraptor Artifacts</h3><a href="https://drive.google.com/file/d/1v2u1QD6OZl0flnBNnF5nuXysz7cLcI89/view?usp=sharing" target="_blank" class="btn-neon p-3 bg-cyan-400 rounded-full hover:bg-cyan-500 transition-colors"><svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a></div></div>
+                    <div class="project-card group" style="transition-delay:300ms;"><img src="https://i.postimg.cc/NMdrSyND/wireshark.jpg" alt="PCAP Analysis & Threat Hunting" class="w-full h-full object-contain"><div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col items-center justify-center p-4"><h3 class="text-white text-xl font-bold text-center mb-4">PCAP Analysis &amp; Threat Hunting</h3><a href="https://drive.google.com/file/d/1nrj05MkTRdKfWtzEgaP4nc_0KQfK6ZxT/view" target="_blank" class="btn-neon p-3 bg-cyan-400 rounded-full hover:bg-cyan-500 transition-colors"><svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a></div></div>
+                    <div class="project-card group" style="transition-delay:400ms;"><img src="https://i.postimg.cc/h4CjBRKC/n8n.png" alt="SOAR Automation" class="w-full h-full object-contain"><div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col items-center justify-center p-4"><h3 class="text-white text-xl font-bold text-center mb-4">SOAR Automation: Wazuh, n8n, TheHive, VirusTotal &amp; Telegram</h3><a href="https://drive.google.com/file/d/1bmE_OsdLQi87egPAGURLBZJKhck3cJTV/view?usp=sharing" target="_blank" class="btn-neon p-3 bg-cyan-400 rounded-full hover:bg-cyan-500 transition-colors"><svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a></div></div>
+                    <div class="project-card group" style="transition-delay:500ms;"><img src="https://i.postimg.cc/Pqkf4tMq/py1.png" alt="Software Inventory Tracker" class="w-full h-full object-contain"><div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col items-center justify-center p-4"><h3 class="text-white text-xl font-bold text-center mb-4">Efficient Software Inventory Tracker for Windows</h3><a href="https://drive.google.com/file/d/10iXmxwrWh_BKxmMZbKiwtPf9qBfAJWbF/view" target="_blank" class="btn-neon p-3 bg-cyan-400 rounded-full hover:bg-cyan-500 transition-colors"><svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a></div></div>
+                    <div class="project-card group" style="transition-delay:600ms;"><img src="https://i.postimg.cc/sx0D97nF/py2.jpg" alt="Python Email Automation" class="w-full h-full object-contain"><div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col items-center justify-center p-4"><h3 class="text-white text-xl font-bold text-center mb-4">Python Email Automation with Secure Attachment Handling</h3><a href="https://drive.google.com/file/d/1NSSZMV0VK1_0pn_pey6r7o7yGEZck66p/view" target="_blank" class="btn-neon p-3 bg-cyan-400 rounded-full hover:bg-cyan-500 transition-colors"><svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a></div></div>
+                    <div class="project-card group" style="transition-delay:700ms;"><img src="https://i.postimg.cc/YqZCvNGY/py3.png" alt="Automated Network Monitoring" class="w-full h-full object-contain"><div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col items-center justify-center p-4"><h3 class="text-white text-xl font-bold text-center mb-4">Automated Network Monitoring and IP Extraction</h3><a href="https://drive.google.com/file/d/1PXKD-7kduM1j5R94lzLyk-eoK6xWd8pN/view" target="_blank" class="btn-neon p-3 bg-cyan-400 rounded-full hover:bg-cyan-500 transition-colors"><svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a></div></div>
+                    <div class="project-card group" style="transition-delay:800ms;"><img src="https://i.postimg.cc/5N6t9K0f/py4.jpg" alt="Weather Reports with Python and Telegram" class="w-full h-full object-contain"><div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col items-center justify-center p-4"><h3 class="text-white text-xl font-bold text-center mb-4">Instant Weather Reports with Python and Telegram</h3><a href="https://drive.google.com/file/d/1r9jIFd4nbG0RDKWtZshSggkrsCQSE2By/view" target="_blank" class="btn-neon p-3 bg-cyan-400 rounded-full hover:bg-cyan-500 transition-colors"><svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a></div></div>
+                </div>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8 text-sm">
-                <div class="tool-category"><h3 class="text-xl font-bold text-cyan-400 mb-4 border-b border-gray-700 pb-2">SIEM & DFIR</h3><ul class="space-y-2 text-gray-300"><li>Wazuh</li><li>Splunk</li><li>Autopsy</li><li>IRIS</li><li>Velociraptor</li><li>Eric Zimmerman's Tools</li></ul></div>
-                <div class="tool-category" style="transition-delay: 100ms;"><h3 class="text-xl font-bold text-cyan-400 mb-4 border-b border-gray-700 pb-2">Penetration Testing</h3><ul class="space-y-2 text-gray-300"><li>Metasploit</li><li>Nmap</li><li>Burp Suite</li><li>Nikto</li><li>OpenVAS</li><li>OWASP ZAP</li></ul></div>
-                <div class="tool-category" style="transition-delay: 200ms;"><h3 class="text-xl font-bold text-cyan-400 mb-4 border-b border-gray-700 pb-2">Network, IDS/IPS & Firewall</h3><ul class="space-y-2 text-gray-300"><li>Wireshark</li><li>Tcpdump</li><li>Suricata</li><li>Snort</li><li>Sysmon</li><li>pfSense / OPNsense</li></ul></div>
-                <div class="tool-category" style="transition-delay: 300ms;"><h3 class="text-xl font-bold text-cyan-400 mb-4 border-b border-gray-700 pb-2">Programming & SOAR</h3><ul class="space-y-2 text-gray-300"><li>Python</li><li>MySQL</li><li>Shuffle</li><li>TheHive (Cortex)</li></ul></div>
-                <div class="tool-category" style="transition-delay: 400ms;"><h3 class="text-xl font-bold text-cyan-400 mb-4 border-b border-gray-700 pb-2">OS, Virtualization & VPN</h3><ul class="space-y-2 text-gray-300"><li>Windows / Windows Server</li><li>Kali Linux / Ubuntu</li><li>VMware</li><li>VirtualBox</li><li>OpenVPN</li></ul></div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- ══════════════════════════════════════
+             CERTIFICATIONS
+        ══════════════════════════════════════ -->
+        <section id="certifications-section" class="py-24 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="section-title text-4xl sm:text-5xl font-bold text-white mb-4">Professional Training &amp; <span class="text-cyan-400">Certifications</span></h2>
+                    <div class="w-24 h-1 mx-auto rounded-full" style="background: linear-gradient(90deg, var(--cyan), #a855f7);"></div>
+                </div>
+                <div class="swiper-container relative overflow-hidden">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide"><div class="cert-card card-glow rounded-2xl h-48 flex flex-col justify-center items-center p-6 text-center group relative overflow-hidden"><div class="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div><h3 class="text-xl font-semibold text-cyan-400">Networking Essentials</h3><p class="text-white mt-2 text-sm">Cisco</p><div class="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center"><a href="https://www.credly.com/badges/ff4fc074-f7df-4a00-9d39-2252540e4ce4/linked_in_profile" target="_blank" class="btn-neon p-3 bg-cyan-400 rounded-full hover:bg-cyan-500"><svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a></div></div></div>
+                        <div class="swiper-slide"><div class="cert-card card-glow rounded-2xl h-48 flex flex-col justify-center items-center p-6 text-center group relative overflow-hidden"><div class="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div><h3 class="text-xl font-semibold text-cyan-400">Web Attack Investigated</h3><p class="text-white mt-2 text-sm">LetsDefend</p><div class="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center"><a href="https://app.letsdefend.io/my-rewards/detail/a29f0182-9b36-419a-b7f3-33c225fe37b6" target="_blank" class="btn-neon p-3 bg-cyan-400 rounded-full hover:bg-cyan-500"><svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a></div></div></div>
+                        <div class="swiper-slide"><div class="cert-card card-glow rounded-2xl h-48 flex flex-col justify-center items-center p-6 text-center group relative overflow-hidden"><div class="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div><h3 class="text-xl font-semibold text-cyan-400">(ISC)2 Candidate</h3><p class="text-white mt-2 text-sm">(ISC)2</p><div class="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center"><a href="https://www.credly.com/badges/042bf390-020f-400b-af34-4edf405e25a7/public_url" target="_blank" class="btn-neon p-3 bg-cyan-400 rounded-full hover:bg-cyan-500"><svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a></div></div></div>
+                        <div class="swiper-slide"><div class="cert-card card-glow rounded-2xl h-48 flex flex-col justify-center items-center p-6 text-center group relative overflow-hidden"><div class="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div><h3 class="text-xl font-semibold text-cyan-400">SIEM 101</h3><p class="text-white mt-2 text-sm">LetsDefend</p><div class="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center"><a href="https://app.letsdefend.io/my-rewards/detail/a9a88c18-b956-4b0a-b081-37f4b39ebb54" target="_blank" class="btn-neon p-3 bg-cyan-400 rounded-full hover:bg-cyan-500"><svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a></div></div></div>
+                        <div class="swiper-slide"><div class="cert-card card-glow rounded-2xl h-48 flex flex-col justify-center items-center p-6 text-center group relative overflow-hidden"><div class="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div><h3 class="text-xl font-semibold text-cyan-400">NDG Linux Essentials</h3><p class="text-white mt-2 text-sm">NDG</p><div class="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center"><a href="https://drive.google.com/file/d/15bFVj5UfHmIzL-bRMaUwCm_NY59Wuo-5/view" target="_blank" class="btn-neon p-3 bg-cyan-400 rounded-full hover:bg-cyan-500"><svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a></div></div></div>
+                        <div class="swiper-slide"><div class="cert-card card-glow rounded-2xl h-48 flex flex-col justify-center items-center p-6 text-center group relative overflow-hidden"><div class="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div><h3 class="text-xl font-semibold text-cyan-400">NSE 1, 2, 3</h3><p class="text-white mt-2 text-sm">Fortinet</p><div class="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center"><a href="https://postimg.cc/gallery/49HFV38" target="_blank" class="btn-neon p-3 bg-cyan-400 rounded-full hover:bg-cyan-500"><svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a></div></div></div>
+                        <div class="swiper-slide"><div class="cert-card card-glow rounded-2xl h-48 flex flex-col justify-center items-center p-6 text-center group relative overflow-hidden"><div class="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div><h3 class="text-xl font-semibold text-cyan-400">Open-source Intelligence</h3><p class="text-white mt-2 text-sm">Basel Institute on Governance</p><div class="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center"><a href="https://drive.google.com/file/d/1x8TY-wbpB0AjPoxOEKuhIa6U-e__iZAR/view" target="_blank" class="btn-neon p-3 bg-cyan-400 rounded-full hover:bg-cyan-500"><svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a></div></div></div>
+                        <div class="swiper-slide"><div class="cert-card card-glow rounded-2xl h-48 flex flex-col justify-center items-center p-6 text-center group relative overflow-hidden"><div class="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div><h3 class="text-xl font-semibold text-cyan-400">EDR – Foundation</h3><p class="text-white mt-2 text-sm">Qualys</p><div class="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center"><a href="https://drive.google.com/file/d/1YcgMkqhTkYnySao2IQl0giCFaCLCX3Tv/view" target="_blank" class="btn-neon p-3 bg-cyan-400 rounded-full hover:bg-cyan-500"><svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a></div></div></div>
+                        <div class="swiper-slide"><div class="cert-card card-glow rounded-2xl h-48 flex flex-col justify-center items-center p-6 text-center group relative overflow-hidden"><div class="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div><h3 class="text-xl font-semibold text-cyan-400">Cyber Threat Intelligence 101</h3><p class="text-white mt-2 text-sm">arcX</p><div class="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center"><a href="https://arcx.io/verify-certificate?id=e384cdd89bcf0ad6382f8065c54e82fa959b4f1f&k=4d569e348a6f48108808ac8507bd48d5" target="_blank" class="btn-neon p-3 bg-cyan-400 rounded-full hover:bg-cyan-500"><svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a></div></div></div>
+                        <div class="swiper-slide"><div class="cert-card card-glow rounded-2xl h-48 flex flex-col justify-center items-center p-6 text-center group relative overflow-hidden"><div class="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div><h3 class="text-xl font-semibold text-cyan-400">Blue Team Junior Analyst Pathway</h3><p class="text-white mt-2 text-sm">Security Blue Team</p><div class="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center"><a href="https://drive.google.com/file/d/1cKRJ_liL0DwiKOhAqvbdPbG13b_4TblB/view" target="_blank" class="btn-neon p-3 bg-cyan-400 rounded-full hover:bg-cyan-500"><svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a></div></div></div>
+                        <div class="swiper-slide"><div class="cert-card card-glow rounded-2xl h-48 flex flex-col justify-center items-center p-6 text-center group relative overflow-hidden"><div class="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div><h3 class="text-xl font-semibold text-cyan-400">Ethical Hacker</h3><p class="text-white mt-2 text-sm">Cisco</p><div class="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center"><a href="https://www.credly.com/earner/earned/badge/3ed1b3d7-ef6a-48b2-8a2f-0f6065b51978" target="_blank" class="btn-neon p-3 bg-cyan-400 rounded-full hover:bg-cyan-500"><svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a></div></div></div>
+                        <div class="swiper-slide"><div class="cert-card card-glow rounded-2xl h-48 flex flex-col justify-center items-center p-6 text-center group relative overflow-hidden"><div class="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div><h3 class="text-xl font-semibold text-cyan-400">Vulnerability Management</h3><p class="text-white mt-2 text-sm">Qualys</p><div class="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center"><a href="https://drive.google.com/file/d/1nf2ncpO2sq-uIGACs5BeIqvTl_mSnjgE/view" target="_blank" class="btn-neon p-3 bg-cyan-400 rounded-full hover:bg-cyan-500"><svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a></div></div></div>
+                    </div>
+                    <div class="swiper-pagination mt-4"></div>
+                </div>
             </div>
-            
-        </div>
-    </section>
+        </section>
 
+        <div class="section-divider"></div>
 
-    <footer class="bg-gray-900 bg-opacity-50 border-t border-gray-700 py-6 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center text-center sm:text-left">
-            <p class="text-gray-400 text-sm mb-4 sm:mb-0">
-                &copy; 2025 Rabiul Hasan. All Rights Reserved.
-            </p>
-            <div class="flex justify-center space-x-6">
-                <a href="https://x.com/rabiul_hasann" target="_blank" class="text-gray-400 hover:text-cyan-400 transition-colors duration-300"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg></a>
-                <a href="https://www.linkedin.com/in/rabiulislam32" target="_blank" class="text-gray-400 hover:text-cyan-400 transition-colors duration-300"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
-                <a href="https://github.com/rabiulhasann" target="_blank" class="text-gray-400 hover:text-cyan-400 transition-colors duration-300"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>
+        <!-- ══════════════════════════════════════
+             EXPERIENCE
+        ══════════════════════════════════════ -->
+        <section id="experience-section" class="py-24 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="section-title text-4xl sm:text-5xl font-bold text-white mb-4">Professional <span class="text-cyan-400">Experience</span></h2>
+                    <div class="w-24 h-1 mx-auto rounded-full" style="background: linear-gradient(90deg, var(--cyan), #a855f7);"></div>
+                </div>
+
+                <div class="relative">
+                    <!-- Timeline vertical line -->
+                    <div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-0.5 timeline-line -translate-x-1/2"></div>
+
+                    <!-- ── MEGHNACLOUD (NEW — LEFT) ── -->
+                    <div class="experience-card relative mb-16">
+                        <div class="md:grid md:grid-cols-2 md:gap-8 items-start">
+                            <!-- Left: Meta -->
+                            <div class="md:text-right pr-0 md:pr-12 mb-6 md:mb-0">
+                                <div class="card-glow rounded-2xl p-6">
+                                    <span class="badge-animated inline-block text-gray-900 text-xs font-bold px-3 py-1 rounded-full mb-4 uppercase tracking-widest">NOV 2025 — PRESENT</span>
+                                    <h3 class="text-2xl font-bold text-white mb-1">
+                                        <span class="animated-border text-cyan-400">MeghnaCloud</span>
+                                    </h3>
+                                    <p class="text-cyan-300 font-medium">Junior SOC Analyst</p>
+                                    <div class="mt-3 flex md:justify-end gap-2 flex-wrap">
+                                        <span class="text-xs bg-cyan-400/10 text-cyan-400 border border-cyan-400/20 px-2 py-1 rounded-full">Active</span>
+                                        <span class="text-xs bg-purple-400/10 text-purple-400 border border-purple-400/20 px-2 py-1 rounded-full">SOC</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Timeline dot -->
+                            <div class="hidden md:block absolute left-1/2 top-6 w-4 h-4 rounded-full bg-cyan-400 timeline-dot -translate-x-1/2"></div>
+                            <!-- Right: Details -->
+                            <div class="pl-0 md:pl-12">
+                                <div class="card-glow rounded-2xl p-6">
+                                    <h4 class="font-semibold text-white mb-4 text-base flex items-center gap-2">
+                                        <svg class="w-4 h-4 text-cyan-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H6zm1 2a1 1 0 000 2h6a1 1 0 100-2H7zm6 4a1 1 0 011 1v4a1 1 0 11-2 0V9a1 1 0 011-1z" clip-rule="evenodd"/></svg>
+                                        Key Responsibilities
+                                    </h4>
+                                    <ul class="space-y-2">
+                                        <li class="flex items-start gap-2 text-gray-300 text-sm"><svg class="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>Monitored and analyzed security logs to detect suspicious activity</li>
+                                        <li class="flex items-start gap-2 text-gray-300 text-sm"><svg class="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>Investigated and responded to security incidents and alerts</li>
+                                        <li class="flex items-start gap-2 text-gray-300 text-sm"><svg class="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>Collected and analyzed threat intelligence feeds</li>
+                                        <li class="flex items-start gap-2 text-gray-300 text-sm"><svg class="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>Installed, configured, and hardened security tools and systems</li>
+                                        <li class="flex items-start gap-2 text-gray-300 text-sm"><svg class="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>Managed OS, platform, and application patching</li>
+                                        <li class="flex items-start gap-2 text-gray-300 text-sm"><svg class="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>Monitored security events and responded to anomalies</li>
+                                        <li class="flex items-start gap-2 text-gray-300 text-sm"><svg class="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>Maintained and updated security software configurations</li>
+                                        <li class="flex items-start gap-2 text-gray-300 text-sm"><svg class="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>Conducted regular log reviews and generated security reports</li>
+                                        <li class="flex items-start gap-2 text-gray-300 text-sm"><svg class="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>Identified threat patterns and escalated critical incidents</li>
+                                        <li class="flex items-start gap-2 text-gray-300 text-sm"><svg class="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>Designed and implemented cybersecurity solutions</li>
+                                        <li class="flex items-start gap-2 text-gray-300 text-sm"><svg class="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>Reported on security posture, risks, and trends</li>
+                                        <li class="flex items-start gap-2 text-gray-300 text-sm"><svg class="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>Investigated alerts from IDS, firewalls, and other security tools</li>
+                                        <li class="flex items-start gap-2 text-gray-300 text-sm"><svg class="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>Delivered security presentations to stakeholders and management</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── POINTER IT (RIGHT) ── -->
+                    <div class="experience-card relative">
+                        <div class="md:grid md:grid-cols-2 md:gap-8 items-start">
+                            <!-- Left: Details -->
+                            <div class="order-2 md:order-1 pl-0 md:pr-12 mb-6 md:mb-0">
+                                <div class="card-glow rounded-2xl p-6">
+                                    <h4 class="font-semibold text-white mb-4 text-base flex items-center gap-2">
+                                        <svg class="w-4 h-4 text-cyan-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H6zm1 2a1 1 0 000 2h6a1 1 0 100-2H7zm6 4a1 1 0 011 1v4a1 1 0 11-2 0V9a1 1 0 011-1z" clip-rule="evenodd"/></svg>
+                                        Key Responsibilities
+                                    </h4>
+                                    <ul class="space-y-2">
+                                        <li class="flex items-start gap-2 text-gray-300 text-sm"><svg class="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>Collaborated with cross-functional teams to integrate security practices into digital marketing campaigns.</li>
+                                        <li class="flex items-start gap-2 text-gray-300 text-sm"><svg class="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>Provided training and guidance to staff on cybersecurity awareness and best practices.</li>
+                                        <li class="flex items-start gap-2 text-gray-300 text-sm"><svg class="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>Assisted in the development of cybersecurity policies and procedures to enhance organizational security posture.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- Timeline dot -->
+                            <div class="hidden md:block absolute left-1/2 top-6 w-4 h-4 rounded-full bg-purple-400 -translate-x-1/2" style="box-shadow: 0 0 0 4px rgba(168,85,247,0.2), 0 0 20px rgba(168,85,247,0.4);"></div>
+                            <!-- Right: Meta -->
+                            <div class="order-1 md:order-2 md:pl-12 mb-6 md:mb-0">
+                                <div class="card-glow rounded-2xl p-6">
+                                    <span class="inline-block text-gray-900 text-xs font-bold px-3 py-1 rounded-full mb-4 uppercase tracking-widest" style="background: linear-gradient(135deg, #a855f7, #ec4899);">JUNE 2023 — NOVEMBER 2025</span>
+                                    <h3 class="text-2xl font-bold text-white mb-1">
+                                        <a href="https://www.pointerit-ltd.com" target="_blank" class="animated-border hover:text-cyan-400 transition-colors duration-300">Pointer IT Limited</a>
+                                    </h3>
+                                    <p class="text-purple-300 font-medium">Digital Marketing &amp; Cybersecurity Practitioner</p>
+                                    <div class="mt-3 flex gap-2 flex-wrap">
+                                        <span class="text-xs bg-purple-400/10 text-purple-400 border border-purple-400/20 px-2 py-1 rounded-full">Closed</span>
+                                        <span class="text-xs bg-pink-400/10 text-pink-400 border border-pink-400/20 px-2 py-1 rounded-full">Marketing</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </footer>
+        </section>
 
-</div>
+        <div class="section-divider"></div>
 
-<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+        <!-- ══════════════════════════════════════
+             EXPERTISE
+        ══════════════════════════════════════ -->
+        <section id="expertise-section" class="py-24 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="section-title text-4xl sm:text-5xl font-bold text-white mb-4">Technical <span class="text-cyan-400">Expertise</span></h2>
+                    <div class="w-24 h-1 mx-auto rounded-full" style="background: linear-gradient(90deg, var(--cyan), #a855f7);"></div>
+                </div>
+                <div class="flex justify-center">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-16 text-gray-300 w-full max-w-3xl">
+                        <div class="expertise-col card-glow rounded-2xl p-6">
+                            <ul class="space-y-3">
+                                <li class="flex items-center gap-3"><span class="w-2 h-2 rounded-full bg-cyan-400 flex-shrink-0"></span>Junior SOC Analyst</li>
+                                <li class="flex items-center gap-3"><span class="w-2 h-2 rounded-full bg-cyan-400 flex-shrink-0"></span>Penetration Testing</li>
+                            </ul>
+                        </div>
+                        <div class="expertise-col card-glow rounded-2xl p-6" style="transition-delay:100ms;">
+                            <ul class="space-y-3">
+                                <li class="flex items-center gap-3"><span class="w-2 h-2 rounded-full bg-purple-400 flex-shrink-0"></span>Vulnerability Management</li>
+                                <li class="flex items-center gap-3"><span class="w-2 h-2 rounded-full bg-purple-400 flex-shrink-0"></span>Log Analysis</li>
+                            </ul>
+                        </div>
+                        <div class="expertise-col card-glow rounded-2xl p-6" style="transition-delay:200ms;">
+                            <ul class="space-y-3">
+                                <li class="flex items-center gap-3"><span class="w-2 h-2 rounded-full bg-pink-400 flex-shrink-0"></span>Python | Bash | Shell</li>
+                                <li class="flex items-center gap-3"><span class="w-2 h-2 rounded-full bg-pink-400 flex-shrink-0"></span>Networking</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-<script>
-// --- NAVIGATION MENU LOGIC ---
-        const navLinks = document.querySelectorAll('.nav-link');
-        const sections = document.querySelectorAll('section');
+        <div class="section-divider"></div>
 
-        // Smooth scroll for nav links
-        navLinks.forEach(link => {
-            link.addEventListener('click', e => {
-                e.preventDefault();
-                const targetId = link.getAttribute('href');
-                const targetSection = document.querySelector(targetId);
-                if (targetSection) {
-                    targetSection.scrollIntoView({ behavior: 'smooth' });
+        <!-- ══════════════════════════════════════
+             TOOLS
+        ══════════════════════════════════════ -->
+        <section id="tools-section" class="py-24 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="section-title text-4xl sm:text-5xl font-bold text-white mb-4">Tools &amp; <span class="text-cyan-400">Technologies</span></h2>
+                    <div class="w-24 h-1 mx-auto rounded-full" style="background: linear-gradient(90deg, var(--cyan), #a855f7);"></div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 text-sm">
+                    <div class="tool-category card-glow rounded-2xl p-6">
+                        <h3 class="text-lg font-bold text-cyan-400 mb-4 pb-2 border-b border-cyan-400/20">SIEM &amp; DFIR</h3>
+                        <ul class="space-y-2 text-gray-300">
+                            <li class="tool-item">Wazuh</li>
+                            <li class="tool-item">Splunk</li>
+                            <li class="tool-item">Autopsy</li>
+                            <li class="tool-item">IRIS</li>
+                            <li class="tool-item">Velociraptor</li>
+                            <li class="tool-item">Eric Zimmerman's Tools</li>
+                        </ul>
+                    </div>
+                    <div class="tool-category card-glow rounded-2xl p-6" style="transition-delay:100ms;">
+                        <h3 class="text-lg font-bold text-cyan-400 mb-4 pb-2 border-b border-cyan-400/20">Penetration Testing</h3>
+                        <ul class="space-y-2 text-gray-300">
+                            <li class="tool-item">Metasploit</li>
+                            <li class="tool-item">Nmap</li>
+                            <li class="tool-item">Burp Suite</li>
+                            <li class="tool-item">Nikto</li>
+                            <li class="tool-item">OpenVAS</li>
+                            <li class="tool-item">OWASP ZAP</li>
+                        </ul>
+                    </div>
+                    <div class="tool-category card-glow rounded-2xl p-6" style="transition-delay:200ms;">
+                        <h3 class="text-lg font-bold text-cyan-400 mb-4 pb-2 border-b border-cyan-400/20">Network &amp; IDS/IPS</h3>
+                        <ul class="space-y-2 text-gray-300">
+                            <li class="tool-item">Wireshark</li>
+                            <li class="tool-item">Tcpdump</li>
+                            <li class="tool-item">Suricata</li>
+                            <li class="tool-item">Snort</li>
+                            <li class="tool-item">Sysmon</li>
+                            <li class="tool-item">pfSense / OPNsense</li>
+                        </ul>
+                    </div>
+                    <div class="tool-category card-glow rounded-2xl p-6" style="transition-delay:300ms;">
+                        <h3 class="text-lg font-bold text-cyan-400 mb-4 pb-2 border-b border-cyan-400/20">Programming &amp; SOAR</h3>
+                        <ul class="space-y-2 text-gray-300">
+                            <li class="tool-item">Python</li>
+                            <li class="tool-item">MySQL</li>
+                            <li class="tool-item">Shuffle</li>
+                            <li class="tool-item">TheHive (Cortex)</li>
+                        </ul>
+                    </div>
+                    <div class="tool-category card-glow rounded-2xl p-6" style="transition-delay:400ms;">
+                        <h3 class="text-lg font-bold text-cyan-400 mb-4 pb-2 border-b border-cyan-400/20">OS &amp; Virtualization</h3>
+                        <ul class="space-y-2 text-gray-300">
+                            <li class="tool-item">Windows / Windows Server</li>
+                            <li class="tool-item">Kali Linux / Ubuntu</li>
+                            <li class="tool-item">VMware</li>
+                            <li class="tool-item">VirtualBox</li>
+                            <li class="tool-item">OpenVPN</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════════════
+             FOOTER
+        ══════════════════════════════════════ -->
+        <footer class="border-t py-8 px-4 sm:px-6 lg:px-8" style="background: rgba(6,13,26,0.8); border-color: rgba(6,182,212,0.1);">
+            <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+                <div class="text-center sm:text-left">
+                    <p class="text-gray-400 text-sm">&copy; 2025 <span class="text-cyan-400 font-semibold">Rabiul Hasan</span>. All Rights Reserved.</p>
+                    <p class="text-gray-600 text-xs mt-1">Cybersecurity Professional · SOC Analyst</p>
+                </div>
+                <div class="flex justify-center space-x-5">
+                    <a href="https://x.com/rabiul_hasann" target="_blank" class="text-gray-500 hover:text-cyan-400 transition-all duration-300 hover:scale-125 hover:drop-shadow-[0_0_8px_rgba(6,182,212,0.8)]"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg></a>
+                    <a href="https://www.linkedin.com/in/rabiulislam32" target="_blank" class="text-gray-500 hover:text-cyan-400 transition-all duration-300 hover:scale-125 hover:drop-shadow-[0_0_8px_rgba(6,182,212,0.8)]"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                    <a href="https://github.com/rabiulhasann" target="_blank" class="text-gray-500 hover:text-cyan-400 transition-all duration-300 hover:scale-125 hover:drop-shadow-[0_0_8px_rgba(6,182,212,0.8)]"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>
+                </div>
+            </div>
+        </footer>
+
+    </div><!-- /main-content -->
+
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+    // ══════════════════════════════════════════════════════
+    //  PARTICLE CANVAS
+    // ══════════════════════════════════════════════════════
+    (function() {
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let mouse = { x: null, y: null };
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resize();
+        window.addEventListener('resize', resize);
+        window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+
+        function Particle() {
+            this.reset();
+        }
+        Particle.prototype.reset = function() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.vx = (Math.random() - 0.5) * 0.4;
+            this.vy = (Math.random() - 0.5) * 0.4;
+            this.radius = Math.random() * 1.5 + 0.5;
+            this.alpha = Math.random() * 0.5 + 0.1;
+            this.color = Math.random() > 0.7 ? '#a855f7' : '#06b6d4';
+        };
+        Particle.prototype.update = function() {
+            this.x += this.vx;
+            this.y += this.vy;
+            if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+            if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+        };
+        Particle.prototype.draw = function() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+            ctx.fillStyle = this.color;
+            ctx.globalAlpha = this.alpha;
+            ctx.fill();
+            ctx.globalAlpha = 1;
+        };
+
+        const PARTICLE_COUNT = Math.min(80, Math.floor(window.innerWidth / 15));
+        for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new Particle());
+
+        function drawConnections() {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 120) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = '#06b6d4';
+                        ctx.globalAlpha = (1 - dist / 120) * 0.15;
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                        ctx.globalAlpha = 1;
+                    }
                 }
-            });
+                // Mouse connection
+                if (mouse.x) {
+                    const dx = particles[i].x - mouse.x;
+                    const dy = particles[i].y - mouse.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 160) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(mouse.x, mouse.y);
+                        ctx.strokeStyle = '#06b6d4';
+                        ctx.globalAlpha = (1 - dist / 160) * 0.3;
+                        ctx.lineWidth = 0.8;
+                        ctx.stroke();
+                        ctx.globalAlpha = 1;
+                    }
+                }
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            drawConnections();
+            requestAnimationFrame(animate);
+        }
+        animate();
+    })();
+
+    // ══════════════════════════════════════════════════════
+    //  CUSTOM CURSOR
+    // ══════════════════════════════════════════════════════
+    (function() {
+        const cursor = document.getElementById('custom-cursor');
+        const follower = document.getElementById('cursor-follower');
+        let fx = 0, fy = 0, cx = 0, cy = 0;
+
+        document.addEventListener('mousemove', e => {
+            cx = e.clientX; cy = e.clientY;
+            cursor.style.left = cx + 'px';
+            cursor.style.top = cy + 'px';
         });
 
-        // Highlight active nav link on scroll
-        const navObserver = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const id = entry.target.getAttribute('id');
-                    document.querySelector(`.nav-link.active`)?.classList.remove('active');
-                    document.querySelector(`.nav-link[href="#${id}"]`)?.classList.add('active');
-                }
-            });
-        }, { rootMargin: '-50% 0px -50% 0px' }); // Activates when section is in the middle of the screen
+        function animateCursor() {
+            fx += (cx - fx) * 0.12;
+            fy += (cy - fy) * 0.12;
+            follower.style.left = fx + 'px';
+            follower.style.top = fy + 'px';
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
 
-        sections.forEach(section => {
-            navObserver.observe(section);
-        });    
-    document.addEventListener("DOMContentLoaded", function() {
-        // --- PRELOADER ---
+        document.querySelectorAll('a, button, .skill-tag, .project-card').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.width = '20px';
+                cursor.style.height = '20px';
+                cursor.style.opacity = '0.6';
+                follower.style.width = '56px';
+                follower.style.height = '56px';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.style.width = '12px';
+                cursor.style.height = '12px';
+                cursor.style.opacity = '1';
+                follower.style.width = '36px';
+                follower.style.height = '36px';
+            });
+        });
+    })();
+
+    // ══════════════════════════════════════════════════════
+    //  SCROLL PROGRESS INDICATOR
+    // ══════════════════════════════════════════════════════
+    window.addEventListener('scroll', () => {
+        const scrollTop = document.documentElement.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const progress = (scrollTop / scrollHeight) * 100;
+        document.getElementById('scroll-indicator').style.width = progress + '%';
+    });
+
+    // ══════════════════════════════════════════════════════
+    //  MAIN INIT
+    // ══════════════════════════════════════════════════════
+    document.addEventListener('DOMContentLoaded', function () {
+
+        // ── PRELOADER ──
         const preloader = document.getElementById('preloader');
         const mainContent = document.getElementById('main-content');
-        window.onload = function() {
+        window.onload = function () {
             preloader.style.opacity = '0';
             mainContent.style.opacity = '1';
-            mainContent.style.transition = 'opacity 0.5s';
-            setTimeout(() => {
-                preloader.style.display = 'none';
-            }, 500);
+            mainContent.style.transition = 'opacity 0.6s';
+            setTimeout(() => { preloader.style.display = 'none'; }, 600);
+
+            // ── HERO ENTRANCE via Anime.js ──
+            anime.timeline({ easing: 'easeOutExpo' })
+                .add({ targets: '#hero-content .floating-animation', opacity: [0, 1], scale: [0.5, 1], duration: 800 })
+                .add({ targets: '#hero-title', opacity: [0, 1], translateY: [40, 0], duration: 700 }, '-=400')
+                .add({ targets: '.typewriter-container', opacity: [0, 1], translateY: [20, 0], duration: 500 }, '-=300')
+                .add({ targets: '#hero-stats .about-stat', opacity: [0, 1], translateY: [30, 0], delay: anime.stagger(120), duration: 600 }, '-=200')
+                .add({ targets: '#hero-content .btn-neon', opacity: [0, 1], translateY: [20, 0], delay: anime.stagger(100), duration: 500 }, '-=300')
+                .add({ targets: '#hero-content .flex.justify-center.space-x-6 a', opacity: [0, 1], scale: [0, 1], delay: anime.stagger(80), duration: 400 }, '-=200');
+
+            // ── COUNTER ANIMATION ──
+            document.querySelectorAll('.stat-number').forEach(el => {
+                const target = parseInt(el.dataset.target);
+                anime({ targets: el, innerHTML: [0, target], round: 1, duration: 2000, easing: 'easeOutExpo', delay: 800,
+                    update: function(anim) { el.innerHTML = Math.round(anim.animations[0].currentValue) + '+'; }
+                });
+            });
         };
-        
-        // --- TYPEWRITER ---
+
+        // ── TYPEWRITER ──
         const typewriterElement = document.querySelector('.typewriter');
         const textArray = ["Cybersecurity Enthusiast", "Bug Hunter", "SOC Analyst", "Penetration Testing", "Network Analysis", "Incident Response", "VAPT"];
         let textIndex = 0, charIndex = 0;
-        const type = () => { if (charIndex < textArray[textIndex].length) { typewriterElement.textContent += textArray[textIndex].charAt(charIndex++); setTimeout(type, 100); } else { setTimeout(deleteText, 1500); } }
-        const deleteText = () => { if (charIndex > 0) { typewriterElement.textContent = textArray[textIndex].substring(0, --charIndex); setTimeout(deleteText, 50); } else { textIndex = (textIndex + 1) % textArray.length; setTimeout(type, 600); } }
-        setTimeout(type, 1000);
-
-        // --- SMOOTH SCROLL ---
-        const setupSmoothScroll = (buttonId, sectionId) => {
-            const button = document.getElementById(buttonId);
-            if(button) {
-                button.addEventListener('click', e => {
-                    e.preventDefault();
-                    const section = document.getElementById(sectionId);
-                    if(section) section.scrollIntoView({ behavior: 'smooth' });
-                });
+        const type = () => {
+            if (charIndex < textArray[textIndex].length) {
+                typewriterElement.textContent += textArray[textIndex].charAt(charIndex++);
+                setTimeout(type, 100);
+            } else { setTimeout(deleteText, 1500); }
+        };
+        const deleteText = () => {
+            if (charIndex > 0) {
+                typewriterElement.textContent = textArray[textIndex].substring(0, --charIndex);
+                setTimeout(deleteText, 50);
+            } else {
+                textIndex = (textIndex + 1) % textArray.length;
+                setTimeout(type, 600);
             }
         };
-        setupSmoothScroll('scroll-down-button', 'about-section');
-        setupSmoothScroll('view-work-button', 'projects-section');
+        setTimeout(type, 1200);
 
-        // --- INTERSECTION OBSERVER FOR ANIMATIONS ---
-        const animatedElements = document.querySelectorAll('.project-card, .cert-card, .experience-card, .expertise-col, .tool-category, .section-title');
-        const observer = new IntersectionObserver(entries => {
+        // ── SMOOTH SCROLL BUTTONS ──
+        ['scroll-down-button', 'view-work-button'].forEach(id => {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.addEventListener('click', e => {
+                e.preventDefault();
+                const target = document.querySelector(el.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // ── NAV SMOOTH SCROLL ──
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', e => {
+                e.preventDefault();
+                const target = document.querySelector(link.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // ── ACTIVE NAV on scroll ──
+        const navObserver = new IntersectionObserver(entries => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                    // Animate title letters
-                    if (entry.target.classList.contains('section-title')) {
-                        const text = entry.target.textContent.trim();
-                        const splitText = text.split('').map(char => `<span style="display:inline-block;">${char === ' ' ? '&nbsp;' : char}</span>`).join('');
-                        entry.target.innerHTML = splitText;
-                        entry.target.querySelectorAll('span').forEach((span, i) => {
-                            setTimeout(() => {
-                                span.style.opacity = '1';
-                                span.style.transform = 'translateY(0) scale(1)';
-                            }, i * 50);
-                        });
-                        observer.unobserve(entry.target);
-                    }
+                    document.querySelector('.nav-link.active')?.classList.remove('active');
+                    document.querySelector(`.nav-link[href="#${entry.target.id}"]`)?.classList.add('active');
+                }
+            });
+        }, { rootMargin: '-50% 0px -50% 0px' });
+        document.querySelectorAll('section').forEach(s => navObserver.observe(s));
+
+        // ── INTERSECTION OBSERVER for scroll-in animations ──
+        const animObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                const el = entry.target;
+                el.classList.add('is-visible');
+
+                // Anime.js enhanced entrance for cards
+                if (el.classList.contains('project-card') || el.classList.contains('cert-card')) {
+                    anime({ targets: el, scale: [0.95, 1], duration: 500, easing: 'easeOutBack' });
+                }
+                if (el.classList.contains('tool-category')) {
+                    anime({ targets: el.querySelectorAll('.tool-item'), translateX: [-20, 0], opacity: [0, 1], delay: anime.stagger(60), duration: 400, easing: 'easeOutQuad' });
+                }
+                if (el.classList.contains('section-title')) {
+                    const text = el.textContent.trim();
+                    const parts = text.split('').map(c => `<span style="display:inline-block;">${c === ' ' ? '&nbsp;' : c}</span>`).join('');
+                    el.innerHTML = parts;
+                    anime({ targets: el.querySelectorAll('span'), opacity: [0, 1], translateY: [20, 0], scale: [0.9, 1], delay: anime.stagger(40), easing: 'easeOutElastic(1, .8)', duration: 600 });
+                    animObserver.unobserve(el);
                 }
             });
         }, { threshold: 0.1 });
-        animatedElements.forEach(el => observer.observe(el));
-        
-        // --- SWIPER INITIALIZATION ---
-        const certSwiper = new Swiper('.swiper-container', {
-            loop: true,
-            slidesPerView: 1,
-            spaceBetween: 30,
-            speed: 1000,
-            autoplay: { delay: 3000, disableOnInteraction: false },
-            pagination: { el: '.swiper-pagination', clickable: true },
-            breakpoints: { 640: { slidesPerView: 1 }, 768: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }
+
+        document.querySelectorAll('.project-card, .cert-card, .experience-card, .expertise-col, .tool-category, .section-title').forEach(el => animObserver.observe(el));
+
+        // ── RIPPLE on buttons ──
+        document.querySelectorAll('.btn-neon').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const r = document.createElement('span');
+                r.classList.add('ripple');
+                const rect = btn.getBoundingClientRect();
+                r.style.width = r.style.height = Math.max(rect.width, rect.height) + 'px';
+                r.style.left = (e.clientX - rect.left - r.offsetWidth / 2) + 'px';
+                r.style.top = (e.clientY - rect.top - r.offsetHeight / 2) + 'px';
+                btn.appendChild(r);
+                setTimeout(() => r.remove(), 700);
+            });
         });
 
-        const logoSwiper = new Swiper('.swiper-logo-container', {
+        // ── SWIPER ──
+        new Swiper('.swiper-container', {
             loop: true,
-            slidesPerView: 2,
-            spaceBetween: 30,
-            speed: 4000,
-            autoplay: { delay: 1, disableOnInteraction: false, pauseOnMouseEnter: true },
-            pagination: { el: '.swiper-logo-pagination', clickable: true },
-            breakpoints: { 640: { slidesPerView: 3 }, 768: { slidesPerView: 4 }, 1024: { slidesPerView: 5 } }
+            slidesPerView: 1,
+            spaceBetween: 24,
+            speed: 800,
+            autoplay: { delay: 3000, disableOnInteraction: false },
+            pagination: { el: '.swiper-pagination', clickable: true },
+            breakpoints: {
+                640:  { slidesPerView: 1 },
+                768:  { slidesPerView: 2 },
+                1024: { slidesPerView: 3 }
+            }
         });
-    });
-</script>
+
+    }); // end DOMContentLoaded
+    </script>
 </body>
 </html>
