@@ -1188,21 +1188,23 @@
                         </div>
                     </div>
 
-                    <!-- Stats row -->
-                    <div class="flex justify-center gap-4 sm:gap-8 mb-10" id="hero-stats">
-                        <div class="about-stat status-drift px-5 py-4 sm:px-8 sm:py-5">
-                            <div class="text-2xl sm:text-3xl font-black stat-number" data-target="2" style="color:var(--cyan)">0</div>
-                            <div class="mono text-xs text-gray-500 mt-1 tracking-widest">YRS EXP</div>
-                        </div>
-                        <div class="about-stat status-drift px-5 py-4 sm:px-8 sm:py-5">
-                            <div class="text-2xl sm:text-3xl font-black stat-number" data-target="9" style="color:var(--purple)">0</div>
-                            <div class="mono text-xs text-gray-500 mt-1 tracking-widest">PROJECTS</div>
-                        </div>
-                        <div class="about-stat status-drift px-5 py-4 sm:px-8 sm:py-5">
-                            <div class="text-2xl sm:text-3xl font-black stat-number" data-target="12" style="color:var(--pink)">0</div>
-                            <div class="mono text-xs text-gray-500 mt-1 tracking-widest">CERTS</div>
-                        </div>
-                    </div>
+
+			<!-- Stats row -->
+			<div class="flex justify-center gap-4 sm:gap-8 mb-10" id="hero-stats">
+			    <div class="about-stat status-drift px-5 py-4 sm:px-8 sm:py-5">
+				<div class="text-2xl sm:text-3xl font-black stat-number" data-target="2" data-suffix="+" style="color:var(--cyan)">0</div>
+				<div class="mono text-xs text-gray-500 mt-1 tracking-widest">YRS EXP</div>
+			    </div>
+			    <div class="about-stat status-drift px-5 py-4 sm:px-8 sm:py-5">
+				<div class="text-2xl sm:text-3xl font-black stat-number" data-target="9" data-suffix="+" style="color:var(--purple)">0</div>
+				<div class="mono text-xs text-gray-500 mt-1 tracking-widest">PROJECTS</div>
+			    </div>
+			    <div class="about-stat status-drift px-5 py-4 sm:px-8 sm:py-5">
+				<div class="text-2xl sm:text-3xl font-black stat-number" data-target="12" data-suffix="+" style="color:var(--pink)">0</div>
+				<div class="mono text-xs text-gray-500 mt-1 tracking-widest">CERTS</div>
+			    </div>
+			</div>
+
 
                     <!-- CTA Buttons -->
                     <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
@@ -1211,7 +1213,7 @@
                            style="box-shadow: 0 0 30px rgba(0,255,229,0.35);">
                             View My Work
                         </a>
-                        <a href="https://drive.google.com/file/d/1jyPfzS0lwTpPeUhpGqC4Khx71FyDiZ9e/view?usp=sharing" target="_blank"
+                        <a href="https://drive.google.com/file/d/1T8deP1xUOqYUfwuXnGSGU5sAO-vJMHlj/view?usp=sharing" target="_blank"
                            class="btn-neon btn-outline py-4 px-10 rounded-full inline-block">
                             Download CV
                         </a>
@@ -2020,12 +2022,13 @@
                 if (entry.isIntersecting) {
                     const el = entry.target;
                     const target = parseInt(el.getAttribute('data-target'));
+                    const suffix = el.getAttribute('data-suffix') || '';
                     let scrambleCount = 0;
                     const maxScrambles = 20;
                     const interval = setInterval(() => {
                         scrambleCount++;
                         if (scrambleCount < maxScrambles) {
-                            el.textContent = Math.floor(Math.random() * (target * 3));
+                            el.textContent = Math.floor(Math.random() * (target * 3)) + suffix;
                         } else {
                             clearInterval(interval);
                             // Final count up
@@ -2036,7 +2039,7 @@
                                 easing: 'easeOutExpo',
                                 round: 1,
                                 update: function(a) {
-                                    el.textContent = a.animations[0].currentValue;
+                                    el.textContent = Math.floor(a.animations[0].currentValue) + suffix;
                                 }
                             });
                         }
