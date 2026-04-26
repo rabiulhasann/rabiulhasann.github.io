@@ -2123,6 +2123,107 @@
         width: 180px;
       }
     }
+
+    /* ═══ PDF VIEWER WINDOW ═══ */
+    .pdf-viewer-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      background: var(--title-bar);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      font-family: var(--ui-font);
+      font-size: 12px;
+    }
+
+    .pdf-viewer-toolbar .pdf-title {
+      flex: 1;
+      font-weight: 600;
+      color: var(--text);
+      font-size: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .pdf-toolbar-btn {
+      padding: 4px 10px;
+      border-radius: 5px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text);
+      font-size: 11px;
+      font-family: var(--ui-font);
+      cursor: pointer;
+      transition: all 0.15s;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+
+    .pdf-toolbar-btn:hover {
+      background: var(--accent);
+      color: #000;
+      border-color: var(--accent);
+    }
+
+    .pdf-viewer-frame-wrap {
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+      background: #1a1a1a;
+    }
+
+    .pdf-viewer-frame-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    .pdf-loading-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: var(--window-bg);
+      color: var(--text-dim);
+      font-family: var(--font);
+      font-size: 13px;
+      gap: 16px;
+      transition: opacity 0.4s;
+      pointer-events: none;
+    }
+
+    .pdf-loading-overlay.hidden {
+      opacity: 0;
+    }
+
+    .pdf-spinner {
+      width: 32px;
+      height: 32px;
+      border: 2px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .pdf-viewer-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
   </style>
 </head>
 
@@ -2164,7 +2265,7 @@
     </div>
     <div class="context-divider"></div>
     <div class="context-item"
-      onclick="window.open('https://drive.google.com/file/d/1T8deP1xUOqYUfwuXnGSGU5sAO-vJMHlj/view?usp=sharing','_blank'); hideContextMenu()">
+      onclick="openPdfViewer('https://drive.google.com/file/d/1T8deP1xUOqYUfwuXnGSGU5sAO-vJMHlj/preview','Resume — Rabiul Hasan.pdf','https://drive.google.com/file/d/1T8deP1xUOqYUfwuXnGSGU5sAO-vJMHlj/view?usp=sharing'); hideContextMenu()">
       <span class="icon">📄</span>View Resume
     </div>
     <div class="context-item" onclick="location.reload(); hideContextMenu()"><span class="icon">🔄</span>Refresh</div>
@@ -2235,7 +2336,7 @@
         <span class="menu-item" onclick="toggleDropdown('file-menu')" style="font-weight:400;opacity:0.7">File</span>
         <div class="dropdown-menu">
           <div class="dropdown-item"
-            onclick="window.open('https://drive.google.com/file/d/1T8deP1xUOqYUfwuXnGSGU5sAO-vJMHlj/view?usp=sharing','_blank'); closeDropdowns()">
+            onclick="openPdfViewer('https://drive.google.com/file/d/1T8deP1xUOqYUfwuXnGSGU5sAO-vJMHlj/preview','Resume — Rabiul Hasan.pdf','https://drive.google.com/file/d/1T8deP1xUOqYUfwuXnGSGU5sAO-vJMHlj/view?usp=sharing'); closeDropdowns()">
             Open Resume <span class="shortcut">⌘O</span></div>
           <div class="dropdown-item" onclick="toggleWindow('certs'); closeDropdowns()">Certifications <span
               class="shortcut">⌘C</span></div>
@@ -2329,7 +2430,7 @@
     </div>
 
     <div class="desktop-icon" style="top:290px;right:24px"
-      ondblclick="window.open('https://drive.google.com/file/d/1T8deP1xUOqYUfwuXnGSGU5sAO-vJMHlj/view?usp=sharing','_blank')">
+      ondblclick="openPdfViewer('https://drive.google.com/file/d/1T8deP1xUOqYUfwuXnGSGU5sAO-vJMHlj/preview','Resume — Rabiul Hasan.pdf','https://drive.google.com/file/d/1T8deP1xUOqYUfwuXnGSGU5sAO-vJMHlj/view?usp=sharing')">
       <div class="di-icon">
         <svg class="icon-svg" viewBox="0 0 24 24">
           <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
@@ -2448,7 +2549,7 @@
                 <div class="drawer-filename" id="drawer-name"></div>
                 <div class="drawer-desc" id="drawer-desc"></div>
                 <div class="drawer-tags" id="drawer-tags"></div>
-                <a href="#" id="drawer-link" class="drawer-open-btn" target="_blank">Open report →</a>
+                <button id="drawer-link" class="drawer-open-btn" onclick="openCurrentDrawerPdf()">Open report →</button>
               </div>
             </div>
           </div>
@@ -2749,6 +2850,38 @@
       </div>
     </div>
 
+    <!-- PDF VIEWER WINDOW -->
+    <div class="window hidden" id="win-pdfviewer" style="width:780px;height:600px;top:60px;left:120px">
+      <div class="title-bar" data-win="pdfviewer">
+        <div class="traffic-lights">
+          <div class="tl tl-close" onclick="closeWindow('pdfviewer')"></div>
+          <div class="tl tl-minimize" onclick="minimizeWindow('pdfviewer')"></div>
+          <div class="tl tl-maximize" onclick="maximizeWindow('pdfviewer')"></div>
+        </div>
+        <span class="title-text" id="pdfviewer-title">PDF Viewer</span>
+      </div>
+      <div class="pdf-viewer-toolbar">
+        <span class="pdf-title" id="pdfviewer-filename">Loading...</span>
+        <a id="pdfviewer-extlink" href="#" target="_blank" class="pdf-toolbar-btn" title="Open in new tab">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Open in tab
+        </a>
+        <a id="pdfviewer-dllink" href="#" download class="pdf-toolbar-btn" title="Download">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download
+        </a>
+      </div>
+      <div class="pdf-viewer-body">
+        <div class="pdf-viewer-frame-wrap">
+          <div class="pdf-loading-overlay" id="pdf-loading">
+            <div class="pdf-spinner"></div>
+            <span>Loading document...</span>
+          </div>
+          <iframe id="pdfviewer-iframe" src="" allow="fullscreen" onload="document.getElementById('pdf-loading').classList.add('hidden')"></iframe>
+        </div>
+      </div>
+    </div>
+
     <!-- EXPERIENCE WINDOW (Timeline layout) -->
     <div class="window hidden" id="win-experience" style="width:560px;height:500px;top:70px;left:200px">
       <div class="title-bar" data-win="experience">
@@ -2872,8 +3005,8 @@
     </div>
     <div class="dock-sep"></div>
     <div class="dock-item"
-      onclick="window.open('https://drive.google.com/file/d/1T8deP1xUOqYUfwuXnGSGU5sAO-vJMHlj/view?usp=sharing','_blank')">
-      <span class="tooltip">Resume</span>
+      onclick="openPdfViewer('https://drive.google.com/file/d/1T8deP1xUOqYUfwuXnGSGU5sAO-vJMHlj/preview','Resume — Rabiul Hasan.pdf','https://drive.google.com/file/d/1T8deP1xUOqYUfwuXnGSGU5sAO-vJMHlj/view?usp=sharing')">
+      <span class="tooltip">Resume PDF</span>
       <svg class="icon-svg" viewBox="0 0 24 24">
         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
         <polyline points="14 2 14 8 20 8" />
@@ -3828,7 +3961,8 @@
       document.getElementById('drawer-img').src = el.dataset.img;
       document.getElementById('drawer-name').textContent = el.dataset.name;
       document.getElementById('drawer-desc').textContent = el.dataset.desc;
-      document.getElementById('drawer-link').href = el.dataset.url;
+      document.getElementById('drawer-link').setAttribute('data-pdf-url', el.dataset.url);
+      document.getElementById('drawer-link').setAttribute('data-pdf-name', el.dataset.name);
       const tagsEl = document.getElementById('drawer-tags');
       tagsEl.innerHTML = '';
       el.dataset.tags.split(',').forEach(tag => {
@@ -4040,11 +4174,11 @@ Type <span class="t-cyan">open &lt;project&gt;</span> to view project details`,
 <span class="t-cyan">Twitter:</span>   x.com/rabiul_hasann
 <span class="t-cyan">Resume:</span>    Available in dock`,
 
-      neofetch: () => `<span class="t-green">       ,.        </span>  <span class="t-red">rabiul</span><span class="t-dim">@</span><span class="t-green">mac</span>
+      neofetch: () => `<span class="t-green">       ,.        </span>  <span class="t-red">rabiul</span><span class="t-dim">@</span><span class="t-green">kali</span>
 <span class="t-green">      /####\\       </span>  <span class="t-red">──────────────────</span>
-<span class="t-green">     /######\\      </span>  <span class="t-red">OS</span>: macOS Tahoe (version 26.4.1)
+<span class="t-green">     /######\\      </span>  <span class="t-red">OS</span>: Kali GNU/Linux 2025.1
 <span class="t-green">    /########\\     </span>  <span class="t-red">Host</span>: CyberSec Workstation
-<span class="t-green">   /##########\\    </span>  <span class="t-red">Kernel</span>: XNU
+<span class="t-green">   /##########\\    </span>  <span class="t-red">Kernel</span>: 6.6.15-amd64
 <span class="t-green">  /####/  \\####\\   </span>  <span class="t-red">Uptime</span>: 127 days, 14 hrs
 <span class="t-green"> /####/    \\####\\  </span>  <span class="t-red">Shell</span>: zsh 5.9
 <span class="t-green">/####/      \\####\\ </span>  <span class="t-red">Role</span>: SOC Analyst @ MeghnaCloud
@@ -4231,6 +4365,58 @@ Host is up (<span class="t-green">0.0012s latency</span>).
       }
     });
 
+
+    // ═══ PDF VIEWER ═══
+    function openPdfViewer(previewUrl, filename, externalUrl) {
+      const win = document.getElementById('win-pdfviewer');
+      const iframe = document.getElementById('pdfviewer-iframe');
+      const titleEl = document.getElementById('pdfviewer-title');
+      const filenameEl = document.getElementById('pdfviewer-filename');
+      const extLink = document.getElementById('pdfviewer-extlink');
+      const dlLink = document.getElementById('pdfviewer-dllink');
+      const loading = document.getElementById('pdf-loading');
+
+      // Reset loading state
+      loading.classList.remove('hidden');
+      iframe.src = '';
+
+      titleEl.textContent = filename;
+      filenameEl.textContent = filename;
+      extLink.href = externalUrl || previewUrl;
+      dlLink.href = externalUrl || previewUrl;
+
+      // Set iframe src after a brief tick so loading shows
+      setTimeout(() => { iframe.src = previewUrl; }, 80);
+
+      // Position window nicely
+      const vw = window.innerWidth, vh = window.innerHeight;
+      const ww = Math.min(vw - 60, 820);
+      const wh = Math.min(vh - 120, 640);
+      win.style.width = ww + 'px';
+      win.style.height = wh + 'px';
+      win.style.left = Math.max(20, (vw - ww) / 2) + 'px';
+      win.style.top = Math.max(40, (vh - wh) / 2 - 20) + 'px';
+
+      if (win.classList.contains('hidden')) {
+        win.classList.remove('hidden');
+      }
+      bringToFront('pdfviewer');
+    }
+
+    function openCurrentDrawerPdf() {
+      const btn = document.getElementById('drawer-link');
+      const url = btn.getAttribute('data-pdf-url');
+      const name = btn.getAttribute('data-pdf-name') || 'Project Report';
+      if (!url) return;
+      // Convert Google Drive view URL to preview/embed URL
+      let previewUrl = url;
+      const driveMatch = url.match(/\/file\/d\/([^/]+)\//);
+      if (driveMatch) {
+        previewUrl = 'https://drive.google.com/file/d/' + driveMatch[1] + '/preview';
+      }
+      openPdfViewer(previewUrl, name + ' — Report.pdf', url);
+    }
+
     // ═══ INIT ═══
     const savedTheme = localStorage.getItem('portfolio-theme') || 'midnight';
     setTheme(savedTheme);
@@ -4339,7 +4525,7 @@ Host is up (<span class="t-green">0.0012s latency</span>).
       <div class="mob-nav-btn" onclick="mobOpen('certs')"><span class="mob-icon">🏆</span>Certs</div>
       <div class="mob-nav-btn" onclick="mobOpen('activitylog')"><span class="mob-icon">📋</span>Log</div>
       <div class="mob-nav-btn" onclick="mobOpen('terminal')"><span class="mob-icon">💻</span>Terminal</div>
-      <div class="mob-nav-btn" onclick="window.open('https://drive.google.com/file/d/1T8deP1xUOqYUfwuXnGSGU5sAO-vJMHlj/view?usp=sharing','_blank'); closeMobileDrawer()"><span class="mob-icon">📄</span>Resume</div>
+      <div class="mob-nav-btn" onclick="openPdfViewer('https://drive.google.com/file/d/1T8deP1xUOqYUfwuXnGSGU5sAO-vJMHlj/preview','Resume — Rabiul Hasan.pdf','https://drive.google.com/file/d/1T8deP1xUOqYUfwuXnGSGU5sAO-vJMHlj/view?usp=sharing'); closeMobileDrawer()"><span class="mob-icon">📄</span>Resume</div>
       <div class="mob-nav-btn" onclick="window.open('https://www.linkedin.com/in/rabiulislam32','_blank'); closeMobileDrawer()"><span class="mob-icon">🔗</span>LinkedIn</div>
     </div>
 
