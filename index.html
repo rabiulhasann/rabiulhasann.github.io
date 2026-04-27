@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 
 <head>
   <meta charset="UTF-8">
@@ -14,104 +14,83 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      touch-action: manipulation;
     }
 
     /* ═══ THEME VARIABLES ═══ */
     :root {
-      --title-bar: rgba(5, 5, 5, 0.45);
-      --window-bg: rgba(10, 10, 10, 0.22);
-      --sidebar-bg: rgba(8, 8, 8, 0.30);
-      --text: #00ff41;
-      --text-dim: #008f11;
-      --accent: #00ff41;
-      --red: #ff0040;
-      --yellow: #ffcc00;
-      --green: #00ff41;
-      --cyan: #00ffff;
-      --magenta: #ff00ff;
-      --border: rgba(0, 255, 65, 0.2);
-      --dock-bg: rgba(10, 10, 10, 0.85);
-      --desktop-bg: #000;
-      --font: 'SF Mono', 'JetBrains Mono', 'Courier New', monospace;
+      --title-bar: rgba(236, 236, 236, 0.85);
+      --window-bg: rgba(255, 255, 255, 0.82);
+      --sidebar-bg: rgba(240, 240, 240, 0.6);
+      --toolbar-bg: rgba(236, 236, 236, 0.85);
+      --text: #1d1d1f;
+      --text-dim: #86868b;
+      --accent: #9333ea;
+      --red: #ff5f57;
+      --yellow: #febc2e;
+      --green: #28c840;
+      --cyan: #c084fc;
+      --magenta: #af52de;
+      --border: rgba(0, 0, 0, 0.15);
+      --dock-bg: rgba(255, 255, 255, 0.28);
+      --desktop-bg: #1a1a1a;
+      --font: -apple-system, 'SF Pro Display', BlinkMacSystemFont, sans-serif;
       --ui-font: -apple-system, 'SF Pro Display', sans-serif;
-      --menu-bg: rgba(0, 0, 0, 0.9);
-      --icon-color: #00ff41;
+      --menu-bg: rgba(248, 248, 248, 0.92);
+      --icon-color: #9333ea;
+      --menu-bar-bg: rgba(255, 255, 255, 0.72);
+      --notification-bg: rgba(248, 248, 248, 0.94);
+    }
+
+    [data-theme="dark"] {
+      --title-bar: rgba(50, 50, 50, 0.85);
+      --window-bg: rgba(40, 40, 40, 0.82);
+      --sidebar-bg: rgba(50, 50, 50, 0.6);
+      --toolbar-bg: rgba(50, 50, 50, 0.85);
+      --text: #f5f5f7;
+      --text-dim: #98989f;
+      --accent: #8b5cf6;
+      --red: #ff5f57;
+      --yellow: #febc2e;
+      --green: #28c840;
+      --cyan: #d8b4fe;
+      --magenta: #bf5af2;
+      --border: rgba(255, 255, 255, 0.15);
+      --dock-bg: rgba(255, 255, 255, 0.2);
+      --desktop-bg: #000;
+      --menu-bg: rgba(40, 40, 40, 0.92);
+      --icon-color: #8b5cf6;
+      --menu-bar-bg: rgba(40, 40, 40, 0.72);
+      --notification-bg: rgba(40, 40, 40, 0.94);
     }
 
     [data-theme="light"] {
-      --title-bar: rgba(232, 232, 232, 0.50);
-      --window-bg: rgba(255, 255, 255, 0.28);
-      --sidebar-bg: rgba(245, 245, 245, 0.35);
-      --text: #1a1a1a;
-      --text-dim: #666666;
-      --accent: #007aff;
-      --red: #ff3b30;
-      --yellow: #ffcc00;
-      --green: #34c759;
-      --cyan: #00c7be;
+      --title-bar: rgba(236, 236, 236, 0.85);
+      --window-bg: rgba(255, 255, 255, 0.82);
+      --sidebar-bg: rgba(240, 240, 240, 0.6);
+      --toolbar-bg: rgba(236, 236, 236, 0.85);
+      --text: #1d1d1f;
+      --text-dim: #86868b;
+      --accent: #9333ea;
+      --red: #ff5f57;
+      --yellow: #febc2e;
+      --green: #28c840;
+      --cyan: #c084fc;
       --magenta: #af52de;
-      --border: rgba(0, 0, 0, 0.1);
-      --dock-bg: rgba(255, 255, 255, 0.85);
-      --desktop-bg: #f5f5f5;
-      --menu-bg: rgba(255, 255, 255, 0.9);
-      --icon-color: #007aff;
-    }
-
-    [data-theme="ocean"] {
-      --title-bar: rgba(10, 22, 40, 0.45);
-      --window-bg: rgba(13, 27, 42, 0.22);
-      --sidebar-bg: rgba(27, 38, 59, 0.30);
-      --text: #00d4ff;
-      --text-dim: #415a77;
-      --accent: #00d4ff;
-      --red: #ff6b6b;
-      --yellow: #ffd93d;
-      --green: #6bcb77;
-      --cyan: #00d4ff;
-      --magenta: #ff6ac1;
-      --border: rgba(0, 212, 255, 0.2);
-      --dock-bg: rgba(10, 22, 40, 0.85);
-      --desktop-bg: #0a1628;
-      --menu-bg: rgba(10, 22, 40, 0.9);
-      --icon-color: #00d4ff;
-    }
-
-    [data-theme="sunset"] {
-      --title-bar: rgba(26, 10, 26, 0.45);
-      --window-bg: rgba(29, 13, 29, 0.22);
-      --sidebar-bg: rgba(45, 27, 45, 0.30);
-      --text: #ff6b9d;
-      --text-dim: #8b4a6b;
-      --accent: #ff6b9d;
-      --red: #ff4757;
-      --yellow: #ffa502;
-      --green: #7bed9f;
-      --cyan: #70a1ff;
-      --magenta: #ff6b9d;
-      --border: rgba(255, 107, 157, 0.2);
-      --dock-bg: rgba(26, 10, 26, 0.85);
-      --desktop-bg: #1a0a1a;
-      --menu-bg: rgba(26, 10, 26, 0.9);
-      --icon-color: #ff6b9d;
-    }
-
-    [data-theme="midnight"] {
-      --title-bar: rgba(13, 13, 26, 0.45);
-      --window-bg: rgba(15, 15, 35, 0.22);
-      --sidebar-bg: rgba(26, 26, 46, 0.30);
-      --text: #a78bfa;
-      --text-dim: #6366f1;
-      --accent: #a78bfa;
-      --red: #f43f5e;
-      --yellow: #fbbf24;
-      --green: #34d399;
-      --cyan: #22d3ee;
-      --magenta: #e879f9;
-      --border: rgba(167, 139, 250, 0.2);
-      --dock-bg: rgba(13, 13, 26, 0.85);
-      --desktop-bg: #0d0d1a;
-      --menu-bg: rgba(13, 13, 26, 0.9);
-      --icon-color: #a78bfa;
+      --border: rgba(0, 0, 0, 0.15);
+      --dock-bg: rgba(255, 255, 255, 0.28);
+      --desktop-bg: #f5f5f7;
+      --menu-bg: rgba(248, 248, 248, 0.92);
+      --icon-color: #9333ea;
+      --menu-bar-bg: rgba(255, 255, 255, 0.72);
+      --notification-bg: rgba(248, 248, 248, 0.94);
     }
 
     html,
@@ -123,73 +102,10 @@
       color: var(--text);
       user-select: none;
       -webkit-user-select: none;
-      background: var(--desktop-bg);
-      cursor: none;
+      background: transparent;
     }
 
-    /* ═══ CUSTOM CURSOR ═══ */
-    #cursor-dot {
-      position: fixed;
-      width: 8px;
-      height: 8px;
-      background: var(--accent);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 999999;
-      transform: translate(-50%, -50%);
-      transition: background 0.2s, transform 0.1s;
-      box-shadow: 0 0 8px var(--accent), 0 0 16px var(--accent);
-      mix-blend-mode: screen;
-    }
-    #cursor-ring {
-      position: fixed;
-      width: 36px;
-      height: 36px;
-      border: 1.5px solid var(--accent);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 999998;
-      transform: translate(-50%, -50%);
-      transition: width 0.2s, height 0.2s, border-color 0.2s, opacity 0.2s;
-      box-shadow: 0 0 10px var(--accent), inset 0 0 6px rgba(0,255,65,0.08);
-      opacity: 0.7;
-    }
-    #cursor-ring::before,
-    #cursor-ring::after {
-      content: '';
-      position: absolute;
-      background: var(--accent);
-      opacity: 0.6;
-    }
-    #cursor-ring::before {
-      width: 1px;
-      height: 8px;
-      left: 50%;
-      top: -10px;
-      transform: translateX(-50%);
-    }
-    #cursor-ring::after {
-      width: 8px;
-      height: 1px;
-      top: 50%;
-      left: -10px;
-      transform: translateY(-50%);
-    }
-    body.cursor-hover #cursor-ring {
-      width: 52px;
-      height: 52px;
-      opacity: 1;
-      border-color: var(--accent);
-    }
-    body.cursor-hover #cursor-dot {
-      transform: translate(-50%, -50%) scale(0.5);
-    }
-    body.cursor-click #cursor-dot {
-      transform: translate(-50%, -50%) scale(2);
-      opacity: 0.5;
-    }
-
-    /* ═══ BACKGROUND CANVASES ═══ */
+    /* ═══ DESKTOP ═══ */
     #bg-canvas {
       position: fixed;
       top: 0;
@@ -197,6 +113,7 @@
       width: 100%;
       height: 100%;
       z-index: 0;
+      pointer-events: none;
     }
 
     #matrix-canvas {
@@ -249,32 +166,34 @@
       right: 0;
       height: 28px;
       z-index: 10000;
-      background: var(--menu-bg);
-      backdrop-filter: blur(30px) saturate(1.8);
+      background: transparent;
       display: flex;
       align-items: center;
       padding: 0 12px;
       font-size: 13px;
-      font-weight: 500;
-      border-bottom: 1px solid var(--border);
-      font-family: var(--ui-font);
-      box-shadow: 0 0 20px var(--border);
+      font-weight: 600;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
     #menubar .apple {
       font-size: 16px;
       margin-right: 16px;
-      opacity: 0.9;
-      color: var(--icon-color);
+      opacity: 1;
+      color: #fff;
       cursor: pointer;
+      font-weight: 600;
+    }
+
+    #menubar .apple svg {
+      fill: #fff;
     }
 
     #menubar .menu-item {
       margin-right: 16px;
-      opacity: 0.85;
+      opacity: 1;
       cursor: pointer;
       font-weight: 600;
-      color: var(--text);
+      color: #fff;
       transition: opacity 0.2s;
     }
 
@@ -285,28 +204,48 @@
     #menubar .menu-right {
       margin-left: auto;
       display: flex;
-      gap: 14px;
-      font-size: 12px;
-      opacity: 0.7;
-      font-weight: 400;
-      color: var(--text-dim);
+      gap: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
       align-items: center;
+    }
+
+    #menubar .menu-right svg {
+      cursor: pointer;
+      transition: opacity 0.2s;
+      stroke-width: 2.5;
+    }
+
+    #menubar .menu-right svg:hover {
+      opacity: 1;
+    }
+
+    #menubar .menu-right img {
+      cursor: pointer;
+      transition: opacity 0.2s;
+      border: 1.5px solid rgba(255,255,255,0.6);
+    }
+
+    #menubar .menu-right img:hover {
+      opacity: 0.85;
     }
 
     #menubar .theme-btn {
       cursor: pointer;
-      padding: 2px 8px;
-      border-radius: 4px;
-      border: 1px solid var(--border);
+      padding: 3px 10px;
+      border-radius: 5px;
+      border: 1.5px solid rgba(255, 255, 255, 0.5);
       background: transparent;
-      color: var(--text);
-      font-size: 11px;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
       transition: all 0.2s;
     }
 
     #menubar .theme-btn:hover {
-      background: var(--accent);
-      color: #000;
+      background: rgba(255, 255, 255, 0.25);
+      color: #fff;
     }
 
     /* ═══ DROPDOWN MENU ═══ */
@@ -319,14 +258,15 @@
       top: 100%;
       left: 0;
       background: var(--menu-bg);
-      backdrop-filter: blur(20px);
-      border: 1px solid var(--border);
-      border-radius: 6px;
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border: 0.5px solid var(--border);
+      border-radius: 12px;
       padding: 4px 0;
       min-width: 180px;
       display: none;
       z-index: 10001;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
     }
 
     .dropdown.active .dropdown-menu {
@@ -341,12 +281,12 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      transition: background 0.15s;
+      transition: all 0.15s;
     }
 
     .dropdown-item:hover {
       background: var(--accent);
-      color: #000;
+      color: #fff;
     }
 
     .dropdown-item .shortcut {
@@ -364,15 +304,16 @@
     /* ═══ CONTEXT MENU ═══ */
     #context-menu {
       position: fixed;
-      background: var(--menu-bg);
-      backdrop-filter: blur(20px);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 6px 0;
-      min-width: 200px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(40px) saturate(180%);
+      -webkit-backdrop-filter: blur(40px) saturate(180%);
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      border-radius: 10px;
+      padding: 5px 0;
+      min-width: 240px;
       z-index: 10002;
       display: none;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(0, 0, 0, 0.1);
     }
 
     #context-menu.active {
@@ -383,54 +324,121 @@
       padding: 8px 16px;
       cursor: pointer;
       font-size: 13px;
-      color: var(--text);
+      color: #1d1d1f;
       display: flex;
       align-items: center;
-      gap: 10px;
-      transition: all 0.15s;
-      font-family: var(--ui-font);
+      gap: 12px;
+      transition: all 0.1s;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 400;
+      border-radius: 0;
+      margin: 0 4px;
     }
 
     .context-item:hover {
-      background: var(--accent);
-      color: #000;
+      background: #007aff;
+      color: #fff;
+      border-radius: 6px;
+      padding: 8px 16px;
     }
 
     .context-item .icon {
       font-size: 14px;
-      width: 18px;
+      width: 20px;
       text-align: center;
+      opacity: 0.9;
+    }
+
+    .context-item:hover .icon {
+      opacity: 1;
     }
 
     .context-divider {
       height: 1px;
-      background: var(--border);
-      margin: 4px 0;
+      background: rgba(0, 0, 0, 0.15);
+      margin: 5px 8px;
     }
 
-    /* ═══ WINDOWS ═══ */
+    [data-theme="dark"] #context-menu {
+      background: rgba(45, 45, 45, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5), 0 0 0 0.5px rgba(0, 0, 0, 0.3);
+    }
+
+    [data-theme="dark"] .context-item {
+      color: #fff;
+    }
+
+    [data-theme="dark"] .context-divider {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+/* ═══ WINDOWS ═══ */
     .window {
       position: absolute;
-      border-radius: 10px;
+      border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px var(--border), 0 0 30px var(--border);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
       display: flex;
       flex-direction: column;
       min-width: 300px;
       min-height: 200px;
-      transition: box-shadow 0.2s;
       background: var(--window-bg);
-      backdrop-filter: blur(18px) saturate(1.6);
-      -webkit-backdrop-filter: blur(18px) saturate(1.6);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border: 0.5px solid var(--border);
     }
 
     .window.active {
-      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.9), 0 0 0 1px var(--accent), 0 0 50px var(--border);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.22);
       z-index: 100;
     }
 
     .window.hidden {
       display: none;
+    }
+
+    .window.active {
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.22);
+      z-index: 100;
+    }
+
+    .window.hidden {
+      display: none;
+    }
+
+    .window.show {
+      animation: windowPopIn 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    }
+
+    .window.hide {
+      animation: windowPopOut 0.2s ease-in forwards;
+    }
+
+    @keyframes windowPopIn {
+      0% {
+        transform: scale(0.1) translateY(20px);
+      }
+
+      70% {
+        transform: scale(1.05) translateY(-3px);
+      }
+
+      100% {
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    @keyframes windowPopOut {
+      0% {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+      }
+
+      100% {
+        transform: scale(0.1) translateY(30px);
+        opacity: 0;
+      }
     }
 
     .window.maximized {
@@ -443,15 +451,15 @@
 
     .title-bar {
       height: 38px;
-      background: var(--title-bar);
-      backdrop-filter: blur(24px) saturate(1.8);
-      -webkit-backdrop-filter: blur(24px) saturate(1.8);
+      background: var(--toolbar-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       display: flex;
       align-items: center;
       padding: 0 14px;
       flex-shrink: 0;
       cursor: grab;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 0.5px solid var(--border);
     }
 
     .title-bar:active {
@@ -584,14 +592,17 @@
       border: 1px solid var(--border);
       border-radius: 8px;
       font-size: 12px;
-      font-weight: 500;
+      font-weight: 600;
       color: var(--accent);
-      transition: all 0.2s;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .about-tag:hover {
-      background: var(--accent);
-      color: #000;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(147, 51, 234, 0.35);
+      background: linear-gradient(135deg, #9333ea 0%, #6366f1 100%);
+      color: #fff;
+      border-color: #9333ea;
     }
 
     .about-socials {
@@ -601,21 +612,26 @@
     }
 
     .about-socials a {
-      padding: 6px 16px;
+      padding: 8px 16px;
       background: var(--border);
       border: 1px solid var(--border);
-      border-radius: 8px;
+      border-radius: 10px;
       font-size: 12px;
       color: var(--text);
       text-decoration: none;
-      transition: all 0.2s;
-      font-weight: 500;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
     .about-socials a:hover {
-      background: var(--accent);
-      color: #000;
-      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(147, 51, 234, 0.3);
+      background: linear-gradient(135deg, #9333ea 0%, #6366f1 100%);
+      color: #fff;
+      border-color: #9333ea;
     }
 
     /* ═══ FINDER WINDOW ═══ */
@@ -627,11 +643,11 @@
     .finder-sidebar {
       width: 180px;
       background: var(--sidebar-bg);
-      backdrop-filter: blur(20px) saturate(1.6);
-      -webkit-backdrop-filter: blur(20px) saturate(1.6);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       padding: 12px 0;
       flex-shrink: 0;
-      border-right: 1px solid var(--border);
+      border-right: 0.5px solid var(--border);
       font-size: 12px;
     }
 
@@ -719,45 +735,21 @@
       color: var(--text);
     }
 
-    /* ═══ TERMINAL ═══ */
+/* ═══ TERMINAL ═══ */
     .terminal-body {
-      background: linear-gradient(160deg,
-          rgba(0, 18, 5, 0.18) 0%,
-          rgba(0, 8, 2, 0.12) 50%,
-          rgba(0, 20, 10, 0.16) 100%);
-      backdrop-filter: blur(28px) saturate(2.2) brightness(1.15);
-      -webkit-backdrop-filter: blur(28px) saturate(2.2) brightness(1.15);
-      box-shadow: inset 0 0 80px rgba(0, 255, 65, 0.06), inset 0 0 2px rgba(0, 255, 65, 0.18);
+      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+      backdrop-filter: blur(28px) saturate(2.2);
+      -webkit-backdrop-filter: blur(28px) saturate(2.2);
+      box-shadow: inset 0 0 100px rgba(147, 51, 234, 0.05), inset 0 0 3px rgba(147, 51, 234, 0.08);
       padding: 16px;
-      font-family: var(--font);
-      font-size: 12px;
-      line-height: 1.8;
-      color: var(--green);
+      font-family: 'SF Mono', 'Monaco', 'Menlo', 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.7;
+      color: #1e293b;
       height: 100%;
       overflow-y: auto;
       outline: none;
-    }
-
-    /* Theme-aware terminal tints */
-    [data-theme="ocean"] .terminal-body {
-      background: linear-gradient(160deg, rgba(0, 15, 30, 0.18) 0%, rgba(0, 8, 18, 0.12) 50%, rgba(0, 20, 40, 0.16) 100%);
-      box-shadow: inset 0 0 80px rgba(0, 212, 255, 0.06), inset 0 0 2px rgba(0, 212, 255, 0.18);
-    }
-
-    [data-theme="sunset"] .terminal-body {
-      background: linear-gradient(160deg, rgba(30, 5, 18, 0.18) 0%, rgba(18, 3, 10, 0.12) 50%, rgba(35, 8, 20, 0.16) 100%);
-      box-shadow: inset 0 0 80px rgba(255, 107, 157, 0.06), inset 0 0 2px rgba(255, 107, 157, 0.18);
-    }
-
-    [data-theme="midnight"] .terminal-body {
-      background: linear-gradient(160deg, rgba(12, 10, 30, 0.18) 0%, rgba(8, 6, 20, 0.12) 50%, rgba(15, 12, 35, 0.16) 100%);
-      box-shadow: inset 0 0 80px rgba(167, 139, 250, 0.06), inset 0 0 2px rgba(167, 139, 250, 0.18);
-    }
-
-    [data-theme="light"] .terminal-body {
-      background: linear-gradient(160deg, rgba(240, 248, 255, 0.28) 0%, rgba(230, 242, 255, 0.20) 50%, rgba(235, 245, 255, 0.24) 100%);
-      box-shadow: inset 0 0 80px rgba(0, 122, 255, 0.06), inset 0 0 2px rgba(0, 122, 255, 0.18);
-      color: #1a1a2e;
+      border-radius: 0 0 12px 12px;
     }
 
     .terminal-line {
@@ -769,75 +761,94 @@
     }
 
     .t-prompt {
-      color: var(--green);
+      color: #9333ea;
+      font-weight: 600;
     }
 
     .t-cmd {
-      color: #e0e0e0;
+      color: #1e293b;
     }
 
     .t-output {
-      color: #aaa;
+      color: #475569;
       margin: 4px 0 12px 0;
       display: block;
     }
 
     .t-comment {
-      color: #666;
+      color: #94a3b8;
       font-style: italic;
     }
 
     .t-accent {
-      color: var(--cyan);
+      color: #7c3aed;
+      font-weight: 600;
     }
 
     .t-cursor {
       animation: blink 1s step-end infinite;
-      color: var(--green);
+      color: #9333ea;
     }
 
     .t-yellow {
-      color: var(--yellow);
-    }
-
-    .t-red {
-      color: var(--red);
-    }
-
-    .t-cyan {
-      color: var(--cyan);
-    }
-
-    .t-magenta {
-      color: var(--magenta);
-    }
-
-    .t-dim {
       color: #666;
     }
 
-    .t-green {
-      color: var(--green);
+    [data-theme="dark"] .t-yellow {
+      color: #9333ea;
     }
 
-    @keyframes blink {
+    .t-red {
+      color: #dc2626;
+    }
 
-      0%,
-      100% {
-        opacity: 1;
-      }
+    .t-cyan {
+      color: #0066cc;
+    }
 
-      50% {
-        opacity: 0;
-      }
+    [data-theme="dark"] .t-cyan {
+      color: #7c3aed;
+    }
+
+    .t-magenta {
+      color: #a855f7;
+    }
+
+    .t-dim {
+      color: #64748b;
+    }
+
+    .t-green {
+      color: #000;
+      font-size: 7px;
+      line-height: 1.1;
+      white-space: pre;
+      display: inline-block;
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    @media (min-width: 800px) {
+      .t-green { font-size: 9px; }
+    }
+
+    @media (min-width: 1000px) {
+      .t-green { font-size: 11px; }
+    }
+
+    @media (min-width: 1200px) {
+      .t-green { font-size: 13px; }
+    }
+
+    [data-theme="dark"] .t-green {
+      color: #7c3aed;
     }
 
     .terminal-input {
       background: transparent;
       border: none;
-      color: #e0e0e0;
-      font-family: var(--font);
-      font-size: 12px;
+      color: #1e293b;
+      font-family: 'SF Mono', 'Monaco', 'Menlo', 'Courier New', monospace;
+      font-size: 13px;
       outline: none;
       width: auto;
       min-width: 10px;
@@ -989,35 +1000,61 @@
     /* ═══ DOCK ═══ */
     #dock {
       position: fixed;
-      bottom: 8px;
+      bottom: 2px !important;
       left: 50%;
       transform: translateX(-50%);
       z-index: 9999;
-      background: var(--dock-bg);
-      backdrop-filter: blur(30px) saturate(1.5);
-      border-radius: 18px;
-      padding: 4px 8px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(30px) saturate(180%);
+      -webkit-backdrop-filter: blur(30px) saturate(180%);
+      border-radius: 22px;
+      padding: 6px 10px;
       display: flex;
-      gap: 4px;
-      border: 1px solid var(--border);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8), 0 0 30px var(--border);
+      gap: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), 0 0 0 0.5px rgba(0, 0, 0, 0.15) inset;
     }
 
     .dock-item {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: all 0.2s ease;
       position: relative;
+      transform-origin: bottom center;
     }
 
     .dock-item:hover {
-      transform: scale(1.2) translateY(-8px);
-      background: var(--border);
+      transform: scale(1.3) translateY(-10px);
+    }
+
+    .dock-item:hover + .dock-item {
+      transform: scale(1.15) translateY(-5px);
+    }
+
+    .dock-item:has(+ :hover) {
+      transform: scale(1.15) translateY(-5px);
+    }
+
+    .dock-item:hover {
+      transform: scale(1.3) translateY(-10px);
+    }
+
+    .dock-item:hover~.dock-sep {
+      transform: translateY(-4px);
+    }
+
+    .dock-sep {
+      align-self: center;
+      width: 1px;
+      height: 32px;
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.4));
+      margin: 0 4px;
+      border-radius: 1px;
     }
 
     .dock-item .tooltip {
@@ -1033,7 +1070,7 @@
       transform: translateY(4px);
       transition: all 0.15s;
       backdrop-filter: blur(10px);
-      border: 1px solid var(--border);
+      border: 0.5px solid var(--border);
       color: var(--text);
       font-family: var(--ui-font);
     }
@@ -1043,9 +1080,31 @@
       transform: translateY(0);
     }
 
+    .dock-icon {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+      transition: transform 0.2s ease, filter 0.2s ease;
+      border-radius: 11px;
+    }
+
+    .dock-icon img,
+    .dock-icon svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      border-radius: 11px;
+    }
+
+    .dock-item:hover .dock-icon {
+      transform: scale(1.25);
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
+    }
+
     .dock-dot {
       position: absolute;
-      bottom: -2px;
+      bottom: -4px;
       width: 4px;
       height: 4px;
       border-radius: 50%;
@@ -1058,7 +1117,7 @@
     }
 
     .dock-sep {
-      width: 1px;
+      width: 0.5px;
       background: var(--border);
       margin: 8px 4px;
     }
@@ -1078,59 +1137,120 @@
       stroke: var(--accent);
     }
 
-    /* ═══ BOOT ═══ */
-    #boot {
+    /* ═══ LOCK SCREEN ═══ */
+    #lockscreen {
       position: fixed;
       inset: 0;
       z-index: 99999;
-      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: inherit;
+      background-size: cover;
+      background-position: center;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    #lockscreen::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(40px);
+      -webkit-backdrop-filter: blur(40px);
+    }
+
+    #lockscreen > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .lock-container {
       display: flex;
       flex-direction: column;
       align-items: center;
+      gap: 20px;
+    }
+
+    .lock-prompt {
+      font-size: 14px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+    }
+
+    .password-input-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 6px;
+      border: 1px solid rgba(255,255,255,0.15);
+      transition: all 0.3s ease;
+    }
+
+    .password-input-wrapper:focus-within {
+      background: rgba(255,255,255,0.15);
+      border-color: rgba(255,255,255,0.3);
+      box-shadow: 0 0 20px rgba(255,255,255,0.1);
+    }
+
+    #lock-password {
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 16px;
+      padding: 12px 16px;
+      width: 220px;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    #lock-password::placeholder {
+      color: rgba(255,255,255,0.4);
+    }
+
+    .unlock-btn {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.3);
+      color: #fff;
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 18px;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
       justify-content: center;
-      gap: 28px;
-      transition: opacity 0.8s ease;
     }
 
-    #boot.hidden {
+    .unlock-btn:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.5);
+    }
+
+    .unlock-btn svg {
+      width: 20px;
+      height: 20px;
+      stroke: #fff;
+    }
+
+    .lock-error {
+      color: #ff6b6b;
+      font-size: 14px;
+      text-shadow: 0 1px 5px rgba(0,0,0,0.5);
+      height: 20px;
+      transition: opacity 0.3s ease;
+    }
+
+    #lockscreen.unlocked {
       opacity: 0;
+      transform: scale(1.1);
       pointer-events: none;
-    }
-
-    .boot-bar {
-      width: 200px;
-      height: 4px;
-      background: rgba(0, 255, 65, 0.1);
-      border-radius: 4px;
-      overflow: hidden;
-      border: 1px solid var(--border);
-    }
-
-    .boot-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--green), var(--cyan));
-      width: 0%;
-      border-radius: 4px;
-      transition: width 0.2s;
-    }
-
-    .boot-text {
-      color: var(--text-dim);
-      font-size: 12px;
-      font-family: var(--font);
-      animation: pulse 1.5s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-
-      0%,
-      100% {
-        opacity: 0.5;
-      }
-
-      50% {
-        opacity: 1;
-      }
     }
 
     /* ═══ DESKTOP ICONS ═══ */
@@ -1151,20 +1271,25 @@
     }
 
     .desktop-icon .di-icon {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      border-radius: 10px;
       transition: all 0.2s;
     }
 
     .desktop-icon:hover .di-icon {
-      transform: scale(1.05);
+      transform: scale(1.08);
     }
 
     .desktop-icon .di-label {
       font-size: 11px;
       text-align: center;
-      text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+      text-shadow: 0 0 8px rgba(0, 0, 0, 0.9), 0 2px 4px rgba(0, 0, 0, 0.8);
       max-width: 80px;
-      color: var(--text);
+      color: #fff;
       font-family: var(--ui-font);
+      font-weight: 600;
     }
 
     /* ═══ WALLPAPER SELECTOR ═══ */
@@ -1296,29 +1421,14 @@
       border-color: var(--accent);
     }
 
-    .theme-cyber {
-      background: linear-gradient(135deg, #000 0%, #0a0a0a 50%, #001100 100%);
-      color: #00ff41;
+    .theme-dark {
+      background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 50%, #1a1a1a 100%);
+      color: #a855f7;
     }
 
     .theme-light {
-      background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 50%, #d0d0d0 100%);
-      color: #1a1a1a;
-    }
-
-    .theme-ocean {
-      background: linear-gradient(135deg, #0a1628 0%, #0d1b2a 50%, #1b263b 100%);
-      color: #00d4ff;
-    }
-
-    .theme-sunset {
-      background: linear-gradient(135deg, #1a0a1a 0%, #2d1b2d 50%, #1d0d1d 100%);
-      color: #ff6b9d;
-    }
-
-    .theme-midnight {
-      background: linear-gradient(135deg, #0d0d1a 0%, #0f0f23 50%, #1a1a2e 100%);
-      color: #a78bfa;
+      background: linear-gradient(135deg, #f5f5f7 0%, #e8e8ed 50%, #d1d1d6 100%);
+      color: #7c3aed;
     }
 
     .overlay {
@@ -1434,19 +1544,61 @@
     }
 
     .skill-bar-track {
-      height: 6px;
+      height: 8px;
       background: var(--border);
-      border-radius: 3px;
+      border-radius: 100px;
       overflow: hidden;
+      position: relative;
+    }
+
+    .skill-bar-track::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(90deg,
+          transparent,
+          transparent 8px,
+          rgba(0, 0, 0, 0.06) 8px,
+          rgba(0, 0, 0, 0.06) 12px);
+      border-radius: 100px;
     }
 
     .skill-bar-fill {
       height: 100%;
-      border-radius: 3px;
+      border-radius: 100px;
       width: 0%;
-      transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
-      background: linear-gradient(90deg, var(--accent), var(--cyan));
-      box-shadow: 0 0 6px var(--accent);
+      transition: width 1.2s cubic-bezier(0.2, 0.9, 0.3, 1);
+      background: linear-gradient(90deg,
+          var(--green) 0%,
+          var(--cyan) 35%,
+          #00d4ff 60%,
+          var(--cyan) 80%,
+          var(--green) 100%);
+      background-size: 200% 100%;
+      animation: shimmer 2.5s ease infinite;
+      position: relative;
+      box-shadow: 0 0 8px rgba(0, 255, 65, 0.35), 0 0 20px rgba(0, 255, 65, 0.15);
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    .skill-bar-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 20px;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+      border-radius: 0 100px 100px 0;
     }
 
     /* ═══ TIMELINE EXPERIENCE ═══ */
@@ -1489,13 +1641,20 @@
     .timeline-dot.active-dot {
       background: var(--green);
       border-color: var(--green);
-      box-shadow: 0 0 0 4px rgba(0,255,65,0.15), 0 0 12px var(--green);
+      box-shadow: 0 0 0 4px rgba(0, 255, 65, 0.15), 0 0 12px var(--green);
       animation: pulse-dot 2s ease-in-out infinite;
     }
 
     @keyframes pulse-dot {
-      0%, 100% { box-shadow: 0 0 0 4px rgba(0,255,65,0.15), 0 0 12px var(--green); }
-      50% { box-shadow: 0 0 0 8px rgba(0,255,65,0.05), 0 0 20px var(--green); }
+
+      0%,
+      100% {
+        box-shadow: 0 0 0 4px rgba(0, 255, 65, 0.15), 0 0 12px var(--green);
+      }
+
+      50% {
+        box-shadow: 0 0 0 8px rgba(0, 255, 65, 0.05), 0 0 20px var(--green);
+      }
     }
 
     .timeline-dot.closed-dot {
@@ -1526,13 +1685,13 @@
     }
 
     .timeline-badge.active {
-      background: rgba(0,255,65,0.12);
+      background: rgba(0, 255, 65, 0.12);
       color: var(--green);
       border: 1px solid var(--green);
     }
 
     .timeline-badge.closed {
-      background: rgba(255,255,255,0.05);
+      background: rgba(255, 255, 255, 0.05);
       color: var(--text-dim);
       border: 1px solid var(--border);
     }
@@ -1599,8 +1758,15 @@
     }
 
     @keyframes blink-log {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.3; }
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.3;
+      }
     }
 
     .log-feed {
@@ -1614,7 +1780,7 @@
       align-items: flex-start;
       gap: 10px;
       padding: 7px 16px;
-      border-bottom: 1px solid rgba(0,255,65,0.05);
+      border-bottom: 1px solid rgba(0, 255, 65, 0.05);
       opacity: 0;
       transform: translateY(8px);
       transition: all 0.4s ease;
@@ -1664,10 +1830,25 @@
       letter-spacing: 0.05em;
     }
 
-    .log-tag.new-role { background: rgba(0,255,65,0.15); color: var(--green); }
-    .log-tag.cert { background: rgba(0,255,255,0.12); color: var(--cyan); }
-    .log-tag.project { background: rgba(255,0,255,0.12); color: var(--magenta); }
-    .log-tag.skill { background: rgba(255,204,0,0.12); color: var(--yellow); }
+    .log-tag.new-role {
+      background: rgba(0, 255, 65, 0.15);
+      color: var(--green);
+    }
+
+    .log-tag.cert {
+      background: rgba(0, 255, 255, 0.12);
+      color: var(--cyan);
+    }
+
+    .log-tag.project {
+      background: rgba(255, 0, 255, 0.12);
+      color: var(--magenta);
+    }
+
+    .log-tag.skill {
+      background: rgba(255, 204, 0, 0.12);
+      color: var(--yellow);
+    }
 
     /* ═══ FINDER DRAWER ═══ */
     .finder-main-wrap {
@@ -1790,26 +1971,13 @@
     }
 
     .finder-file.selected {
-      background: rgba(0,255,65,0.1);
-      border: 1px solid rgba(0,255,65,0.3);
+      background: rgba(0, 255, 65, 0.1);
+      border: 1px solid rgba(0, 255, 65, 0.3);
     }
 
-    /* ═══ PERMANENT DOCK LABELS ═══ */
+    /* ═══ DOCK LABEL (hidden for macOS style) ═══ */
     .dock-label-permanent {
-      position: absolute;
-      bottom: -18px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 9px;
-      color: var(--text-dim);
-      white-space: nowrap;
-      font-family: var(--ui-font);
-      pointer-events: none;
-      letter-spacing: 0.02em;
-    }
-
-    #dock {
-      padding-bottom: 20px;
+      display: none;
     }
 
     /* ═══ STATS PANEL ═══ */
@@ -1822,7 +1990,7 @@
       backdrop-filter: blur(18px) saturate(1.6);
       border: 1px solid var(--border);
       border-radius: 10px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 20px var(--border);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 20px var(--border);
       z-index: 200;
       opacity: 0;
       transform: translateY(-8px);
@@ -1836,7 +2004,7 @@
     }
 
     .stats-panel.active {
-      box-shadow: 0 12px 48px rgba(0,0,0,0.7), 0 0 0 1px var(--accent), 0 0 30px var(--border);
+      box-shadow: 0 12px 48px rgba(0, 0, 0, 0.7), 0 0 0 1px var(--accent), 0 0 30px var(--border);
     }
 
     .stats-titlebar {
@@ -1902,7 +2070,7 @@
       justify-content: space-between;
       align-items: center;
       padding: 4px 0;
-      border-bottom: 1px solid rgba(0,255,65,0.06);
+      border-bottom: 1px solid rgba(0, 255, 65, 0.06);
       font-size: 11px;
     }
 
@@ -1919,18 +2087,23 @@
       font-family: var(--font);
       font-weight: 600;
     }
+
     /* ═══ MOBILE CONTROLS ═══ */
     #mobile-controls {
       display: none;
     }
 
-    @media (max-width: 768px), (pointer: coarse) {
-      html, body {
+    @media (max-width: 768px),
+    (pointer: coarse) {
+
+      html,
+      body {
         cursor: default;
         overflow: hidden;
       }
 
-      #cursor-dot, #cursor-ring {
+      #cursor-dot,
+      #cursor-ring {
         display: none;
       }
 
@@ -1948,7 +2121,9 @@
         border-radius: 16px 16px 0 0;
       }
 
-      #dock::-webkit-scrollbar { display: none; }
+      #dock::-webkit-scrollbar {
+        display: none;
+      }
 
       .dock-item {
         width: 52px;
@@ -1990,7 +2165,7 @@
         justify-content: center;
         cursor: pointer;
         transition: all 0.2s;
-        box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
       }
 
       .mob-btn:active {
@@ -2013,7 +2188,7 @@
         z-index: 99990;
         transform: translateY(100%);
         transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 -8px 40px rgba(0,0,0,0.6);
+        box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.6);
       }
 
       #mobile-drawer.open {
@@ -2107,7 +2282,7 @@
         display: none;
         position: fixed;
         inset: 0;
-        background: rgba(0,0,0,0.5);
+        background: rgba(0, 0, 0, 0.5);
         z-index: 99989;
       }
 
@@ -2215,7 +2390,9 @@
     }
 
     @keyframes spin {
-      to { transform: rotate(360deg); }
+      to {
+        transform: rotate(360deg);
+      }
     }
 
     .pdf-viewer-body {
@@ -2223,6 +2400,546 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
+    }
+
+    /* ═══ SAFARI BROWSER ═══ */
+    .safari-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      background: linear-gradient(180deg, #f5f5f5 0%, #e8e8e8 100%);
+      border-bottom: 1px solid #d1d1d1;
+    }
+
+    .safari-nav {
+      display: flex;
+      gap: 4px;
+    }
+
+    .safari-btn {
+      width: 28px;
+      height: 24px;
+      border-radius: 5px;
+      border: none;
+      background: transparent;
+      color: #333;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .safari-btn:hover {
+      background: rgba(0,0,0,0.1);
+    }
+
+    .safari-btn:active {
+      transform: scale(0.95);
+    }
+
+    .safari-url {
+      flex: 1;
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      background: #fff;
+      color: #333;
+      font-size: 13px;
+      font-family: var(--ui-font);
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    .safari-url:focus {
+      background: #fff;
+      box-shadow: 0 0 0 2px rgba(0,122,255,0.4);
+    }
+
+    .safari-url::placeholder {
+      color: #888;
+    }
+
+    .safari-frame {
+      flex: 1;
+      border: none;
+      background: #fff;
+    }
+
+    .safari-frame.hidden {
+      display: none;
+    }
+
+    .safari-message {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+      padding: 40px;
+      position: relative;
+    }
+
+    .safari-message::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.3);
+    }
+
+    .safari-message > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .safari-message.hidden {
+      display: none;
+    }
+
+    .safari-message-content {
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(20px);
+      border-radius: 24px;
+      padding: 40px;
+      max-width: 500px;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+
+    .safari-message-icon {
+      font-size: 64px;
+      margin-bottom: 16px;
+    }
+
+    .safari-message-content h2 {
+      font-size: 24px;
+      color: #1a1a2e;
+      margin-bottom: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    .safari-message-content p {
+      color: #666;
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 12px;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    .safari-message-content strong {
+      color: #333;
+    }
+
+    .safari-message-links {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+    }
+
+    .safari-message-links p {
+      margin-bottom: 12px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .safari-msg-link {
+      display: block;
+      padding: 10px 16px;
+      margin: 8px 0;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 10px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .safari-msg-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(102,126,234,0.4);
+    }
+
+    .safari-msg-btn {
+      margin-top: 20px;
+      padding: 12px 24px;
+      background: #333;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .safari-msg-btn:hover {
+      background: #555;
+      transform: scale(1.02);
+    }
+
+    .safari-start-page {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 40px 60px;
+      background: linear-gradient(200deg, #89f7fe 0%, #66a6ff 100%);
+      background: url('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=1920&q=80') center/cover no-repeat;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .safari-start-page::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.35);
+    }
+
+    .safari-start-page > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .safari-start-page.hidden {
+      display: none;
+    }
+
+    .safari-start-header {
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .safari-favorites-title {
+      font-size: 28px;
+      font-weight: 600;
+      color: #1a1a2e;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      text-shadow: 0 1px 2px rgba(255,255,255,0.8);
+    }
+
+    .safari-favorites {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    .safari-fav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 8px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: rgba(255,255,255,0.5);
+      backdrop-filter: blur(10px);
+    }
+
+    .safari-fav-item:hover {
+      background: rgba(255,255,255,0.75);
+      transform: scale(1.05);
+    }
+
+    .safari-fav-item img {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      object-fit: contain;
+      background: #fff;
+      padding: 4px;
+    }
+
+    .safari-fav-item span {
+      font-size: 12px;
+      color: #333;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 500;
+    }
+
+    .safari-search-box {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+
+    .safari-search-container {
+      position: relative;
+      width: 100%;
+      max-width: 500px;
+    }
+
+    .safari-search-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      color: #666;
+    }
+
+    #safari-start-search {
+      width: 100%;
+      padding: 14px 20px 14px 46px;
+      border-radius: 24px;
+      border: 1px solid rgba(0,0,0,0.1);
+      background: rgba(255,255,255,0.6);
+      color: #333;
+      font-size: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      outline: none;
+      transition: all 0.3s;
+    }
+
+    #safari-start-search:focus {
+      background: rgba(255,255,255,0.85);
+      box-shadow: 0 0 0 3px rgba(0,122,255,0.3);
+    }
+
+    #safari-start-search::placeholder {
+      color: #666;
+    }
+
+    [data-theme="light"] .safari-toolbar {
+      background: linear-gradient(180deg, #f0f0f0 0%, #e0e0e0 100%);
+      border-bottom: 1px solid #ccc;
+    }
+
+    [data-theme="light"] .safari-btn {
+      color: #333;
+    }
+
+    [data-theme="light"] .safari-btn:hover {
+      background: rgba(0,0,0,0.1);
+    }
+
+    [data-theme="light"] .safari-url {
+      background: rgba(0,0,0,0.08);
+      color: #333;
+    }
+
+    [data-theme="light"] .safari-url::placeholder {
+      color: #666;
+    }
+
+    /* ═══ RESPONSIVE STYLES ═══ */
+    
+/* Large Desktop */
+    @media (min-width: 1400px) {
+      #dock { bottom: 15px; padding: 8px 16px; gap: 14px; }
+      .dock-icon { width: 72px; height: 72px; }
+      .dock-icon img, .dock-icon .icon-svg { width: 52px; height: 52px; }
+      .dock-label { font-size: 13px; }
+      .desktop-icon { width: 90px; }
+      .desktop-icon img { width: 64px; height: 64px; }
+      .desktop-icon span { font-size: 13px; }
+    }
+
+    /* Desktop */
+    @media (min-width: 1200px) and (max-width: 1399px) {
+      #dock { bottom: 12px; padding: 6px 14px; gap: 12px; }
+      .dock-icon { width: 64px; height: 64px; }
+      .dock-icon img, .dock-icon .icon-svg { width: 46px; height: 46px; }
+      .dock-label { font-size: 12px; }
+      .desktop-icon { width: 80px; }
+      .desktop-icon img { width: 56px; height: 56px; }
+      .desktop-icon span { font-size: 12px; }
+    }
+
+    /* Laptop */
+    @media (min-width: 992px) and (max-width: 1199px) {
+      #dock { bottom: 10px; padding: 5px 12px; gap: 10px; }
+      .dock-icon { width: 56px; height: 56px; }
+      .dock-icon img, .dock-icon .icon-svg { width: 40px; height: 40px; }
+      .dock-label { font-size: 11px; }
+      .desktop-icon { width: 70px; }
+      .desktop-icon img { width: 48px; height: 48px; }
+      .desktop-icon span { font-size: 11px; }
+      .menubar { height: 28px; padding: 0 12px; font-size: 13px; }
+      .window { min-width: 280px; min-height: 180px; }
+    }
+
+    /* Tablet Landscape */
+    @media (min-width: 768px) and (max-width: 991px) {
+      #dock { bottom: 8px; padding: 4px 10px; gap: 8px; }
+      .dock-icon { width: 48px; height: 48px; }
+      .dock-icon img, .dock-icon .icon-svg { width: 34px; height: 34px; }
+      .dock-label { font-size: 10px; display: none; }
+      .desktop-icon { width: 65px; padding: 6px; }
+      .desktop-icon img { width: 42px; height: 42px; }
+      .desktop-icon span { font-size: 10px; }
+      .menubar { height: 26px; padding: 0 10px; font-size: 12px; }
+      .window { min-width: 250px; min-height: 160px; }
+      .window-header { height: 36px; }
+      .window-title { font-size: 13px; }
+      .lock-prompt { font-size: 12px; }
+      #lock-password { font-size: 14px; width: 180px; padding: 10px 12px; }
+      .unlock-btn { width: 38px; height: 38px; }
+    }
+
+    /* Tablet Portrait / Mobile Landscape */
+    @media (min-width: 576px) and (max-width: 767px) {
+      #dock { bottom: 6px; padding: 4px 8px; gap: 6px; }
+      .dock-icon { width: 42px; height: 42px; }
+      .dock-icon img, .dock-icon .icon-svg { width: 30px; height: 30px; }
+      .dock-label { font-size: 9px; display: none; }
+      .desktop-icon { width: 60px; padding: 5px; }
+      .desktop-icon img { width: 38px; height: 38px; }
+      .desktop-icon span { font-size: 9px; }
+      .menubar { height: 24px; padding: 0 8px; font-size: 11px; }
+      .menubar-left, .menubar-right { gap: 8px; }
+      .window { min-width: 220px; min-height: 140px; width: 90% !important; left: 5% !important; }
+      .window-header { height: 32px; }
+      .window-title { font-size: 12px; }
+      .window-controls { gap: 6px; }
+      .window-btn { width: 12px; height: 12px; }
+      .lock-prompt { font-size: 11px; }
+      #lock-password { font-size: 14px; width: 160px; padding: 8px 12px; }
+      .unlock-btn { width: 36px; height: 36px; }
+      .password-input-wrapper { padding: 4px; border-radius: 8px; }
+      .taskbar-right { gap: 8px; font-size: 11px; }
+      .stats-panel { font-size: 10px; }
+    }
+
+    /* Mobile Portrait */
+    @media (max-width: 575px) {
+      #dock { bottom: 4px; padding: 3px 6px; gap: 4px; }
+      .dock-icon { width: 36px; height: 36px; }
+      .dock-icon img, .dock-icon .icon-svg { width: 26px; height: 26px; }
+      .dock-label { display: none; }
+      .desktop-icon { width: 55px; padding: 4px; }
+      .desktop-icon img { width: 32px; height: 32px; }
+      .desktop-icon span { font-size: 8px; }
+      .menubar { height: 22px; padding: 0 6px; font-size: 10px; }
+      .menubar-left, .menubar-right { gap: 4px; }
+      .window { min-width: 200px; min-height: 120px; width: 94% !important; left: 3% !important; }
+      .window-header { height: 28px; }
+      .window-title { font-size: 11px; }
+      .window-controls { gap: 4px; }
+      .window-btn { width: 10px; height: 10px; }
+      .window-content { padding: 10px; }
+      .lock-prompt { font-size: 10px; }
+      #lock-password { font-size: 13px; width: 140px; padding: 8px 10px; }
+      .unlock-btn { width: 32px; height: 32px; border-radius: 6px; }
+      .password-input-wrapper { padding: 3px; border-radius: 6px; gap: 6px; }
+      .lock-error { font-size: 11px; }
+      .taskbar-right { gap: 6px; font-size: 10px; }
+      .stats-panel { font-size: 9px; padding: 4px 8px; }
+      .taskbar { height: 36px; }
+      #context-menu { min-width: 160px; padding: 4px; }
+      .context-item { padding: 6px 10px; font-size: 12px; }
+      .dropdown-menu { min-width: 160px; }
+      .dropdown-item { padding: 6px 10px; font-size: 12px; }
+    }
+
+    /* Desktop */
+    @media (min-width: 1200px) and (max-width: 1399px) {
+      .dock { bottom: 12px; padding: 6px 14px; gap: 12px; }
+      .dock-icon { width: 64px; height: 64px; }
+      .dock-icon img, .dock-icon .icon-svg { width: 46px; height: 46px; }
+      .dock-label { font-size: 12px; }
+      .desktop-icon { width: 80px; }
+      .desktop-icon img { width: 56px; height: 56px; }
+      .desktop-icon span { font-size: 12px; }
+    }
+
+    /* Laptop */
+    @media (min-width: 992px) and (max-width: 1199px) {
+      .dock { bottom: 10px; padding: 5px 12px; gap: 10px; }
+      .dock-icon { width: 56px; height: 56px; }
+      .dock-icon img, .dock-icon .icon-svg { width: 40px; height: 40px; }
+      .dock-label { font-size: 11px; }
+      .desktop-icon { width: 70px; }
+      .desktop-icon img { width: 48px; height: 48px; }
+      .desktop-icon span { font-size: 11px; }
+      .menubar { height: 28px; padding: 0 12px; font-size: 13px; }
+      .window { min-width: 280px; min-height: 180px; }
+    }
+
+    /* Tablet Landscape */
+    @media (min-width: 768px) and (max-width: 991px) {
+      .dock { bottom: 8px; padding: 4px 10px; gap: 8px; }
+      .dock-icon { width: 48px; height: 48px; }
+      .dock-icon img, .dock-icon .icon-svg { width: 34px; height: 34px; }
+      .dock-label { font-size: 10px; }
+      .desktop-icon { width: 65px; padding: 6px; }
+      .desktop-icon img { width: 42px; height: 42px; }
+      .desktop-icon span { font-size: 10px; }
+      .menubar { height: 26px; padding: 0 10px; font-size: 12px; }
+      .window { min-width: 250px; min-height: 160px; }
+      .window-header { height: 36px; }
+      .window-title { font-size: 13px; }
+      .lock-prompt { font-size: 12px; }
+      #lock-password { font-size: 14px; width: 180px; padding: 10px 12px; }
+      .unlock-btn { width: 38px; height: 38px; }
+    }
+
+    /* Tablet Portrait / Mobile Landscape */
+    @media (min-width: 576px) and (max-width: 767px) {
+      .dock { bottom: 6px; padding: 4px 8px; gap: 6px; }
+      .dock-icon { width: 42px; height: 42px; }
+      .dock-icon img, .dock-icon .icon-svg { width: 30px; height: 30px; }
+      .dock-label { font-size: 9px; display: none; }
+      .desktop-icon { width: 60px; padding: 5px; }
+      .desktop-icon img { width: 38px; height: 38px; }
+      .desktop-icon span { font-size: 9px; }
+      .menubar { height: 24px; padding: 0 8px; font-size: 11px; }
+      .menubar-left, .menubar-right { gap: 8px; }
+      .window { min-width: 220px; min-height: 140px; width: 90% !important; left: 5% !important; }
+      .window-header { height: 32px; }
+      .window-title { font-size: 12px; }
+      .window-controls { gap: 6px; }
+      .window-btn { width: 12px; height: 12px; }
+      .lock-prompt { font-size: 11px; }
+      #lock-password { font-size: 14px; width: 160px; padding: 8px 12px; }
+      .unlock-btn { width: 36px; height: 36px; }
+      .password-input-wrapper { padding: 4px; border-radius: 8px; }
+      .taskbar-right { gap: 8px; font-size: 11px; }
+      .stats-panel { font-size: 10px; }
+    }
+
+    /* Mobile Portrait */
+    @media (max-width: 575px) {
+      .dock { bottom: 4px; padding: 3px 6px; gap: 4px; }
+      .dock-icon { width: 36px; height: 36px; }
+      .dock-icon img, .dock-icon .icon-svg { width: 26px; height: 26px; }
+      .dock-label { display: none; }
+      .desktop-icon { width: 55px; padding: 4px; }
+      .desktop-icon img { width: 32px; height: 32px; }
+      .desktop-icon span { font-size: 8px; }
+      .menubar { height: 22px; padding: 0 6px; font-size: 10px; }
+      .menubar-left, .menubar-right { gap: 4px; }
+      .apple-logo { width: 14px; }
+      .window { min-width: 200px; min-height: 120px; width: 94% !important; left: 3% !important; }
+      .window-header { height: 28px; }
+      .window-title { font-size: 11px; }
+      .window-controls { gap: 4px; }
+      .window-btn { width: 10px; height: 10px; }
+      .window-content { padding: 10px; }
+      .lock-prompt { font-size: 10px; }
+      #lock-password { font-size: 13px; width: 140px; padding: 8px 10px; }
+      .unlock-btn { width: 32px; height: 32px; border-radius: 6px; }
+      .password-input-wrapper { padding: 3px; border-radius: 6px; gap: 6px; }
+      .lock-error { font-size: 11px; }
+      .taskbar-right { gap: 6px; font-size: 10px; }
+      .stats-panel { font-size: 9px; padding: 4px 8px; }
+      .taskbar { height: 36px; }
+      #context-menu { min-width: 160px; padding: 4px; }
+      .context-item { padding: 6px 10px; font-size: 12px; }
+      .dropdown-menu { min-width: 160px; }
+      .dropdown-item { padding: 6px 10px; font-size: 12px; }
+    }
+
+    /* Touch devices - larger touch targets */
+    @media (hover: none) and (pointer: coarse) {
+      .dock-icon:hover { transform: scale(1.1); }
+      .dock-icon:active { transform: scale(0.95); }
+      .desktop-icon:active { background: rgba(255,255,255,0.1); }
+      .window-btn { cursor: pointer; }
+      .context-item:active { background: rgba(255,255,255,0.1); }
     }
   </style>
 </head>
@@ -2237,12 +2954,18 @@
   <canvas id="matrix-canvas"></canvas>
   <div class="scanlines" id="scanlines"></div>
 
-  <!-- BOOT SCREEN -->
-  <div id="boot">
-    <div class="boot-bar">
-      <div class="boot-fill" id="boot-fill"></div>
+  <!-- LOCK SCREEN -->
+  <div id="lockscreen">
+    <div class="lock-container">
+      <div class="lock-prompt">Enter admin to unlock</div>
+      <div class="password-input-wrapper">
+        <input type="password" id="lock-password" placeholder="Password" autocomplete="off">
+        <button class="unlock-btn" onclick="unlockScreen()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+      <div class="lock-error" id="lock-error"></div>
     </div>
-    <div class="boot-text">INITIALIZING SYSTEM...</div>
   </div>
 
   <!-- CONTEXT MENU -->
@@ -2253,15 +2976,12 @@
     </div>
     <div class="context-item" onclick="toggleWindow('terminal'); hideContextMenu()"><span class="icon">💻</span>Terminal
     </div>
+    <div class="context-item" onclick="toggleWindow('safari'); hideContextMenu()"><span class="icon">🌐</span>Safari
+    </div>
     <div class="context-divider"></div>
     <div class="context-item" onclick="openWallpaperSelector(); hideContextMenu()"><span class="icon">🖼️</span>Change
       Wallpaper</div>
     <div class="context-item" onclick="openThemeSelector(); hideContextMenu()"><span class="icon">🎨</span>Change Theme
-    </div>
-    <div class="context-divider"></div>
-    <div class="context-item" onclick="toggleScanlines(); hideContextMenu()"><span class="icon">📺</span>Toggle
-      Scanlines</div>
-    <div class="context-item" onclick="toggleMatrix(); hideContextMenu()"><span class="icon">🔢</span>Toggle Matrix
     </div>
     <div class="context-divider"></div>
     <div class="context-item"
@@ -2283,18 +3003,16 @@
   <div class="theme-selector" id="theme-selector">
     <h3>Select Theme</h3>
     <div class="theme-grid">
-      <div class="theme-option theme-cyber" onclick="setTheme('cyber')">Cyber</div>
+      <div class="theme-option theme-dark" onclick="setTheme('dark')">Dark</div>
       <div class="theme-option theme-light" onclick="setTheme('light')">Light</div>
-      <div class="theme-option theme-ocean" onclick="setTheme('ocean')">Ocean</div>
-      <div class="theme-option theme-sunset" onclick="setTheme('sunset')">Sunset</div>
-      <div class="theme-option theme-midnight active" onclick="setTheme('midnight')">Midnight</div>
     </div>
   </div>
 
   <!-- STATS PANEL (auto-opens on boot) -->
   <div class="stats-panel" id="stats-panel">
     <div class="stats-titlebar" id="stats-titlebar">
-      <div class="stats-close" onclick="document.getElementById('stats-panel').classList.remove('visible')" title="Close"></div>
+      <div class="stats-close" onclick="document.getElementById('stats-panel').classList.remove('visible')"
+        title="Close"></div>
       <div class="stats-title">sys.status</div>
     </div>
     <div class="stats-body">
@@ -2303,7 +3021,8 @@
       <div class="stat-row"><span class="stat-label">Projects</span><span class="stat-value">9 completed</span></div>
       <div class="stat-row"><span class="stat-label">Certs</span><span class="stat-value">12 earned</span></div>
       <div class="stat-row"><span class="stat-label">Location</span><span class="stat-value">Bangladesh</span></div>
-      <div class="stat-row"><span class="stat-label">Status</span><span class="stat-value" style="color:var(--green)">● Active</span></div>
+      <div class="stat-row"><span class="stat-label">Status</span><span class="stat-value" style="color:var(--green)">●
+          Active</span></div>
     </div>
   </div>
 
@@ -2312,8 +3031,11 @@
     <!-- MENU BAR -->
     <div id="menubar">
       <span class="apple" onclick="openWallpaperSelector()">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+          <path
+            d="M11.182.008C11.148-.03 9.923.023 8.857 1.18c-1.066 1.156-.902 2.482-.878 2.516s1.52.087 2.475-1.258.762-2.391.728-2.43m3.314 11.733c-.048-.096-2.325-1.234-2.113-3.422s1.675-2.789 1.698-2.854-.597-.79-1.254-1.157a3.7 3.7 0 0 0-1.563-.434c-.108-.003-.483-.095-1.254.116-.508.139-1.653.589-1.968.607-.316.018-1.256-.522-2.267-.665-.647-.125-1.333.131-1.824.328-.49.196-1.422.754-2.074 2.237-.652 1.482-.311 3.83-.067 4.56s.625 1.924 1.273 2.796c.576.984 1.34 1.667 1.659 1.899s1.219.386 1.843.067c.502-.308 1.408-.485 1.766-.472.357.013 1.061.154 1.782.539.571.197 1.111.115 1.652-.105.541-.221 1.324-1.059 2.238-2.758q.52-1.185.473-1.282" />
+          <path
+            d="M11.182.008C11.148-.03 9.923.023 8.857 1.18c-1.066 1.156-.902 2.482-.878 2.516s1.52.087 2.475-1.258.762-2.391.728-2.43m3.314 11.733c-.048-.096-2.325-1.234-2.113-3.422s1.675-2.789 1.698-2.854-.597-.79-1.254-1.157a3.7 3.7 0 0 0-1.563-.434c-.108-.003-.483-.095-1.254.116-.508.139-1.653.589-1.968.607-.316.018-1.256-.522-2.267-.665-.647-.125-1.333.131-1.824.328-.49.196-1.422.754-2.074 2.237-.652 1.482-.311 3.83-.067 4.56s.625 1.924 1.273 2.796c.576.984 1.34 1.667 1.659 1.899s1.219.386 1.843.067c.502-.308 1.408-.485 1.766-.472.357.013 1.061.154 1.782.539.571.197 1.111.115 1.652-.105.541-.221 1.324-1.059 2.238-2.758q.52-1.185.473-1.282" />
         </svg>
       </span>
       <div class="dropdown" id="finder-menu">
@@ -2325,15 +3047,10 @@
               class="shortcut">⌘2</span></div>
           <div class="dropdown-item" onclick="toggleWindow('terminal'); closeDropdowns()">Terminal <span
               class="shortcut">⌘3</span></div>
-          <div class="dropdown-divider"></div>
-          <div class="dropdown-item" onclick="openWallpaperSelector(); closeDropdowns()">Change Wallpaper <span
-              class="shortcut">⌘W</span></div>
-          <div class="dropdown-item" onclick="openThemeSelector(); closeDropdowns()">Preferences... <span
-              class="shortcut">⌘,</span></div>
         </div>
       </div>
       <div class="dropdown" id="file-menu">
-        <span class="menu-item" onclick="toggleDropdown('file-menu')" style="font-weight:400;opacity:0.7">File</span>
+        <span class="menu-item" onclick="toggleDropdown('file-menu')" style="font-weight:600">File</span>
         <div class="dropdown-menu">
           <div class="dropdown-item"
             onclick="openPdfViewer('https://drive.google.com/file/d/1T8deP1xUOqYUfwuXnGSGU5sAO-vJMHlj/preview','Resume — Rabiul Hasan.pdf','https://drive.google.com/file/d/1T8deP1xUOqYUfwuXnGSGU5sAO-vJMHlj/view?usp=sharing'); closeDropdowns()">
@@ -2345,7 +3062,7 @@
         </div>
       </div>
       <div class="dropdown" id="edit-menu">
-        <span class="menu-item" onclick="toggleDropdown('edit-menu')" style="font-weight:400;opacity:0.7">Edit</span>
+        <span class="menu-item" onclick="toggleDropdown('edit-menu')" style="font-weight:600">Edit</span>
         <div class="dropdown-menu">
           <div class="dropdown-item" onclick="copyToClipboard(); closeDropdowns()">Copy Email <span
               class="shortcut">⌘⇧C</span></div>
@@ -2354,22 +3071,8 @@
               class="shortcut">⌘G</span></div>
         </div>
       </div>
-      <div class="dropdown" id="view-menu">
-        <span class="menu-item" onclick="toggleDropdown('view-menu')" style="font-weight:400;opacity:0.7">View</span>
-        <div class="dropdown-menu">
-          <div class="dropdown-item" onclick="toggleMatrix(); closeDropdowns()">Toggle Matrix Effect <span
-              class="shortcut">⌘M</span></div>
-          <div class="dropdown-item" onclick="toggleScanlines(); closeDropdowns()">Toggle Scanlines <span
-              class="shortcut">⌘⇧S</span></div>
-          <div class="dropdown-divider"></div>
-          <div class="dropdown-item" onclick="openThemeSelector(); closeDropdowns()">Change Theme <span
-              class="shortcut">⌘T</span></div>
-          <div class="dropdown-item" onclick="openWallpaperSelector(); closeDropdowns()">Change Wallpaper <span
-              class="shortcut">⌘W</span></div>
-        </div>
-      </div>
       <div class="dropdown" id="go-menu">
-        <span class="menu-item" onclick="toggleDropdown('go-menu')" style="font-weight:400;opacity:0.7">Go</span>
+        <span class="menu-item" onclick="toggleDropdown('go-menu')" style="font-weight:600">Go</span>
         <div class="dropdown-menu">
           <div class="dropdown-item"
             onclick="window.open('https://www.linkedin.com/in/rabiulislam32','_blank'); closeDropdowns()">LinkedIn <span
@@ -2382,7 +3085,7 @@
         </div>
       </div>
       <div class="dropdown" id="help-menu">
-        <span class="menu-item" onclick="toggleDropdown('help-menu')" style="font-weight:400;opacity:0.7">Help</span>
+        <span class="menu-item" onclick="toggleDropdown('help-menu')" style="font-weight:600">Help</span>
         <div class="dropdown-menu">
           <div class="dropdown-item" onclick="showHelp(); closeDropdowns()">Keyboard Shortcuts <span
               class="shortcut">⌘/</span></div>
@@ -2390,57 +3093,47 @@
               class="shortcut">⌘⌥A</span></div>
         </div>
       </div>
-      <div class="menu-right">
-        <button class="theme-btn" onclick="openWallpaperSelector()">Wallpaper</button>
-        <button class="theme-btn" onclick="openThemeSelector()">Theme</button>
-        <span id="menu-clock"></span>
+<div class="menu-right">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" style="opacity:0.9;cursor:pointer" 
+          title="Search" onclick="openSpotlightSearch()">
+          <circle cx="11" cy="11" r="8" />
+          <path d="M21 21l-4.35-4.35" />
+        </svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" style="opacity:0.9"
+          title="WiFi">
+          <path d="M5 12.55a11 11 0 0 1 14.08 0" />
+          <path d="M1.42 9a16 16 0 0 1 21.16 0" />
+          <path d="M8.53 16.55a6 6 0 0 1 6.95 0" />
+          <circle cx="12" cy="20" r="1" fill="#fff" />
+        </svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" style="opacity:0.9"
+          title="Battery">
+          <rect x="2" y="7" width="18" height="10" rx="2" ry="2" />
+          <line x1="22" y1="10" x2="22" y2="14" stroke="#fff" stroke-width="2" />
+          <rect x="4" y="9" width="12" height="6" rx="1" fill="#fff" opacity="0.8" />
+        </svg>
+        <img src="https://i.postimg.cc/Bj1JPMyv/image.jpg" alt="Profile"
+          style="width:18px;height:18px;border-radius:50%;object-fit:cover;object-position:top;border:1px solid rgba(255,255,255,0.5)"
+          title="Rabiul Hasan" onclick="toggleWindow('about')">
+        <span id="menu-clock" style="font-size:11px"></span>
       </div>
     </div>
 
     <!-- DESKTOP ICONS -->
-    <div class="desktop-icon" style="top:50px;right:24px" ondblclick="toggleWindow('about')">
-      <div class="di-icon">
-        <svg class="icon-svg" viewBox="0 0 24 24">
-          <rect x="3" y="3" width="18" height="18" rx="2" />
-          <line x1="9" y1="9" x2="15" y2="9" />
-          <line x1="9" y1="13" x2="15" y2="13" />
-          <line x1="9" y1="17" x2="11" y2="17" />
-        </svg>
-      </div>
+    <div class="desktop-icon" style="top:50px;left:24px" ondblclick="toggleWindow('about')">
+      <img class="di-icon"
+        src="https://cdn.jim-nielsen.com/macos/512/cleanmaster-remove-junk-files-2026-01-05.png?rf=1024">
       <div class="di-label">About Me</div>
     </div>
 
-    <div class="desktop-icon" style="top:130px;right:24px" ondblclick="toggleWindow('finder')">
-      <div class="di-icon">
-        <svg class="icon-svg" viewBox="0 0 24 24">
-          <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
-        </svg>
-      </div>
+    <div class="desktop-icon" style="top:130px;left:24px" ondblclick="toggleWindow('finder')">
+      <img class="di-icon" src="https://cdn.jim-nielsen.com/macos/512/finder-2025-11-13.png">
       <div class="di-label">Projects</div>
     </div>
 
-    <div class="desktop-icon" style="top:210px;right:24px" ondblclick="toggleWindow('terminal')">
-      <div class="di-icon">
-        <svg class="icon-svg" viewBox="0 0 24 24">
-          <polyline points="4 17 10 11 4 5" />
-          <line x1="12" y1="19" x2="20" y2="19" />
-        </svg>
-      </div>
+    <div class="desktop-icon" style="top:210px;left:24px" ondblclick="toggleWindow('terminal')">
+      <img class="di-icon" src="https://cdn.jim-nielsen.com/macos/512/terminal-2025-11-14.png?rf=1024">
       <div class="di-label">Terminal</div>
-    </div>
-
-    <div class="desktop-icon" style="top:290px;right:24px"
-      ondblclick="openPdfViewer('https://drive.google.com/file/d/1T8deP1xUOqYUfwuXnGSGU5sAO-vJMHlj/preview','Resume — Rabiul Hasan.pdf','https://drive.google.com/file/d/1T8deP1xUOqYUfwuXnGSGU5sAO-vJMHlj/view?usp=sharing')">
-      <div class="di-icon">
-        <svg class="icon-svg" viewBox="0 0 24 24">
-          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-          <polyline points="14 2 14 8 20 8" />
-          <line x1="16" y1="13" x2="8" y2="13" />
-          <line x1="16" y1="17" x2="8" y2="17" />
-          <polyline points="10 9 9 9 8 9" />
-        </svg>
-      </div>
-      <div class="di-label">Resume.pdf</div>
     </div>
 
     <!-- ABOUT WINDOW -->
@@ -2477,9 +3170,9 @@
             <span class="about-tag">VAPT</span>
           </div>
           <div class="about-socials">
-            <a href="https://x.com/rabiul_hasann" target="_blank">Twitter</a>
-            <a href="https://www.linkedin.com/in/rabiulislam32" target="_blank">LinkedIn</a>
-            <a href="https://github.com/rabiulhasann" target="_blank">GitHub</a>
+            <a href="https://x.com/rabiul_hasann" target="_blank"><img src="https://img.icons8.com/?size=100&id=oaaSr6h7kwm6&format=png&color=000000" style="width:16px;height:16px"> Twitter</a>
+            <a href="https://www.linkedin.com/in/rabiulislam32" target="_blank"><img src="https://img.icons8.com/?size=100&id=nTY9sWZezkri&format=png&color=000000" style="width:16px;height:16px"> LinkedIn</a>
+            <a href="https://github.com/rabiulhasann" target="_blank"><img src="https://cdn.jim-nielsen.com/macos/512/github-desktop-2021-05-20.png?rf=1024" style="width:16px;height:16px"> GitHub</a>
           </div>
         </div>
       </div>
@@ -2512,31 +3205,76 @@
           <div class="finder-main-wrap">
             <div class="finder-files-area">
               <div class="finder-grid" id="projects-grid">
-                <div class="finder-file" data-category="siem" data-name="Wazuh SIEM Solution" data-img="https://i.postimg.cc/jjQx3G84/wazuh.png" data-desc="Full enterprise SIEM deployment using Wazuh. Includes custom detection rules, dashboards, and alerting pipelines for real-time threat monitoring." data-tags="Wazuh,SIEM,Detection,Alerting" data-url="https://drive.google.com/file/d/1GJY3C9ud2n0qigC55_krOjG66LkecNy7/view" onclick="openDrawer(this)">
+                <div class="finder-file" data-category="siem" data-name="Wazuh SIEM Solution"
+                  data-img="https://i.postimg.cc/jjQx3G84/wazuh.png"
+                  data-desc="Full enterprise SIEM deployment using Wazuh. Includes custom detection rules, dashboards, and alerting pipelines for real-time threat monitoring."
+                  data-tags="Wazuh,SIEM,Detection,Alerting"
+                  data-url="https://drive.google.com/file/d/1GJY3C9ud2n0qigC55_krOjG66LkecNy7/view"
+                  onclick="openDrawer(this)">
                   <img src="https://i.postimg.cc/jjQx3G84/wazuh.png" alt="Wazuh"><span>Wazuh SIEM Solution</span>
                 </div>
-                <div class="finder-file" data-category="siem" data-name="pfSense + Snort IDS" data-img="https://i.postimg.cc/nrLhD0GY/pfsense.png" data-desc="Network perimeter defense using pfSense firewall paired with Snort IDS. Configured custom intrusion detection rules and traffic analysis." data-tags="pfSense,Snort,IDS,Network" data-url="https://drive.google.com/file/d/1feG7cjBitrwS1nPcUsAt5Ddi274O5BeR/view" onclick="openDrawer(this)">
+                <div class="finder-file" data-category="siem" data-name="pfSense + Snort IDS"
+                  data-img="https://i.postimg.cc/nrLhD0GY/pfsense.png"
+                  data-desc="Network perimeter defense using pfSense firewall paired with Snort IDS. Configured custom intrusion detection rules and traffic analysis."
+                  data-tags="pfSense,Snort,IDS,Network"
+                  data-url="https://drive.google.com/file/d/1feG7cjBitrwS1nPcUsAt5Ddi274O5BeR/view"
+                  onclick="openDrawer(this)">
                   <img src="https://i.postimg.cc/nrLhD0GY/pfsense.png" alt="pfSense"><span>pfSense + Snort IDS</span>
                 </div>
-                <div class="finder-file" data-category="siem" data-name="Velociraptor EDR" data-img="https://i.postimg.cc/T3bYgygS/velo.png" data-desc="Endpoint detection and response deployment using Velociraptor. Built hunt artifacts and live response capabilities for incident investigation." data-tags="Velociraptor,EDR,DFIR,Hunting" data-url="https://drive.google.com/file/d/1v2u1QD6OZl0flnBNnF5nuXysz7cLcI89/view?usp=sharing" onclick="openDrawer(this)">
+                <div class="finder-file" data-category="siem" data-name="Velociraptor EDR"
+                  data-img="https://i.postimg.cc/T3bYgygS/velo.png"
+                  data-desc="Endpoint detection and response deployment using Velociraptor. Built hunt artifacts and live response capabilities for incident investigation."
+                  data-tags="Velociraptor,EDR,DFIR,Hunting"
+                  data-url="https://drive.google.com/file/d/1v2u1QD6OZl0flnBNnF5nuXysz7cLcI89/view?usp=sharing"
+                  onclick="openDrawer(this)">
                   <img src="https://i.postimg.cc/T3bYgygS/velo.png" alt="Velociraptor"><span>Velociraptor EDR</span>
                 </div>
-                <div class="finder-file" data-category="siem" data-name="PCAP Analysis" data-img="https://i.postimg.cc/NMdrSyND/wireshark.jpg" data-desc="Deep packet inspection and PCAP analysis using Wireshark. Investigated network anomalies, protocol misuse, and C2 communications." data-tags="Wireshark,PCAP,Network,DFIR" data-url="https://drive.google.com/file/d/1nrj05MkTRdKfWtzEgaP4nc_0KQfK6ZxT/view" onclick="openDrawer(this)">
+                <div class="finder-file" data-category="siem" data-name="PCAP Analysis"
+                  data-img="https://i.postimg.cc/NMdrSyND/wireshark.jpg"
+                  data-desc="Deep packet inspection and PCAP analysis using Wireshark. Investigated network anomalies, protocol misuse, and C2 communications."
+                  data-tags="Wireshark,PCAP,Network,DFIR"
+                  data-url="https://drive.google.com/file/d/1nrj05MkTRdKfWtzEgaP4nc_0KQfK6ZxT/view"
+                  onclick="openDrawer(this)">
                   <img src="https://i.postimg.cc/NMdrSyND/wireshark.jpg" alt="Wireshark"><span>PCAP Analysis</span>
                 </div>
-                <div class="finder-file" data-category="siem" data-name="SOAR Automation" data-img="https://i.postimg.cc/h4CjBRKC/n8n.png" data-desc="Automated security orchestration using n8n, TheHive, and VirusTotal. Reduced mean time to respond with fully automated alert triage." data-tags="n8n,SOAR,TheHive,Automation" data-url="https://drive.google.com/file/d/1bmE_OsdLQi87egPAGURLBZJKhck3cJTV/view?usp=sharing" onclick="openDrawer(this)">
+                <div class="finder-file" data-category="siem" data-name="SOAR Automation"
+                  data-img="https://i.postimg.cc/h4CjBRKC/n8n.png"
+                  data-desc="Automated security orchestration using n8n, TheHive, and VirusTotal. Reduced mean time to respond with fully automated alert triage."
+                  data-tags="n8n,SOAR,TheHive,Automation"
+                  data-url="https://drive.google.com/file/d/1bmE_OsdLQi87egPAGURLBZJKhck3cJTV/view?usp=sharing"
+                  onclick="openDrawer(this)">
                   <img src="https://i.postimg.cc/h4CjBRKC/n8n.png" alt="SOAR"><span>SOAR Automation</span>
                 </div>
-                <div class="finder-file" data-category="python" data-name="Software Inventory" data-img="https://i.postimg.cc/Pqkf4tMq/py1.png" data-desc="Python tool to automatically scan and catalog installed software across endpoints. Generates structured reports for asset management." data-tags="Python,Inventory,Automation" data-url="https://drive.google.com/file/d/10iXmxwrWh_BKxmMZbKiwtPf9qBfAJWbF/view" onclick="openDrawer(this)">
+                <div class="finder-file" data-category="python" data-name="Software Inventory"
+                  data-img="https://i.postimg.cc/Pqkf4tMq/py1.png"
+                  data-desc="Python tool to automatically scan and catalog installed software across endpoints. Generates structured reports for asset management."
+                  data-tags="Python,Inventory,Automation"
+                  data-url="https://drive.google.com/file/d/10iXmxwrWh_BKxmMZbKiwtPf9qBfAJWbF/view"
+                  onclick="openDrawer(this)">
                   <img src="https://i.postimg.cc/Pqkf4tMq/py1.png" alt="Inventory"><span>Software Inventory</span>
                 </div>
-                <div class="finder-file" data-category="python" data-name="Email Automation" data-img="https://i.postimg.cc/sx0D97nF/py2.jpg" data-desc="Python-based email automation bot for security notifications, alert dispatching, and scheduled report delivery." data-tags="Python,Email,Bot,Automation" data-url="https://drive.google.com/file/d/1NSSZMV0VK1_0pn_pey6r7o7yGEZck66p/view" onclick="openDrawer(this)">
+                <div class="finder-file" data-category="python" data-name="Email Automation"
+                  data-img="https://i.postimg.cc/sx0D97nF/py2.jpg"
+                  data-desc="Python-based email automation bot for security notifications, alert dispatching, and scheduled report delivery."
+                  data-tags="Python,Email,Bot,Automation"
+                  data-url="https://drive.google.com/file/d/1NSSZMV0VK1_0pn_pey6r7o7yGEZck66p/view"
+                  onclick="openDrawer(this)">
                   <img src="https://i.postimg.cc/sx0D97nF/py2.jpg" alt="Email"><span>Email Automation</span>
                 </div>
-                <div class="finder-file" data-category="python" data-name="Network Monitoring" data-img="https://i.postimg.cc/YqZCvNGY/py3.png" data-desc="Real-time network monitoring script using Python. Detects anomalies, tracks bandwidth, and alerts on suspicious host activity." data-tags="Python,Network,Monitor,Security" data-url="https://drive.google.com/file/d/1PXKD-7kduM1j5R94lzLyk-eoK6xWd8pN/view" onclick="openDrawer(this)">
+                <div class="finder-file" data-category="python" data-name="Network Monitoring"
+                  data-img="https://i.postimg.cc/YqZCvNGY/py3.png"
+                  data-desc="Real-time network monitoring script using Python. Detects anomalies, tracks bandwidth, and alerts on suspicious host activity."
+                  data-tags="Python,Network,Monitor,Security"
+                  data-url="https://drive.google.com/file/d/1PXKD-7kduM1j5R94lzLyk-eoK6xWd8pN/view"
+                  onclick="openDrawer(this)">
                   <img src="https://i.postimg.cc/YqZCvNGY/py3.png" alt="Network"><span>Network Monitoring</span>
                 </div>
-                <div class="finder-file" data-category="python" data-name="Weather Bot" data-img="https://i.postimg.cc/5N6t9K0f/py4.jpg" data-desc="Python weather bot using public API integration. Built as a scripting exercise with REST API calls, JSON parsing, and CLI output." data-tags="Python,API,Bot,Scripting" data-url="https://drive.google.com/file/d/1r9jIFd4nbG0RDKWtZshSggkrsCQSE2By/view" onclick="openDrawer(this)">
+                <div class="finder-file" data-category="python" data-name="Weather Bot"
+                  data-img="https://i.postimg.cc/5N6t9K0f/py4.jpg"
+                  data-desc="Python weather bot using public API integration. Built as a scripting exercise with REST API calls, JSON parsing, and CLI output."
+                  data-tags="Python,API,Bot,Scripting"
+                  data-url="https://drive.google.com/file/d/1r9jIFd4nbG0RDKWtZshSggkrsCQSE2By/view"
+                  onclick="openDrawer(this)">
                   <img src="https://i.postimg.cc/5N6t9K0f/py4.jpg" alt="Weather"><span>Weather Bot</span>
                 </div>
               </div>
@@ -2559,7 +3297,7 @@
 
     <!-- TERMINAL WINDOW -->
     <div class="window hidden" id="win-terminal" style="width:700px;height:520px;top:100px;left:240px">
-      <div class="title-bar" data-win="terminal" style="background:#0a0a0a">
+      <div class="title-bar" data-win="terminal" style="background:#f5f5f5">
         <div class="traffic-lights">
           <div class="tl tl-close" onclick="closeWindow('terminal')"></div>
           <div class="tl tl-minimize" onclick="minimizeWindow('terminal')"></div>
@@ -2568,6 +3306,88 @@
         <span class="title-text">rabiul@mac:~ — zsh</span>
       </div>
       <div class="window-body terminal-body" id="terminal-output" tabindex="0"></div>
+    </div>
+
+    <!-- SAFARI WINDOW -->
+    <div class="window hidden" id="win-safari" style="width:1100px;height:700px;top:60px;left:100px">
+      <div class="title-bar" data-win="safari" style="background:#f5f5f5">
+        <div class="traffic-lights">
+          <div class="tl tl-close" onclick="closeWindow('safari')"></div>
+          <div class="tl tl-minimize" onclick="minimizeWindow('safari')"></div>
+          <div class="tl tl-maximize" onclick="maximizeWindow('safari')"></div>
+        </div>
+        <span class="title-text">Safari</span>
+      </div>
+      <div class="window-body" style="padding:0;display:flex;flex-direction:column;background:#fff">
+        <div class="safari-toolbar">
+          <div class="safari-nav">
+            <button class="safari-btn" onclick="safariBack()">◀</button>
+            <button class="safari-btn" onclick="safariForward()">▶</button>
+            <button class="safari-btn" onclick="safariReload()">↻</button>
+          </div>
+          <input type="text" class="safari-url" id="safari-url" placeholder="Search or enter website" 
+            onkeydown="if(event.key==='Enter')safariNavigate()">
+          <button class="safari-btn" onclick="showSafariStartPage()">⌂</button>
+        </div>
+        <div class="safari-start-page" id="safari-start-page">
+          <div class="safari-start-header">
+            <div class="safari-favorites-title">Favorites</div>
+          </div>
+          <div class="safari-favorites">
+            <div class="safari-fav-item" onclick="window.open('https://github.com','_blank')">
+              <img src="https://cdn.jim-nielsen.com/macos/512/github-desktop-2021-05-20.png?rf=1024">
+              <span>GitHub</span>
+            </div>
+            <div class="safari-fav-item" onclick="window.open('https://www.linkedin.com','_blank')">
+              <img src="https://img.icons8.com/?size=100&id=nTY9sWZezkri&format=png&color=000000">
+              <span>LinkedIn</span>
+            </div>
+            <div class="safari-fav-item" onclick="window.open('https://x.com','_blank')">
+              <img src="https://img.icons8.com/?size=100&id=oaaSr6h7kwm6&format=png&color=000000">
+              <span>X</span>
+            </div>
+            <div class="safari-fav-item" onclick="window.open('https://www.youtube.com','_blank')">
+              <img src="https://img.icons8.com/?size=100&id=19318&format=png&color=000000">
+              <span>YouTube</span>
+            </div>
+            <div class="safari-fav-item" onclick="window.open('https://mail.google.com','_blank')">
+              <img src="https://img.icons8.com/?size=100&id=P7UIlhbpWzZm&format=png&color=000000">
+              <span>Gmail</span>
+            </div>
+            <div class="safari-fav-item" onclick="window.open('https://drive.google.com','_blank')">
+              <img src="https://img.icons8.com/?size=100&id=ya4CrqO7PgnY&format=png&color=000000">
+              <span>Drive</span>
+            </div>
+          </div>
+          <div class="safari-search-box">
+            <div class="safari-search-container">
+              <svg class="safari-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+              </svg>
+              <input type="text" id="safari-start-search" placeholder="Search or enter website name" 
+                onkeydown="if(event.key==='Enter')safariSearchFromStart()">
+            </div>
+          </div>
+        </div>
+        <iframe class="safari-frame hidden" id="safari-frame"></iframe>
+        <div class="safari-message hidden" id="safari-message">
+          <div class="safari-message-content">
+            <div class="safari-message-icon">🚫</div>
+            <h2>Oops! Can't Browse Here 😢</h2>
+            <p>Most websites don't allow being displayed inside other websites for security reasons.</p>
+            <p>This is called <strong>X-Frame-Options</strong> protection - it prevents sites from being embedded to avoid clickjacking attacks.</p>
+            <div class="safari-message-links">
+              <p>But don't worry! You can still:</p>
+              <a href="https://github.com" target="_blank" class="safari-msg-link">📂 Open GitHub in new tab</a>
+              <a href="https://linkedin.com" target="_blank" class="safari-msg-link">💼 Open LinkedIn in new tab</a>
+              <a href="https://x.com" target="_blank" class="safari-msg-link">🐦 Open X in new tab</a>
+              <a href="https://youtube.com" target="_blank" class="safari-msg-link">🎬 Open YouTube in new tab</a>
+              <a href="https://mail.google.com" target="_blank" class="safari-msg-link">📧 Open Gmail in new tab</a>
+            </div>
+            <button class="safari-msg-btn" onclick="closeSafariMessage()">🔙 Back to Start Page</button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- CERTS WINDOW -->
@@ -2618,7 +3438,8 @@
             </div>
             <div class="cert-arrow">→</div>
           </a>
-          <a href="https://drive.google.com/file/d/15bFVj5UfHmIzL-bRMaUwCm_NY59Wuo-5/view" target="_blank"
+          <a href="javascript:void(0)"
+            onclick="openPdfViewer('https://drive.google.com/file/d/15bFVj5UfHmIzL-bRMaUwCm_NY59Wuo-5/preview','NDG Linux Essentials.pdf','https://drive.google.com/file/d/15bFVj5UfHmIzL-bRMaUwCm_NY59Wuo-5/view')"
             class="cert-row">
             <div class="cert-dot" style="background:var(--green)"></div>
             <div class="cert-info">
@@ -2635,7 +3456,8 @@
             </div>
             <div class="cert-arrow">→</div>
           </a>
-          <a href="https://drive.google.com/file/d/1x8TY-wbpB0AjPoxOEKuhIa6U-e__iZAR/view" target="_blank"
+          <a href="javascript:void(0)"
+            onclick="openPdfViewer('https://drive.google.com/file/d/1x8TY-wbpB0AjPoxOEKuhIa6U-e__iZAR/preview','Open-source Intelligence.pdf','https://drive.google.com/file/d/1x8TY-wbpB0AjPoxOEKuhIa6U-e__iZAR/view')"
             class="cert-row">
             <div class="cert-dot"></div>
             <div class="cert-info">
@@ -2644,7 +3466,8 @@
             </div>
             <div class="cert-arrow">→</div>
           </a>
-          <a href="https://drive.google.com/file/d/1YcgMkqhTkYnySao2IQl0giCFaCLCX3Tv/view" target="_blank"
+          <a href="javascript:void(0)"
+            onclick="openPdfViewer('https://drive.google.com/file/d/1YcgMkqhTkYnySao2IQl0giCFaCLCX3Tv/preview','EDR Foundation.pdf','https://drive.google.com/file/d/1YcgMkqhTkYnySao2IQl0giCFaCLCX3Tv/view')"
             class="cert-row">
             <div class="cert-dot" style="background:var(--green)"></div>
             <div class="cert-info">
@@ -2653,18 +3476,10 @@
             </div>
             <div class="cert-arrow">→</div>
           </a>
-          <a href="https://arcx.io/verify-certificate?id=e384cdd89bcf0ad6382f8065c54e82fa959b4f1f&k=4d569e348a6f48108808ac8507bd48d5"
-            target="_blank" class="cert-row">
-            <div class="cert-dot" style="background:var(--yellow)"></div>
-            <div class="cert-info">
-              <div class="cert-title">Cyber Threat Intelligence 101</div>
-              <div class="cert-issuer">arcX</div>
-            </div>
-            <div class="cert-arrow">→</div>
-          </a>
-          <a href="https://drive.google.com/file/d/1cKRJ_liL0DwiKOhAqvbdPbG13b_4TblB/view" target="_blank"
+          <a href="javascript:void(0)"
+            onclick="openPdfViewer('https://drive.google.com/file/d/1cKRJ_liL0DwiKOhAqvbdPbG13b_4TblB/preview','Blue Team Junior Analyst.pdf','https://drive.google.com/file/d/1cKRJ_liL0DwiKOhAqvbdPbG13b_4TblB/view')"
             class="cert-row">
-            <div class="cert-dot"></div>
+            <div class="cert-dot" style="background:var(--cyan)"></div>
             <div class="cert-info">
               <div class="cert-title">Blue Team Junior Analyst</div>
               <div class="cert-issuer">Security Blue Team</div>
@@ -2679,7 +3494,8 @@
             </div>
             <div class="cert-arrow">→</div>
           </a>
-          <a href="https://drive.google.com/file/d/1nf2ncpO2sq-uIGACs5BeIqvTl_mSnjgE/view" target="_blank"
+          <a href="javascript:void(0)"
+            onclick="openPdfViewer('https://drive.google.com/file/d/1nf2ncpO2sq-uIGACs5BeIqvTl_mSnjgE/preview','Vulnerability Management.pdf','https://drive.google.com/file/d/1nf2ncpO2sq-uIGACs5BeIqvTl_mSnjgE/view')"
             class="cert-row">
             <div class="cert-dot" style="background:var(--yellow)"></div>
             <div class="cert-info">
@@ -2715,41 +3531,179 @@
             <!-- Defense -->
             <div class="skills-section active" id="skills-defense">
               <div class="skills-category-title">🛡️ Defense & SIEM</div>
-              <div class="skill-bar-row"><div class="skill-bar-header"><span class="skill-name">Wazuh SIEM</span><span class="skill-pct">92%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="92"></div></div></div>
-              <div class="skill-bar-row"><div class="skill-bar-header"><span class="skill-name">Incident Response</span><span class="skill-pct">85%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="85"></div></div></div>
-              <div class="skill-bar-row"><div class="skill-bar-header"><span class="skill-name">Velociraptor EDR</span><span class="skill-pct">80%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="80"></div></div></div>
-              <div class="skill-bar-row"><div class="skill-bar-header"><span class="skill-name">SOAR (n8n/TheHive)</span><span class="skill-pct">78%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="78"></div></div></div>
-              <div class="skill-bar-row"><div class="skill-bar-header"><span class="skill-name">Log Analysis</span><span class="skill-pct">88%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="88"></div></div></div>
-              <div class="skill-bar-row"><div class="skill-bar-header"><span class="skill-name">Threat Intelligence</span><span class="skill-pct">75%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="75"></div></div></div>
+              <div class="skill-bar-row">
+                <div class="skill-bar-header"><span class="skill-name">Wazuh SIEM</span><span
+                    class="skill-pct">92%</span></div>
+                <div class="skill-bar-track">
+                  <div class="skill-bar-fill" data-pct="92"></div>
+                </div>
+              </div>
+              <div class="skill-bar-row">
+                <div class="skill-bar-header"><span class="skill-name">Incident Response</span><span
+                    class="skill-pct">85%</span></div>
+                <div class="skill-bar-track">
+                  <div class="skill-bar-fill" data-pct="85"></div>
+                </div>
+              </div>
+              <div class="skill-bar-row">
+                <div class="skill-bar-header"><span class="skill-name">Velociraptor EDR</span><span
+                    class="skill-pct">80%</span></div>
+                <div class="skill-bar-track">
+                  <div class="skill-bar-fill" data-pct="80"></div>
+                </div>
+              </div>
+              <div class="skill-bar-row">
+                <div class="skill-bar-header"><span class="skill-name">SOAR (n8n/TheHive)</span><span
+                    class="skill-pct">78%</span></div>
+                <div class="skill-bar-track">
+                  <div class="skill-bar-fill" data-pct="78"></div>
+                </div>
+              </div>
+              <div class="skill-bar-row">
+                <div class="skill-bar-header"><span class="skill-name">Log Analysis</span><span
+                    class="skill-pct">88%</span></div>
+                <div class="skill-bar-track">
+                  <div class="skill-bar-fill" data-pct="88"></div>
+                </div>
+              </div>
+              <div class="skill-bar-row">
+                <div class="skill-bar-header"><span class="skill-name">Threat Intelligence</span><span
+                    class="skill-pct">75%</span></div>
+                <div class="skill-bar-track">
+                  <div class="skill-bar-fill" data-pct="75"></div>
+                </div>
+              </div>
             </div>
             <!-- Offense -->
             <div class="skills-section" id="skills-offense">
               <div class="skills-category-title">⚔️ Offensive Security</div>
-              <div class="skill-bar-row"><div class="skill-bar-header"><span class="skill-name">Penetration Testing</span><span class="skill-pct">78%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="78"></div></div></div>
-              <div class="skill-bar-row"><div class="skill-bar-header"><span class="skill-name">Burp Suite</span><span class="skill-pct">74%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="74"></div></div></div>
-              <div class="skill-bar-row"><div class="skill-bar-header"><span class="skill-name">Metasploit</span><span class="skill-pct">70%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="70"></div></div></div>
-              <div class="skill-bar-row"><div class="skill-bar-header"><span class="skill-name">Vulnerability Assessment</span><span class="skill-pct">82%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="82"></div></div></div>
-              <div class="skill-bar-row"><div class="skill-bar-header"><span class="skill-name">OWASP ZAP</span><span class="skill-pct">68%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="68"></div></div></div>
-              <div class="skill-bar-row"><div class="skill-bar-header"><span class="skill-name">Bug Hunting / VAPT</span><span class="skill-pct">72%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="72"></div></div></div>
+              <div class="skill-bar-row">
+                <div class="skill-bar-header"><span class="skill-name">Penetration Testing</span><span
+                    class="skill-pct">78%</span></div>
+                <div class="skill-bar-track">
+                  <div class="skill-bar-fill" data-pct="78"></div>
+                </div>
+              </div>
+              <div class="skill-bar-row">
+                <div class="skill-bar-header"><span class="skill-name">Burp Suite</span><span
+                    class="skill-pct">74%</span></div>
+                <div class="skill-bar-track">
+                  <div class="skill-bar-fill" data-pct="74"></div>
+                </div>
+              </div>
+              <div class="skill-bar-row">
+                <div class="skill-bar-header"><span class="skill-name">Metasploit</span><span
+                    class="skill-pct">70%</span></div>
+                <div class="skill-bar-track">
+                  <div class="skill-bar-fill" data-pct="70"></div>
+                </div>
+              </div>
+              <div class="skill-bar-row">
+                <div class="skill-bar-header"><span class="skill-name">Vulnerability Assessment</span><span
+                    class="skill-pct">82%</span></div>
+                <div class="skill-bar-track">
+                  <div class="skill-bar-fill" data-pct="82"></div>
+                </div>
+              </div>
+              <div class="skill-bar-row">
+                <div class="skill-bar-header"><span class="skill-name">OWASP ZAP</span><span
+                    class="skill-pct">68%</span></div>
+                <div class="skill-bar-track">
+                  <div class="skill-bar-fill" data-pct="68"></div>
+                </div>
+              </div>
+              <div class="skill-bar-row">
+                <div class="skill-bar-header"><span class="skill-name">Bug Hunting / VAPT</span><span
+                    class="skill-pct">72%</span></div>
+                <div class="skill-bar-track">
+                  <div class="skill-bar-fill" data-pct="72"></div>
+                </div>
+              </div>
             </div>
             <!-- Dev -->
             <div class="skills-section" id="skills-dev">
               <div class="skills-category-title">🐍 Development</div>
-              <div class="skill-bar-row"><div class="skill-bar-header"><span class="skill-name">Python</span><span class="skill-pct">85%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="85"></div></div></div>
-              <div class="skill-bar-row"><div class="skill-bar-header"><span class="skill-name">Bash Scripting</span><span class="skill-pct">78%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="78"></div></div></div>
-              <div class="skill-bar-row"><div class="skill-bar-header"><span class="skill-name">MySQL</span><span class="skill-pct">65%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="65"></div></div></div>
-              <div class="skill-bar-row"><div class="skill-bar-header"><span class="skill-name">Automation (n8n)</span><span class="skill-pct">80%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="80"></div></div></div>
-              <div class="skill-bar-row"><div class="skill-bar-header"><span class="skill-name">Security Scripting</span><span class="skill-pct">82%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="82"></div></div></div>
+              <div class="skill-bar-row">
+                <div class="skill-bar-header"><span class="skill-name">Python</span><span class="skill-pct">85%</span>
+                </div>
+                <div class="skill-bar-track">
+                  <div class="skill-bar-fill" data-pct="85"></div>
+                </div>
+              </div>
+              <div class="skill-bar-row">
+                <div class="skill-bar-header"><span class="skill-name">Bash Scripting</span><span
+                    class="skill-pct">78%</span></div>
+                <div class="skill-bar-track">
+                  <div class="skill-bar-fill" data-pct="78"></div>
+                </div>
+              </div>
+              <div class="skill-bar-row">
+                <div class="skill-bar-header"><span class="skill-name">MySQL</span><span class="skill-pct">65%</span>
+                </div>
+                <div class="skill-bar-track">
+                  <div class="skill-bar-fill" data-pct="65"></div>
+                </div>
+              </div>
+              <div class="skill-bar-row">
+                <div class="skill-bar-header"><span class="skill-name">Automation (n8n)</span><span
+                    class="skill-pct">80%</span></div>
+                <div class="skill-bar-track">
+                  <div class="skill-bar-fill" data-pct="80"></div>
+                </div>
+              </div>
+              <div class="skill-bar-row">
+                <div class="skill-bar-header"><span class="skill-name">Security Scripting</span><span
+                    class="skill-pct">82%</span></div>
+                <div class="skill-bar-track">
+                  <div class="skill-bar-fill" data-pct="82"></div>
+                </div>
+              </div>
             </div>
             <!-- Network -->
             <div class="skills-section" id="skills-network">
               <div class="skills-category-title">🌐 Network & Infrastructure</div>
-              <div class="skill-bar-row"><div class="skill-bar-header"><span class="skill-name">Wireshark / PCAP</span><span class="skill-pct">87%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="87"></div></div></div>
-              <div class="skill-bar-row"><div class="skill-bar-header"><span class="skill-name">Suricata / Snort IDS</span><span class="skill-pct">82%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="82"></div></div></div>
-              <div class="skill-bar-row"><div class="skill-bar-header"><span class="skill-name">pfSense Firewall</span><span class="skill-pct">79%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="79"></div></div></div>
-              <div class="skill-bar-row"><div class="skill-bar-header"><span class="skill-name">Nmap / Recon</span><span class="skill-pct">84%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="84"></div></div></div>
-              <div class="skill-bar-row"><div class="skill-bar-header"><span class="skill-name">Network Monitoring</span><span class="skill-pct">80%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="80"></div></div></div>
-              <div class="skill-bar-row"><div class="skill-bar-header"><span class="skill-name">Kali Linux / Ubuntu</span><span class="skill-pct">88%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="88"></div></div></div>
+              <div class="skill-bar-row">
+                <div class="skill-bar-header"><span class="skill-name">Wireshark / PCAP</span><span
+                    class="skill-pct">87%</span></div>
+                <div class="skill-bar-track">
+                  <div class="skill-bar-fill" data-pct="87"></div>
+                </div>
+              </div>
+              <div class="skill-bar-row">
+                <div class="skill-bar-header"><span class="skill-name">Suricata / Snort IDS</span><span
+                    class="skill-pct">82%</span></div>
+                <div class="skill-bar-track">
+                  <div class="skill-bar-fill" data-pct="82"></div>
+                </div>
+              </div>
+              <div class="skill-bar-row">
+                <div class="skill-bar-header"><span class="skill-name">pfSense Firewall</span><span
+                    class="skill-pct">79%</span></div>
+                <div class="skill-bar-track">
+                  <div class="skill-bar-fill" data-pct="79"></div>
+                </div>
+              </div>
+              <div class="skill-bar-row">
+                <div class="skill-bar-header"><span class="skill-name">Nmap / Recon</span><span
+                    class="skill-pct">84%</span></div>
+                <div class="skill-bar-track">
+                  <div class="skill-bar-fill" data-pct="84"></div>
+                </div>
+              </div>
+              <div class="skill-bar-row">
+                <div class="skill-bar-header"><span class="skill-name">Network Monitoring</span><span
+                    class="skill-pct">80%</span></div>
+                <div class="skill-bar-track">
+                  <div class="skill-bar-fill" data-pct="80"></div>
+                </div>
+              </div>
+              <div class="skill-bar-row">
+                <div class="skill-bar-header"><span class="skill-name">Kali Linux / Ubuntu</span><span
+                    class="skill-pct">88%</span></div>
+                <div class="skill-bar-track">
+                  <div class="skill-bar-fill" data-pct="88"></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -2863,11 +3817,19 @@
       <div class="pdf-viewer-toolbar">
         <span class="pdf-title" id="pdfviewer-filename">Loading...</span>
         <a id="pdfviewer-extlink" href="#" target="_blank" class="pdf-toolbar-btn" title="Open in new tab">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+            <polyline points="15 3 21 3 21 9" />
+            <line x1="10" y1="14" x2="21" y2="3" />
+          </svg>
           Open in tab
         </a>
         <a id="pdfviewer-dllink" href="#" download class="pdf-toolbar-btn" title="Download">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="7 10 12 15 17 10" />
+            <line x1="12" y1="15" x2="12" y2="3" />
+          </svg>
           Download
         </a>
       </div>
@@ -2877,7 +3839,8 @@
             <div class="pdf-spinner"></div>
             <span>Loading document...</span>
           </div>
-          <iframe id="pdfviewer-iframe" src="" allow="fullscreen" onload="document.getElementById('pdf-loading').classList.add('hidden')"></iframe>
+          <iframe id="pdfviewer-iframe" src="" allow="fullscreen"
+            onload="document.getElementById('pdf-loading').classList.add('hidden')"></iframe>
         </div>
       </div>
     </div>
@@ -2937,145 +3900,264 @@
   </div>
 
   <!-- DOCK -->
-  <div id="dock">
+  <div id="dock" style="bottom:6px">
     <div class="dock-item" onclick="toggleWindow('finder')">
       <span class="tooltip">Finder</span>
-      <svg class="icon-svg" viewBox="0 0 24 24">
-        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
-      </svg>
+      <img class="dock-icon" src="https://cdn.jim-nielsen.com/macos/512/finder-2025-11-13.png">
       <div class="dock-dot"></div>
-      <span class="dock-label-permanent">Finder</span>
     </div>
     <div class="dock-item" onclick="toggleWindow('about')">
       <span class="tooltip">About</span>
-      <svg class="icon-svg" viewBox="0 0 24 24">
-        <rect x="3" y="3" width="18" height="18" rx="2" />
-        <line x1="9" y1="9" x2="15" y2="9" />
-        <line x1="9" y1="13" x2="15" y2="13" />
-        <line x1="9" y1="17" x2="11" y2="17" />
-      </svg>
+      <img class="dock-icon"
+        src="https://cdn.jim-nielsen.com/macos/512/cleanmaster-remove-junk-files-2026-01-05.png?rf=1024">
       <div class="dock-dot"></div>
-      <span class="dock-label-permanent">About</span>
     </div>
     <div class="dock-item" onclick="toggleWindow('skills')">
       <span class="tooltip">Skills</span>
-      <svg class="icon-svg" viewBox="0 0 24 24">
-        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
-      </svg>
+      <img class="dock-icon" src="https://cdn.jim-nielsen.com/macos/512/bit-slicer-2025-12-08.png?rf=1024">
       <div class="dock-dot"></div>
-      <span class="dock-label-permanent">Skills</span>
     </div>
     <div class="dock-item" onclick="toggleWindow('terminal')">
       <span class="tooltip">Terminal</span>
-      <svg class="icon-svg" viewBox="0 0 24 24">
-        <polyline points="4 17 10 11 4 5" />
-        <line x1="12" y1="19" x2="20" y2="19" />
-      </svg>
+      <img class="dock-icon" src="https://cdn.jim-nielsen.com/macos/512/terminal-2025-11-14.png?rf=1024">
       <div class="dock-dot"></div>
-      <span class="dock-label-permanent">Terminal</span>
+    </div>
+    <div class="dock-item" onclick="toggleWindow('safari')">
+      <span class="tooltip">Safari</span>
+      <img class="dock-icon" src="https://cdn.jim-nielsen.com/macos/512/safari-2025-11-14.png?rf=1024">
+      <div class="dock-dot"></div>
     </div>
     <div class="dock-item" onclick="toggleWindow('certs')">
       <span class="tooltip">Certs</span>
-      <svg class="icon-svg" viewBox="0 0 24 24">
-        <circle cx="12" cy="8" r="7" />
-        <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" />
-      </svg>
+      <img class="dock-icon" src="https://cdn.jim-nielsen.com/macos/512/bluenote-2014-09-23.png?rf=512">
       <div class="dock-dot"></div>
-      <span class="dock-label-permanent">Certs</span>
     </div>
     <div class="dock-item" onclick="toggleWindow('experience')">
       <span class="tooltip">Experience</span>
-      <svg class="icon-svg" viewBox="0 0 24 24">
-        <rect x="2" y="7" width="20" height="14" rx="2" />
-        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-      </svg>
+      <img class="dock-icon"
+        src="https://cdn.jim-nielsen.com/macos/512/expenses-spending-tracker-2025-04-26.png?rf=1024">
       <div class="dock-dot"></div>
-      <span class="dock-label-permanent">XP</span>
     </div>
     <div class="dock-item" onclick="toggleWindow('activitylog')">
       <span class="tooltip">Activity Log</span>
-      <svg class="icon-svg" viewBox="0 0 24 24">
-        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-        <polyline points="14 2 14 8 20 8" />
-        <line x1="16" y1="13" x2="8" y2="13" />
-        <line x1="16" y1="17" x2="8" y2="17" />
-      </svg>
+      <img class="dock-icon" src="https://cdn.jim-nielsen.com/macos/512/activity-monitor-2025-11-13.png?rf=1024">
       <div class="dock-dot"></div>
-      <span class="dock-label-permanent">Log</span>
     </div>
     <div class="dock-sep"></div>
     <div class="dock-item"
       onclick="openPdfViewer('https://drive.google.com/file/d/1T8deP1xUOqYUfwuXnGSGU5sAO-vJMHlj/preview','Resume — Rabiul Hasan.pdf','https://drive.google.com/file/d/1T8deP1xUOqYUfwuXnGSGU5sAO-vJMHlj/view?usp=sharing')">
-      <span class="tooltip">Resume PDF</span>
-      <svg class="icon-svg" viewBox="0 0 24 24">
-        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-        <polyline points="14 2 14 8 20 8" />
-        <line x1="16" y1="13" x2="8" y2="13" />
-        <line x1="16" y1="17" x2="8" y2="17" />
-        <polyline points="10 9 9 9 8 9" />
-      </svg>
+      <span class="tooltip">Resume</span>
+      <img class="dock-icon" src="https://cdn.jim-nielsen.com/macos/512/coppice-2026-04-01.png?rf=1024">
       <div class="dock-dot"></div>
-      <span class="dock-label-permanent">Resume</span>
     </div>
     <div class="dock-item" onclick="window.open('https://www.linkedin.com/in/rabiulislam32','_blank')">
       <span class="tooltip">LinkedIn</span>
-      <svg class="icon-svg" viewBox="0 0 24 24">
-        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-        <rect x="2" y="9" width="4" height="12" />
-        <circle cx="4" cy="4" r="2" />
-      </svg>
+      <img class="dock-icon" src="https://img.icons8.com/?size=100&id=nTY9sWZezkri&format=png&color=000000">
       <div class="dock-dot"></div>
-      <span class="dock-label-permanent">LinkedIn</span>
     </div>
-    <div class="dock-item" onclick="window.open('https://github.com/rabiulhasann','_blank')">
+<div class="dock-item" onclick="window.open('https://github.com/rabiulhasann','_blank')">
       <span class="tooltip">GitHub</span>
-      <svg class="icon-svg" viewBox="0 0 24 24">
-        <path
-          d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-      </svg>
+      <img class="dock-icon" src="https://cdn.jim-nielsen.com/macos/512/github-desktop-2021-05-20.png?rf=1024">
       <div class="dock-dot"></div>
-      <span class="dock-label-permanent">GitHub</span>
     </div>
+    <div class="dock-sep"></div>
+    <div class="dock-item" onclick="openLaunchpad()">
+      <span class="tooltip">Launchpad</span>
+      <img src="https://static.wikia.nocookie.net/logopedia/images/0/0e/Apps_2025_%28dark%29.png/revision/latest/scale-to-width-down/1000?cb=20251025053551" style="width:32px;height:32px;object-fit:contain;border-radius:6px;">
+      <div class="dock-dot"></div>
+    </div>
+  </div>
+  </div>
+  <div class="dock-item" onclick="toggleWindow('about')">
+    <span class="tooltip">About</span>
+    <svg class="dock-icon" viewBox="0 0 100 100">
+      <rect fill="#9333ea" width="100" height="100" rx="20" />
+      <circle fill="#fff" cx="50" cy="38" r="18" />
+      <path fill="#fff" d="M25 80c0-13.8 11.2-25 25-25s25 11.2 25 25" />
+    </svg>
+    <div class="dock-dot"></div>
+  </div>
+  <div class="dock-item" onclick="toggleWindow('skills')">
+    <span class="tooltip">Skills</span>
+    <svg class="dock-icon" viewBox="0 0 100 100">
+      <rect fill="#28c840" width="100" height="100" rx="20" />
+      <path fill="#fff" stroke="#fff" stroke-width="6" d="M25 35l15 30 30-30 30 30" />
+      <line stroke="#fff" stroke-width="6" x1="25" y1="70" x2="75" y2="70" />
+    </svg>
+    <div class="dock-dot"></div>
+  </div>
+  <div class="dock-item" onclick="toggleWindow('terminal')">
+    <span class="tooltip">Terminal</span>
+    <svg class="dock-icon" viewBox="0 0 100 100">
+      <rect fill="#000" width="100" height="100" rx="20" />
+      <polyline fill="none" stroke="#00ff00" stroke-width="6" points="20,35 40,50 20,65" />
+      <line stroke="#00ff00" stroke-width="6" x1="50" y1="65" x2="80" y2="65" />
+    </svg>
+    <div class="dock-dot"></div>
+  </div>
+  <div class="dock-item" onclick="toggleWindow('certs')">
+    <span class="tooltip">Certs</span>
+    <svg class="dock-icon" viewBox="0 0 100 100">
+      <rect fill="#febc2e" width="100" height="100" rx="20" />
+      <polygon fill="#fff" points="50,20 61,45 88,45 66,60 75,87 50,72 25,87 34,60 12,45 39,45" />
+      <rect fill="#febc2e" x="45" y="48" width="10" height="30" />
+    </svg>
+    <div class="dock-dot"></div>
+  </div>
+  <div class="dock-item" onclick="toggleWindow('experience')">
+    <span class="tooltip">Experience</span>
+    <svg class="dock-icon" viewBox="0 0 100 100">
+      <rect fill="#32d74b" width="100" height="100" rx="20" />
+      <path fill="#fff" d="M30 35h40v30H30zM30 30c-5 0-10 5-10 10v30h50V40c0-5-5-10-10-10H30z" />
+      <circle fill="#32d74b" cx="50" cy="28" r="8" />
+      <path fill="#fff" d="M25 65h50M35 75h30M25 85h40" />
+    </svg>
+    <div class="dock-dot"></div>
+  </div>
+  <div class="dock-item" onclick="toggleWindow('activitylog')">
+    <span class="tooltip">Activity Log</span>
+    <svg class="dock-icon" viewBox="0 0 100 100">
+      <rect fill="#febc2e" width="100" height="100" rx="20" />
+      <line stroke="#fff" stroke-width="6" x1="25" y1="30" x2="75" y2="30" />
+      <line stroke="#fff" stroke-width="6" x1="25" y1="50" x2="75" y2="50" />
+      <line stroke="#fff" stroke-width="6" x1="25" y1="70" x2="55" y2="70" />
+    </svg>
+    <div class="dock-dot"></div>
+  </div>
+  <div class="dock-sep"></div>
+  <div class="dock-item"
+    onclick="openPdfViewer('https://drive.google.com/file/d/1T8deP1xUOqYUfwuXnGSGU5sAO-vJMHlj/preview','Resume — Rabiul Hasan.pdf','https://drive.google.com/file/d/1T8deP1xUOqYUfwuXnGSGU5sAO-vJMHlj/view?usp=sharing')">
+    <span class="tooltip">Resume</span>
+    <svg class="dock-icon" viewBox="0 0 100 100">
+      <rect fill="#fff" width="100" height="100" rx="20" />
+      <path fill="#ff3b30" stroke="#ccc" stroke-width="2" d="M30 20h40v60H30z" />
+      <polyline fill="#ff3b30" stroke="#fff" stroke-width="3" points="40,20 40,35 60,35" />
+      <line stroke="#999" stroke-width="4" x1="35" y1="50" x2="65" y2="50" />
+      <line stroke="#999" stroke-width="4" x1="35" y1="62" x2="65" y2="62" />
+      <line stroke="#999" stroke-width="4" x1="35" y1="74" x2="55" y2="74" />
+    </svg>
+    <div class="dock-dot"></div>
+  </div>
+  <div class="dock-item" onclick="window.open('https://www.linkedin.com/in/rabiulislam32','_blank')">
+    <span class="tooltip">LinkedIn</span>
+    <svg class="dock-icon" viewBox="0 0 100 100">
+      <rect fill="#0a66c2" width="100" height="100" rx="20" />
+      <path fill="#fff"
+        d="M30 65h10v20H30zM35 30v10c0-5 2-8 8-8s8 3 8 8v10h10v20H35V45c0-3-1-5-3-5-2-1-5 0-5 3v20H20V45c0-8 5-12 10-12 5 0 5 3 5 5v20z" />
+    </svg>
+    <div class="dock-dot"></div>
+  </div>
+  <div class="dock-item" onclick="window.open('https://github.com/rabiulhasann','_blank')">
+    <span class="tooltip">GitHub</span>
+    <svg class="dock-icon" viewBox="0 0 100 100">
+      <rect fill="#24292e" width="100" height="100" rx="20" />
+      <path fill="#fff"
+        d="M50 25c-20 0-35 15-35 35 0 15 10 27 23 32-2 4-4 10-1 14l1 2c3 1 8-1 10-3 2-1 4-1 6 0 2 2 5 3 10 2 10-1 16-5 20-10 4-5 6-10 6-15 0-12-8-22-18-25 2-2 4-8 1-10-2-1-4 0-6 2-3 2-5 6-5 10 0 2 2 5 3 7-2-1-8 0-12 2-5 3-8 9-8 16 0 12 9 20 22 20 10 0 18-5 22-12 3-5 7-12 7-22 0-15-10-27-26-30-4-1-8 1-6 5 3 4 4 10 4 15 0 8-4 15-10 20v2c6 0 12-3 16-9 5-6 8-14 8-24 0-15-10-28-28-28z" />
+    </svg>
+    <div class="dock-dot"></div>
+  </div>
   </div>
 
   <script>
+    // Force hide boot after 2 seconds max - safety fallback
+    setTimeout(() => {
+      const boot = document.getElementById('boot');
+      const fill = document.getElementById('boot-fill');
+      if (boot && !boot.classList.contains('hidden')) {
+        boot.classList.add('hidden');
+        if (fill) fill.style.width = '100%';
+        openDefaults && openDefaults();
+      }
+    }, 2000);
+    
     // ═══ COLOR HELPER ═══
     function hexToRgb(hex) {
       hex = hex.replace('#', '');
       return { r: parseInt(hex.slice(0, 2), 16), g: parseInt(hex.slice(2, 4), 16), b: parseInt(hex.slice(4, 6), 16) };
     }
 
-    // ═══ WALLPAPER SYSTEM ═══
+    // ═══ IMAGE WALLPAPER ═══
+    let bgImage = new Image();
+    let imageLoaded = false;
+    let imageTimeout = false;
+    let customImgUrl = 'https://512pixels.net/downloads/macos-wallpapers-6k/15-Sequoia-Dark-6K.jpg';
+
+    function initImageWp() {
+      if (bgAnimationId) cancelAnimationFrame(bgAnimationId);
+      document.getElementById('matrix-canvas').classList.remove('active');
+      imageLoaded = false;
+      imageTimeout = false;
+      bgImage = new Image();
+      bgImage.crossOrigin = 'anonymous';
+      bgImage.onload = () => { imageLoaded = true; };
+      bgImage.onerror = () => { imageLoaded = false; imageTimeout = true; };
+      bgImage.src = wallpapers[currentWallpaper].img;
+
+      setTimeout(() => { if (!imageLoaded) imageTimeout = true; }, 5000);
+
+      function animate() {
+        if (imageLoaded && !imageTimeout) {
+          bgCtx.drawImage(bgImage, 0, 0, bgCanvas.width, bgCanvas.height);
+        } else {
+          bgCtx.fillStyle = '#1a1a1a';
+          bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
+        }
+        bgAnimationId = requestAnimationFrame(animate);
+      }
+      animate();
+    }
+
+    function initCustomWp() {
+      if (bgAnimationId) cancelAnimationFrame(bgAnimationId);
+      document.getElementById('matrix-canvas').classList.remove('active');
+      imageLoaded = false;
+      imageTimeout = false;
+      bgImage = new Image();
+      bgImage.crossOrigin = 'anonymous';
+      bgImage.onload = () => { imageLoaded = true; };
+      bgImage.onerror = () => { imageLoaded = false; imageTimeout = true; };
+      bgImage.src = customImgUrl;
+
+      setTimeout(() => { if (!imageLoaded) imageTimeout = true; }, 5000);
+
+      function animate() {
+        if (imageLoaded && !imageTimeout) {
+          bgCtx.drawImage(bgImage, 0, 0, bgCanvas.width, bgCanvas.height);
+        } else {
+          bgCtx.fillStyle = '#1a1a1a';
+          bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
+        }
+        bgAnimationId = requestAnimationFrame(animate);
+      }
+      animate();
+    }
+
+    // ═══ WALLPAPER ═══
     const wallpapers = {
-      neural: { name: '🧠 Neural Net', init: initNeural },
-      tunnel: { name: '🌀 Tunnel', init: initTunnel },
-      hexgrid: { name: '⬡ Hex Grid', init: initHexGrid },
-      cityrain: { name: '🏙️ City Rain', init: initCityRain },
-      aurora: { name: '🌌 Aurora', init: initAurora },
-      visualizer: { name: '🎵 Visualizer', init: initVisualizer },
-      fireworks: { name: '🎆 Fireworks', init: initFireworks },
-      binary: { name: '01 Binary', init: initBinaryStream },
-      holoshapes: { name: '◈ Holo Shapes', init: initHoloShapes },
-      glitch: { name: '⚡ Glitch', init: initGlitchMatrix },
-      particles: { name: 'Particles', init: initParticles },
-      cybergrid: { name: 'Cyber Grid', init: initCyberGrid },
-      waves: { name: 'Neon Waves', init: initWaves },
-      constellation: { name: 'Constellation', init: initConstellation },
-      matrix: { name: 'Matrix', init: initMatrixBg },
-      gradient: { name: 'Gradient', init: initGradient }
+      wp1: { name: '🌄 Wallpaper 1', init: initImageWp, img: 'https://wallpapercave.com/wp/wp12117002.jpg' },
+      wp2: { name: '🌅 Wallpaper 2', init: initImageWp, img: 'https://wallpapercave.com/wp/wp12116948.jpg' },
+      wp3: { name: '🌌 Wallpaper 3', init: initImageWp, img: 'https://wallpapercave.com/wp/wp12116937.png' },
+      wp4: { name: '🏔️ Wallpaper 4', init: initImageWp, img: 'https://wallpapercave.com/uwp/uwp5012384.jpeg' },
+      wp5: { name: '🎆 Wallpaper 5', init: initImageWp, img: 'https://wallpapercave.com/wp/wp11600068.jpg' },
+      wp6: { name: '🌺 Wallpaper 6', init: initImageWp, img: 'https://wallpapercave.com/wp/wp12523946.jpg' }
     };
 
-    let currentWallpaper = 'neural';
+    let currentWallpaper = 'wp5';
     let bgAnimationId = null;
     const bgCanvas = document.getElementById('bg-canvas');
     const bgCtx = bgCanvas.getContext('2d');
+
+    // Load initial wallpaper
+    if (wallpapers[currentWallpaper]) {
+      document.body.style.background = `url('${wallpapers[currentWallpaper].img}') center/cover no-repeat`;
+    }
 
     function resizeBgCanvas() {
       bgCanvas.width = window.innerWidth;
       bgCanvas.height = window.innerHeight;
     }
     resizeBgCanvas();
-    window.addEventListener('resize', () => { resizeBgCanvas(); wallpapers[currentWallpaper].init(); });
+    // Wallpaper now uses CSS gradient - no resize needed
 
     // ═══ PARTICLES WALLPAPER ═══
     function initParticles() {
@@ -3096,8 +4178,8 @@
       }
 
       function animate() {
-        const theme = document.documentElement.getAttribute('data-theme') || 'cyber';
-        const colors = { cyber: '#00ff41', light: '#007aff', ocean: '#00d4ff', sunset: '#ff6b9d', midnight: '#a78bfa' };
+        const theme = document.documentElement.getAttribute('data-theme') || 'dark';
+        const colors = { dark: '#a855f7', light: '#7c3aed', ocean: '#c084fc', sonoma: '#fc61c7', ventura: '#ff9f0a', monterey: '#8b5cf6', bigsur: '#9333ea' };
         const color = colors[theme] || '#00ff41';
 
         bgCtx.fillStyle = getComputedStyle(document.body).getPropertyValue('--desktop-bg');
@@ -3145,8 +4227,8 @@
       let offset = 0;
 
       function animate() {
-        const theme = document.documentElement.getAttribute('data-theme') || 'cyber';
-        const colors = { cyber: '#00ff41', light: '#007aff', ocean: '#00d4ff', sunset: '#ff6b9d', midnight: '#a78bfa' };
+        const theme = document.documentElement.getAttribute('data-theme') || 'dark';
+        const colors = { dark: '#a855f7', light: '#7c3aed', ocean: '#c084fc', sonoma: '#fc61c7', ventura: '#ff9f0a', monterey: '#8b5cf6', bigsur: '#9333ea' };
         const color = colors[theme] || '#00ff41';
 
         bgCtx.fillStyle = '#000';
@@ -3198,8 +4280,8 @@
       let time = 0;
 
       function animate() {
-        const theme = document.documentElement.getAttribute('data-theme') || 'cyber';
-        const colors = { cyber: '#00ff41', light: '#007aff', ocean: '#00d4ff', sunset: '#ff6b9d', midnight: '#a78bfa' };
+        const theme = document.documentElement.getAttribute('data-theme') || 'dark';
+        const colors = { dark: '#a855f7', light: '#7c3aed', ocean: '#c084fc', sonoma: '#fc61c7', ventura: '#ff9f0a', monterey: '#8b5cf6', bigsur: '#9333ea' };
         const color = colors[theme] || '#00ff41';
 
         bgCtx.fillStyle = '#000';
@@ -3244,8 +4326,8 @@
       }
 
       function animate() {
-        const theme = document.documentElement.getAttribute('data-theme') || 'cyber';
-        const colors = { cyber: '#00ff41', light: '#007aff', ocean: '#00d4ff', sunset: '#ff6b9d', midnight: '#a78bfa' };
+        const theme = document.documentElement.getAttribute('data-theme') || 'dark';
+        const colors = { dark: '#a855f7', light: '#7c3aed', ocean: '#c084fc', sonoma: '#fc61c7', ventura: '#ff9f0a', monterey: '#8b5cf6', bigsur: '#9333ea' };
         const color = colors[theme] || '#00ff41';
 
         bgCtx.fillStyle = '#000';
@@ -3301,8 +4383,8 @@
       for (let i = 0; i < columns; i++) drops[i] = Math.random() * -100;
 
       function animate() {
-        const theme = document.documentElement.getAttribute('data-theme') || 'cyber';
-        const colors = { cyber: '#00ff41', light: '#007aff', ocean: '#00d4ff', sunset: '#ff6b9d', midnight: '#a78bfa' };
+        const theme = document.documentElement.getAttribute('data-theme') || 'dark';
+        const colors = { dark: '#a855f7', light: '#7c3aed', ocean: '#c084fc', sonoma: '#fc61c7', ventura: '#ff9f0a', monterey: '#8b5cf6', bigsur: '#9333ea' };
         const color = colors[theme] || '#00ff41';
 
         matrixCtx.fillStyle = 'rgba(0, 0, 0, 0.05)';
@@ -3329,15 +4411,17 @@
       let angle = 0;
 
       function animate() {
-        const theme = document.documentElement.getAttribute('data-theme') || 'cyber';
+        const theme = document.documentElement.getAttribute('data-theme') || 'dark';
         const gradients = {
-          cyber: ['#001100', '#000000', '#0a0a0a'],
+          dark: ['#1a1a1a', '#2a2a2a', '#1c1c1e'],
           light: ['#f0f0f0', '#e8e8e8', '#ffffff'],
-          ocean: ['#0a1628', '#0d1b2a', '#1b263b'],
-          sunset: ['#1a0a1a', '#2d1b2d', '#1d0d1d'],
-          midnight: ['#0d0d1a', '#0f0f23', '#1a1a2e']
+          ocean: ['#0a0a0f', '#151520', '#1a1a25'],
+          sonoma: ['#1c1c1e', '#2c2c30', '#1c1c1e'],
+          ventura: ['#101115', '#1a1a20', '#202028'],
+          monterey: ['#141417', '#1e1e22', '#28282e'],
+          bigsur: ['#1c1c1e', '#28282c', '#1c1c1e']
         };
-        const colors = gradients[theme] || gradients.cyber;
+        const colors = gradients[theme] || gradients.dark;
 
         angle += 0.2;
         const x1 = 50 + Math.cos(angle * Math.PI / 180) * 50;
@@ -3356,6 +4440,197 @@
       animate();
     }
 
+    // ═══ macOS SONOMA WALLPAPER ═══
+    function initSonomaWp() {
+      if (bgAnimationId) cancelAnimationFrame(bgAnimationId);
+      document.getElementById('matrix-canvas').classList.remove('active');
+      let time = 0;
+
+      function animate() {
+        const w = bgCanvas.width, h = bgCanvas.height;
+        const gradient = bgCtx.createLinearGradient(0, 0, w * 0.7, h);
+        gradient.addColorStop(0, '#5e3a99');
+        gradient.addColorStop(0.3, '#8b5cf6');
+        gradient.addColorStop(0.5, '#a78bfa');
+        gradient.addColorStop(0.7, '#c084fc');
+        gradient.addColorStop(1, '#dd6cde');
+        bgCtx.fillStyle = gradient;
+        bgCtx.fillRect(0, 0, w, h);
+
+        bgCtx.fillStyle = 'rgba(255,255,255,0.08)';
+        for (let i = 0; i < 8; i++) {
+          const y = h * (0.2 + i * 0.1) + Math.sin(time * 0.001 + i) * 15;
+          const waveHeight = 2 + Math.sin(i * 0.8) * 1.5;
+          bgCtx.beginPath();
+          bgCtx.ellipse(w * 0.3, y, w * 0.5, waveHeight, 0, 0, Math.PI * 2);
+          bgCtx.fill();
+        }
+
+        time++;
+        bgAnimationId = requestAnimationFrame(animate);
+      }
+      animate();
+    }
+
+    // ═══ macOS VENTURA WALLPAPER ═══
+    function initVenturaWp() {
+      if (bgAnimationId) cancelAnimationFrame(bgAnimationId);
+      document.getElementById('matrix-canvas').classList.remove('active');
+      let time = 0;
+
+      function animate() {
+        const w = bgCanvas.width, h = bgCanvas.height;
+        const gradient = bgCtx.createLinearGradient(0, 0, w, h * 0.8);
+        gradient.addColorStop(0, '#1a1a2e');
+        gradient.addColorStop(0.4, '#2d2d44');
+        gradient.addColorStop(0.7, '#3d3d5c');
+        gradient.addColorStop(1, '#ff9500');
+        bgCtx.fillStyle = gradient;
+        bgCtx.fillRect(0, 0, w, h);
+
+        bgCtx.fillStyle = 'rgba(255,255,255,0.9)';
+        for (let i = 0; i < 12; i++) {
+          const x = (i * 137) % w;
+          const y = (i * 73) % (h * 0.6);
+          const size = 3 + (i % 3) * 0.8;
+          bgCtx.beginPath();
+          bgCtx.arc(x + Math.sin(time * 0.02 + i) * 20, y, size, 0, Math.PI * 2);
+          bgCtx.fill();
+        }
+
+        time++;
+        bgAnimationId = requestAnimationFrame(animate);
+      }
+      animate();
+    }
+
+    // ═══ macOS MONTEREY WALLPAPER ═══
+    function initMontereyWp() {
+      if (bgAnimationId) cancelAnimationFrame(bgAnimationId);
+      document.getElementById('matrix-canvas').classList.remove('active');
+      let time = 0;
+
+      function animate() {
+        const w = bgCanvas.width, h = bgCanvas.height;
+        const gradient = bgCtx.createRadialGradient(w * 0.5, h * 0.4, 0, w * 0.5, h * 0.5, w);
+        gradient.addColorStop(0, '#8b5cf6');
+        gradient.addColorStop(0.4, '#064a99');
+        gradient.addColorStop(0.7, '#031a33');
+        gradient.addColorStop(1, '#0d1220');
+        bgCtx.fillStyle = gradient;
+        bgCtx.fillRect(0, 0, w, h);
+
+        bgCtx.fillStyle = 'rgba(255,255,255,0.6)';
+        for (let i = 0; i < 25; i++) {
+          const x = (i * 163) % w;
+          const y = (i * 97) % h;
+          const size = 1 + (i % 2) * 0.5;
+          const alpha = 0.3 + (i % 3) * 0.15;
+          bgCtx.globalAlpha = alpha;
+          bgCtx.beginPath();
+          bgCtx.arc(x, y, size, 0, Math.PI * 2);
+          bgCtx.fill();
+        }
+        bgCtx.globalAlpha = 1;
+
+        time++;
+        bgAnimationId = requestAnimationFrame(animate);
+      }
+      animate();
+    }
+
+    // ═══ macOS BIG SUR WALLPAPER ═══
+    function initBigSurWp() {
+      if (bgAnimationId) cancelAnimationFrame(bgAnimationId);
+      document.getElementById('matrix-canvas').classList.remove('active');
+      let time = 0;
+
+      function animate() {
+        const w = bgCanvas.width, h = bgCanvas.height;
+        const gradient = bgCtx.createLinearGradient(0, 0, 0, h);
+        gradient.addColorStop(0, '#636366');
+        gradient.addColorStop(0.3, '#48484a');
+        gradient.addColorStop(0.6, '#3a3a3c');
+        gradient.addColorStop(1, '#1c1c1e');
+        bgCtx.fillStyle = gradient;
+        bgCtx.fillRect(0, 0, w, h);
+
+        bgCtx.fillStyle = 'rgba(255,255,255,0.4)';
+        for (let i = 0; i < 15; i++) {
+          const x = w * 0.1 + (i % 5) * w * 0.2;
+          const y = h * 0.15 + Math.floor(i / 5) * h * 0.25;
+          const baseH = h * 0.15 + Math.random() * h * 0.08;
+          bgCtx.fillRect(x, h - baseH, w * 0.12, baseH);
+        }
+
+        time++;
+        bgAnimationId = requestAnimationFrame(animate);
+      }
+      animate();
+    }
+
+    // ═══ DYNAMIC SOLID WALLPAPER ═══
+    function initDynamicWp() {
+      if (bgAnimationId) cancelAnimationFrame(bgAnimationId);
+      document.getElementById('matrix-canvas').classList.remove('active');
+
+      function animate() {
+        const theme = document.documentElement.getAttribute('data-theme') || 'dark';
+        const colors = {
+          dark: '#1a1a1a',
+          light: '#f5f5f7',
+          ocean: '#0a0a0f',
+          sonoma: '#1c1c1e',
+          ventura: '#101115',
+          monterey: '#141417',
+          bigsur: '#1c1c1e'
+        };
+        bgCtx.fillStyle = colors[theme] || colors.dark;
+        bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
+
+        bgAnimationId = requestAnimationFrame(animate);
+      }
+      animate();
+    }
+
+    // ═══ AERO WALLPAPER ═══
+    function initAeroWp() {
+      if (bgAnimationId) cancelAnimationFrame(bgAnimationId);
+      document.getElementById('matrix-canvas').classList.remove('active');
+      let time = 0;
+
+      function animate() {
+        const w = bgCanvas.width, h = bgCanvas.height;
+        const gradient = bgCtx.createLinearGradient(0, 0, w, h);
+        gradient.addColorStop(0, '#003366');
+        gradient.addColorStop(0.5, '#1a4a6e');
+        gradient.addColorStop(1, '#004d80');
+        bgCtx.fillStyle = gradient;
+        bgCtx.fillRect(0, 0, w, h);
+
+        bgCtx.strokeStyle = 'rgba(255,255,255,0.15)';
+        bgCtx.lineWidth = 1;
+        for (let i = 0; i < 8; i++) {
+          const y = (i * h / 8) + Math.sin(time * 0.01 + i * 0.5) * 10;
+          bgCtx.beginPath();
+          bgCtx.moveTo(0, y);
+          for (let x = 0; x < w; x += 20) {
+            bgCtx.lineTo(x, y + Math.sin(x * 0.01 + time * 0.02 + i) * 15);
+          }
+          bgCtx.stroke();
+        }
+
+        time++;
+        bgAnimationId = requestAnimationFrame(animate);
+      }
+      animate();
+    }
+
+    // ═══ GRADIENT WP (simpler) ═══
+    function initGradientWp() {
+      initGradient();
+    }
+
     // ═══ NEURAL NETWORK WEB ═══
     function initNeural() {
       if (bgAnimationId) cancelAnimationFrame(bgAnimationId);
@@ -3368,8 +4643,8 @@
         nodes.push({ x: Math.random() * bgCanvas.width, y: Math.random() * bgCanvas.height, vx: (Math.random() - 0.5) * 0.7, vy: (Math.random() - 0.5) * 0.7, radius: Math.random() * 3 + 1.5, pulse: Math.random() * Math.PI * 2 });
       }
       function animate() {
-        const theme = document.documentElement.getAttribute('data-theme') || 'cyber';
-        const cm = { cyber: '#00ff41', light: '#007aff', ocean: '#00d4ff', sunset: '#ff6b9d', midnight: '#a78bfa' };
+        const theme = document.documentElement.getAttribute('data-theme') || 'dark';
+        const cm = { dark: '#a855f7', light: '#7c3aed', ocean: '#c084fc', sonoma: '#fc61c7', ventura: '#ff9f0a', monterey: '#8b5cf6', bigsur: '#9333ea' };
         const color = cm[theme] || '#00ff41', rgb = hexToRgb(color);
         bgCtx.fillStyle = '#000'; bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
         const maxD = 165, conns = [];
@@ -3429,8 +4704,8 @@
       }
       let lightF = 0;
       function animate() {
-        const theme = document.documentElement.getAttribute('data-theme') || 'cyber';
-        const cm = { cyber: '#00ff41', light: '#007aff', ocean: '#00d4ff', sunset: '#ff6b9d', midnight: '#a78bfa' };
+        const theme = document.documentElement.getAttribute('data-theme') || 'dark';
+        const cm = { dark: '#a855f7', light: '#7c3aed', ocean: '#c084fc', sonoma: '#fc61c7', ventura: '#ff9f0a', monterey: '#8b5cf6', bigsur: '#9333ea' };
         const color = cm[theme] || '#00ff41', rgb = hexToRgb(color);
         bgCtx.fillStyle = '#030308'; bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
         if (lightF > 0) { bgCtx.fillStyle = `rgba(180,180,255,${lightF * 0.025})`; bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height); lightF--; }
@@ -3488,8 +4763,8 @@
         bgCtx.shadowBlur = 0;
       }
       function animate() {
-        const theme = document.documentElement.getAttribute('data-theme') || 'cyber';
-        const cm = { cyber: '#00ff41', light: '#007aff', ocean: '#00d4ff', sunset: '#ff6b9d', midnight: '#a78bfa' };
+        const theme = document.documentElement.getAttribute('data-theme') || 'dark';
+        const cm = { dark: '#a855f7', light: '#7c3aed', ocean: '#c084fc', sonoma: '#fc61c7', ventura: '#ff9f0a', monterey: '#8b5cf6', bigsur: '#9333ea' };
         const color = cm[theme] || '#00ff41', rgb = hexToRgb(color);
         bgCtx.fillStyle = '#000'; bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
         shapes.forEach(sh => { sh.rx += sh.rsx; sh.ry += sh.rsy; sh.rz += sh.rsz; sh.pulse += 0.03; sh.x += sh.vx; sh.y += sh.vy; if (sh.x < -130 || sh.x > bgCanvas.width + 130) sh.vx *= -1; if (sh.y < -130 || sh.y > bgCanvas.height + 130) sh.vy *= -1; sh.alpha = 0.35 + Math.sin(sh.pulse) * 0.15; drawShape(sh, color, rgb); });
@@ -3514,8 +4789,8 @@
         bgCtx.strokeStyle = `rgba(${rgb.r},${rgb.g},${rgb.b},${sa})`; bgCtx.lineWidth = 1; bgCtx.stroke();
       }
       function animate() {
-        const theme = document.documentElement.getAttribute('data-theme') || 'cyber';
-        const cm = { cyber: '#00ff41', light: '#007aff', ocean: '#00d4ff', sunset: '#ff6b9d', midnight: '#a78bfa' };
+        const theme = document.documentElement.getAttribute('data-theme') || 'dark';
+        const cm = { dark: '#a855f7', light: '#7c3aed', ocean: '#c084fc', sonoma: '#fc61c7', ventura: '#ff9f0a', monterey: '#8b5cf6', bigsur: '#9333ea' };
         const color = cm[theme] || '#00ff41', rgb = hexToRgb(color);
         bgCtx.fillStyle = '#000508'; bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
         time += 0.018;
@@ -3533,9 +4808,9 @@
       let time = 0;
       bgCtx.fillStyle = '#000010'; bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
       function animate() {
-        const theme = document.documentElement.getAttribute('data-theme') || 'cyber';
-        const pals = { cyber: ['#00ff41', '#00ffff', '#66ffcc'], ocean: ['#00d4ff', '#0066ff', '#00ffaa'], sunset: ['#ff6b9d', '#ff4400', '#ffaa00'], midnight: ['#a78bfa', '#6366f1', '#ec4899'], light: ['#007aff', '#5ac8fa', '#30d158'] };
-        const pal = pals[theme] || pals.cyber;
+        const theme = document.documentElement.getAttribute('data-theme') || 'dark';
+        const pals = { dark: ['#a855f7', '#d8b4fe', '#30d158'], light: ['#7c3aed', '#c084fc', '#34c759'], ocean: ['#c084fc', '#9333ea', '#30d158'], sonoma: ['#fc61c7', '#bf5af2', '#7bed9f'], ventura: ['#ff9f0a', '#ff6b6b', '#30d158'], monterey: ['#8b5cf6', '#c084fc', '#30d158'], bigsur: ['#9333ea', '#c084fc', '#32d74b'] };
+        const pal = pals[theme] || pals.dark;
         bgCtx.fillStyle = 'rgba(0,0,10,0.12)'; bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
         time += 0.003;
         for (let b = 0; b < 5; b++) {
@@ -3567,9 +4842,9 @@
         for (let i = 0; i < n; i++) { const a = Math.PI * 2 * i / n + (Math.random() - 0.5) * 0.3, spd = 2 + Math.random() * 5; particles.push({ x, y, vx: Math.cos(a) * spd, vy: Math.sin(a) * spd, type: 'spark', alpha: 1, color: pal[Math.floor(Math.random() * pal.length)], trail: [], life: 0.982 + Math.random() * 0.012, grav: 0.08 + Math.random() * 0.05 }); }
       }
       function animate() {
-        const theme = document.documentElement.getAttribute('data-theme') || 'cyber';
-        const pm = { cyber: ['#00ff41', '#00ffff', '#ffffff'], ocean: ['#00d4ff', '#0066ff', '#00ffaa'], sunset: ['#ff6b9d', '#ff4500', '#ffcc00'], midnight: ['#a78bfa', '#6366f1', '#f472b6'], light: ['#007aff', '#5ac8fa', '#ff9500'] };
-        const pal = pm[theme] || pm.cyber;
+        const theme = document.documentElement.getAttribute('data-theme') || 'dark';
+        const pm = { dark: ['#a855f7', '#d8b4fe', '#ffffff'], light: ['#7c3aed', '#c084fc', '#ff9500'], ocean: ['#c084fc', '#9333ea', '#30d158'], sonoma: ['#fc61c7', '#bf5af2', '#ffffff'], ventura: ['#ff9f0a', '#ff6b6b', '#ffcc00'], monterey: ['#8b5cf6', '#c084fc', '#30d158'], bigsur: ['#9333ea', '#c084fc', '#32d74b'] };
+        const pal = pm[theme] || pm.dark;
         bgCtx.fillStyle = 'rgba(0,0,0,0.17)'; bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
         if (--nextL <= 0) { launch(); nextL = 55 + Math.floor(Math.random() * 75); }
         for (let i = particles.length - 1; i >= 0; i--) {
@@ -3606,8 +4881,8 @@
       const drops = Array.from({ length: cols }, () => Math.random() * -80);
       let glI = 0, glOn = false;
       function animate() {
-        const theme = document.documentElement.getAttribute('data-theme') || 'cyber';
-        const cm = { cyber: '#00ff41', light: '#007aff', ocean: '#00d4ff', sunset: '#ff6b9d', midnight: '#a78bfa' };
+        const theme = document.documentElement.getAttribute('data-theme') || 'dark';
+        const cm = { dark: '#a855f7', light: '#7c3aed', ocean: '#c084fc', sonoma: '#fc61c7', ventura: '#ff9f0a', monterey: '#8b5cf6', bigsur: '#9333ea' };
         const color = cm[theme] || '#00ff41', rgb = hexToRgb(color);
         if (!glOn && Math.random() < 0.004) { glOn = true; glI = 6 + Math.floor(Math.random() * 12); }
         if (glOn) { glI--; if (glI <= 0) { glOn = false; mCtx.globalCompositeOperation = 'source-over'; } }
@@ -3640,8 +4915,8 @@
       document.getElementById('matrix-canvas').style.opacity = '';
       let time = 0;
       function animate() {
-        const theme = document.documentElement.getAttribute('data-theme') || 'cyber';
-        const cm = { cyber: '#00ff41', light: '#007aff', ocean: '#00d4ff', sunset: '#ff6b9d', midnight: '#a78bfa' };
+        const theme = document.documentElement.getAttribute('data-theme') || 'dark';
+        const cm = { dark: '#a855f7', light: '#7c3aed', ocean: '#c084fc', sonoma: '#fc61c7', ventura: '#ff9f0a', monterey: '#8b5cf6', bigsur: '#9333ea' };
         const color = cm[theme] || '#00ff41', rgb = hexToRgb(color);
         bgCtx.fillStyle = '#000'; bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
         time += 0.016;
@@ -3671,8 +4946,8 @@
       document.getElementById('matrix-canvas').style.opacity = '';
       const bC = 64, heights = new Array(bC).fill(0), targets = new Array(bC).fill(0); let time = 0;
       function animate() {
-        const theme = document.documentElement.getAttribute('data-theme') || 'cyber';
-        const cm = { cyber: '#00ff41', light: '#007aff', ocean: '#00d4ff', sunset: '#ff6b9d', midnight: '#a78bfa' };
+        const theme = document.documentElement.getAttribute('data-theme') || 'dark';
+        const cm = { dark: '#a855f7', light: '#7c3aed', ocean: '#c084fc', sonoma: '#fc61c7', ventura: '#ff9f0a', monterey: '#8b5cf6', bigsur: '#9333ea' };
         const color = cm[theme] || '#00ff41', rgb = hexToRgb(color);
         bgCtx.fillStyle = '#000'; bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
         time += 0.022;
@@ -3700,8 +4975,8 @@
       const fs = 15, cols = Math.floor(bgCanvas.width / fs), streams = [];
       for (let i = 0; i < cols; i++) { const len = 8 + Math.floor(Math.random() * 30); streams.push({ x: i * fs, y: Math.random() * bgCanvas.height - bgCanvas.height, spd: 0.4 + Math.random() * 1.8, len, bits: Array.from({ length: 50 }, () => Math.random() < 0.5 ? '1' : '0') }); }
       function animate() {
-        const theme = document.documentElement.getAttribute('data-theme') || 'cyber';
-        const cm = { cyber: '#00ff41', light: '#007aff', ocean: '#00d4ff', sunset: '#ff6b9d', midnight: '#a78bfa' };
+        const theme = document.documentElement.getAttribute('data-theme') || 'dark';
+        const cm = { dark: '#a855f7', light: '#7c3aed', ocean: '#c084fc', sonoma: '#fc61c7', ventura: '#ff9f0a', monterey: '#8b5cf6', bigsur: '#9333ea' };
         const color = cm[theme] || '#00ff41', rgb = hexToRgb(color);
         bgCtx.fillStyle = 'rgba(0,0,0,0.07)'; bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
         bgCtx.font = `${fs}px 'Courier New',monospace`;
@@ -3740,9 +5015,9 @@
         const ctx = canvas.getContext('2d');
 
         // Draw preview (theme-aware)
-        const theme = document.documentElement.getAttribute('data-theme') || 'cyber';
-        const tc = { cyber: '#00ff41', light: '#007aff', ocean: '#00d4ff', sunset: '#ff6b9d', midnight: '#a78bfa' };
-        const pc = tc[theme] || '#00ff41', pr = hexToRgb(pc);
+        const theme = document.documentElement.getAttribute('data-theme') || 'dark';
+        const tc = { dark: '#a855f7', light: '#7c3aed', ocean: '#c084fc', sonoma: '#fc61c7', ventura: '#ff9f0a', monterey: '#8b5cf6', bigsur: '#9333ea' };
+        const pc = tc[theme] || '#a855f7', pr = hexToRgb(pc);
 
         if (key === 'neural') {
           ctx.fillStyle = '#000'; ctx.fillRect(0, 0, 160, 100);
@@ -3821,6 +5096,21 @@
         } else if (key === 'gradient') {
           const grad = ctx.createLinearGradient(0, 0, 160, 100); grad.addColorStop(0, '#001100'); grad.addColorStop(1, '#0a0a0a');
           ctx.fillStyle = grad; ctx.fillRect(0, 0, 160, 100);
+        } else if (wp.img) {
+          // For image-based wallpapers, load and draw the image
+          const img = new Image();
+          img.onload = () => {
+            ctx.drawImage(img, 0, 0, 160, 100);
+          };
+          img.onerror = () => {
+            ctx.fillStyle = '#1a1a2e';
+            ctx.fillRect(0, 0, 160, 100);
+            ctx.fillStyle = '#9333ea';
+            ctx.font = '12px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('Preview', 80, 55);
+          };
+          img.src = wp.img;
         }
 
         option.appendChild(canvas);
@@ -3839,7 +5129,10 @@
       mc.style.opacity = '';
       document.querySelectorAll('.wallpaper-option').forEach(el => el.classList.remove('active'));
       event.currentTarget.classList.add('active');
-      wallpapers[key].init();
+      
+      // Set body background directly
+      document.body.style.background = `url('${wallpapers[key].img}') center/cover no-repeat`;
+      
       localStorage.setItem('portfolio-wallpaper', key);
     }
 
@@ -3884,24 +5177,41 @@
       document.getElementById('scanlines').classList.toggle('active');
     }
 
-    // ═══ BOOT ═══
-    (function () {
-      const fill = document.getElementById('boot-fill'), boot = document.getElementById('boot');
-      let p = 0;
-      const iv = setInterval(() => {
-        p += Math.random() * 8 + 3;
-        if (p >= 100) {
-          p = 100;
-          clearInterval(iv);
-          setTimeout(() => { boot.classList.add('hidden'); openDefaults(); }, 500);
-        }
-        fill.style.width = p + '%';
-      }, 60);
-    })();
+    // ═══ LOCK SCREEN ═══
+    function initLockScreen() {
+      const lockscreen = document.getElementById('lockscreen');
+      const bodyBg = document.body.style.background;
+      if (bodyBg) {
+        lockscreen.style.background = bodyBg;
+      }
+      
+      document.getElementById('lock-password').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') unlockScreen();
+      });
+    }
+
+    function unlockScreen() {
+      const password = document.getElementById('lock-password').value.toLowerCase();
+      const errorEl = document.getElementById('lock-error');
+      
+      if (password === 'admin') {
+        const lockscreen = document.getElementById('lockscreen');
+        lockscreen.classList.add('unlocked');
+        setTimeout(() => {
+          lockscreen.style.display = 'none';
+          openDefaults();
+        }, 500);
+      } else {
+        errorEl.textContent = 'Incorrect password';
+        document.getElementById('lock-password').value = '';
+        setTimeout(() => errorEl.textContent = '', 2000);
+      }
+    }
+
+    // Initialize lock screen on load
+    initLockScreen();
 
     function openDefaults() {
-      // Auto-open About window
-      setTimeout(() => toggleWindow('about'), 300);
       // Auto-open Activity Log
       setTimeout(() => toggleWindow('activitylog'), 600);
       // Show stats panel
@@ -3926,31 +5236,18 @@
       document.querySelectorAll('.skills-section').forEach(s => s.classList.remove('active'));
       el.classList.add('active');
       document.getElementById('skills-' + tab).classList.add('active');
-      // Animate bars when tab opens
-      setTimeout(() => animateSkillBars(), 50);
+      requestAnimationFrame(() => animateSkillBars());
     }
 
     function animateSkillBars() {
       document.querySelectorAll('.skills-section.active .skill-bar-fill').forEach(bar => {
-        bar.style.width = bar.dataset.pct + '%';
+        bar.style.width = '0%';
       });
-    }
-
-    // Trigger bar animation when Skills window opens
-    const origToggleWindow = toggleWindow;
-    function toggleWindow(id) {
-      const w = document.getElementById('win-' + id);
-      if (w && w.classList.contains('hidden')) {
-        w.classList.remove('hidden');
-        bringToFront(id);
-        updateDock();
-        if (id === 'terminal') setTimeout(() => document.getElementById('terminal-output').focus(), 100);
-        if (id === 'skills') setTimeout(() => animateSkillBars(), 100);
-        if (id === 'activitylog') setTimeout(() => animateLogEntries(), 100);
-      } else if (w) {
-        w.classList.add('hidden');
-        updateDock();
-      }
+      requestAnimationFrame(() => {
+        document.querySelectorAll('.skills-section.active .skill-bar-fill').forEach(bar => {
+          bar.style.width = bar.dataset.pct + '%';
+        });
+      });
     }
 
     // ═══ FINDER DRAWER ═══
@@ -4005,8 +5302,6 @@
       document.querySelectorAll('.theme-option').forEach(el => el.classList.remove('active'));
       document.querySelector('.theme-' + theme).classList.add('active');
       localStorage.setItem('portfolio-theme', theme);
-      // Restart current wallpaper with new theme colors
-      wallpapers[currentWallpaper].init();
     }
 
     function openThemeSelector() {
@@ -4038,37 +5333,543 @@
 
     // toggleWindow is defined above (near openDefaults) with Skills/log support
 
+    // ═══ WINDOW TOGGLE ═══
+    let isAnimating = {};
+    let windowStates = {};
+    
+    function isWindowVisible(id) {
+      return windowStates[id] === true;
+    }
+    
+    function toggleWindow(id) {
+      if (isAnimating[id]) return;
+      
+      const w = document.getElementById('win-' + id);
+      if (!w) return;
+      
+      const isVisible = windowStates[id] === true;
+      
+      if (!isVisible) {
+        isAnimating[id] = true;
+        windowStates[id] = true;
+        w.style.display = 'flex';
+        w.classList.remove('hide');
+        w.classList.add('show');
+        setTimeout(() => {
+          w.classList.remove('show');
+          bringToFront(id);
+          isAnimating[id] = false;
+          if (id === 'skills') {
+            requestAnimationFrame(() => animateSkillBars());
+          }
+        }, 250);
+      } else {
+        isAnimating[id] = true;
+        windowStates[id] = false;
+        w.classList.add('hide');
+        setTimeout(() => {
+          w.classList.add('hidden');
+          w.classList.remove('hide');
+          w.style.display = '';
+          isAnimating[id] = false;
+        }, 200);
+      }
+
+      // Toggle dock dot indicator
+      const dockItems = document.querySelectorAll('.dock-item');
+      dockItems.forEach(item => {
+        const onclick = item.getAttribute('onclick');
+        if (onclick && onclick.includes(`toggleWindow('${id}')`)) {
+          item.classList.toggle('open', !isVisible);
+        }
+      });
+    }
+
     function closeWindow(id) {
-      document.getElementById('win-' + id).classList.add('hidden');
-      updateDock();
+      const w = document.getElementById('win-' + id);
+      if (!w) return;
+      w.classList.add('hide');
+      setTimeout(() => {
+        w.classList.add('hidden');
+        w.classList.remove('hide');
+        w.style.display = '';
+      }, 200);
+
+      // Remove dock dot
+      const dockItems = document.querySelectorAll('.dock-item');
+      dockItems.forEach(item => {
+        const onclick = item.getAttribute('onclick');
+        if (onclick && onclick.includes(`toggleWindow('${id}')`)) {
+          item.classList.remove('open');
+        }
+      });
     }
 
     function minimizeWindow(id) {
-      document.getElementById('win-' + id).classList.add('hidden');
-      updateDock();
+      const w = document.getElementById('win-' + id);
+      if (!w) return;
+      w.classList.add('hide');
+      setTimeout(() => {
+        w.classList.add('hidden');
+        w.classList.remove('hide');
+        w.style.display = '';
+      }, 200);
+      
+      // Remove dock dot
+      const dockItems = document.querySelectorAll('.dock-item');
+      dockItems.forEach(item => {
+        const onclick = item.getAttribute('onclick');
+        if (onclick && onclick.includes(`toggleWindow('${id}')`)) {
+          item.classList.remove('open');
+        }
+      });
+    }
+
+    // ═══ SAFARI BROWSER ═══
+    function safariNavigate() {
+      const urlInput = document.getElementById('safari-url');
+      let url = urlInput.value.trim();
+      if (!url) return;
+      if (!url.startsWith('http://') && !url.startsWith('https://')) {
+        url = 'https://' + url;
+      }
+      document.getElementById('safari-frame').src = url;
+    }
+
+    function safariBack() {
+      document.getElementById('safari-frame').contentWindow.history.back();
+    }
+
+    function safariForward() {
+      document.getElementById('safari-frame').contentWindow.history.forward();
+    }
+
+    function safariReload() {
+      document.getElementById('safari-frame').src = document.getElementById('safari-frame').src;
+    }
+
+    function safariHome() {
+      showSafariStartPage();
+    }
+
+    function showSafariStartPage() {
+      document.getElementById('safari-start-page').classList.remove('hidden');
+      document.getElementById('safari-frame').classList.add('hidden');
+      document.getElementById('safari-message').classList.add('hidden');
+      document.getElementById('safari-url').value = '';
+    }
+
+    function showSafariMessage() {
+      document.getElementById('safari-start-page').classList.add('hidden');
+      document.getElementById('safari-frame').classList.add('hidden');
+      document.getElementById('safari-message').classList.remove('hidden');
+    }
+
+    function closeSafariMessage() {
+      showSafariStartPage();
+    }
+
+    function safariGoTo(url) {
+      showSafariMessage();
+      document.getElementById('safari-url').value = url;
+    }
+
+    function safariNavigate() {
+      const urlInput = document.getElementById('safari-url');
+      let url = urlInput.value.trim();
+      if (!url) return;
+      showSafariMessage();
+    }
+
+    function safariSearchFromStart() {
+      const query = document.getElementById('safari-start-search').value.trim();
+      if (!query) return;
+      showSafariMessage();
+    }
+
+    // Update URL bar when iframe loads
+    document.getElementById('safari-frame').addEventListener('load', function() {
+      try {
+        const currentUrl = this.contentWindow.location.href;
+        if (currentUrl && currentUrl !== 'about:blank') {
+          document.getElementById('safari-url').value = currentUrl;
+        }
+      } catch(e) {}
+    });
+
+    // ═══ LAUNCHPAD ═══
+    let launchpadOpen = false;
+    function openLaunchpad() {
+      const lp = document.getElementById('launchpad-overlay');
+      if (!lp) {
+        createLaunchpad();
+        lp = document.getElementById('launchpad-overlay');
+      }
+      launchpadOpen = !launchpadOpen;
+      lp.classList.toggle('active', launchpadOpen);
+    }
+
+    function createLaunchpad() {
+      const overlay = document.createElement('div');
+      overlay.id = 'launchpad-overlay';
+      overlay.className = 'launchpad-overlay';
+      overlay.onclick = function(e) {
+        if (e.target === overlay) openLaunchpad();
+      };
+      overlay.innerHTML = `
+        <div class="launchpad-grid">
+          <div class="launchpad-search">
+            <input type="text" placeholder="Search" oninput="filterLaunchpad(this.value)">
+          </div>
+          <div class="launchpad-apps">
+            <div class="lp-app" onclick="toggleWindow('finder'); openLaunchpad()">
+              <img src="https://cdn.jim-nielsen.com/macos/512/finder-2025-11-13.png">
+              <span>Finder</span>
+            </div>
+            <div class="lp-app" onclick="toggleWindow('about'); openLaunchpad()">
+              <img src="https://cdn.jim-nielsen.com/macos/512/cleanmaster-remove-junk-files-2026-01-05.png?rf=1024">
+              <span>About</span>
+            </div>
+            <div class="lp-app" onclick="toggleWindow('skills'); openLaunchpad()">
+              <img src="https://cdn.jim-nielsen.com/macos/512/bit-slicer-2025-12-08.png?rf=1024">
+              <span>Skills</span>
+            </div>
+            <div class="lp-app" onclick="toggleWindow('terminal'); openLaunchpad()">
+              <img src="https://cdn.jim-nielsen.com/macos/512/terminal-2025-11-14.png?rf=1024">
+              <span>Terminal</span>
+            </div>
+            <div class="lp-app" onclick="toggleWindow('safari'); openLaunchpad()">
+              <img src="https://cdn.jim-nielsen.com/macos/512/safari-2025-11-14.png?rf=1024">
+              <span>Safari</span>
+            </div>
+            <div class="lp-app" onclick="toggleWindow('certs'); openLaunchpad()">
+              <img src="https://cdn.jim-nielsen.com/macos/512/bluenote-2014-09-23.png?rf=512">
+              <span>Certs</span>
+            </div>
+            <div class="lp-app" onclick="toggleWindow('experience'); openLaunchpad()">
+              <img src="https://cdn.jim-nielsen.com/macos/512/expenses-spending-tracker-2025-04-26.png?rf=1024">
+              <span>XP</span>
+            </div>
+            <div class="lp-app" onclick="toggleWindow('activitylog'); openLaunchpad()">
+              <img src="https://cdn.jim-nielsen.com/macos/512/activity-monitor-2025-11-13.png?rf=1024">
+              <span>Log</span>
+            </div>
+            <div class="lp-app" onclick="openLaunchpad(); openPdfViewer('https://drive.google.com/file/d/1T8deP1xUOqYUfwuXnGSGU5sAO-vJMHlj/preview','Resume','https://drive.google.com/file/d/1T8deP1xUOqYUfwuXnGSGU5sAO-vJMHlj/view')">
+              <img src="https://cdn.jim-nielsen.com/macos/512/coppice-2026-04-01.png?rf=1024">
+              <span>Resume</span>
+            </div>
+            <div class="lp-app" onclick="window.open('https://www.linkedin.com/in/rabiulislam32','_blank'); openLaunchpad()">
+              <img src="https://img.icons8.com/?size=100&id=nTY9sWZezkri&format=png&color=000000">
+              <span>LinkedIn</span>
+            </div>
+            <div class="lp-app" onclick="window.open('https://github.com/rabiulhasann','_blank'); openLaunchpad()">
+              <img src="https://cdn.jim-nielsen.com/macos/512/github-desktop-2021-05-20.png?rf=1024">
+              <span>GitHub</span>
+            </div>
+            <div class="lp-app" onclick="window.open('https://x.com/rabiul_hasann','_blank'); openLaunchpad()">
+              <img src="https://img.icons8.com/?size=100&id=oaaSr6h7kwm6&format=png&color=000000">
+              <span>X</span>
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(overlay);
+      addLaunchpadStyles();
+    }
+
+    function addLaunchpadStyles() {
+      const style = document.createElement('style');
+      style.textContent = `
+        .launchpad-overlay {
+          position: fixed;
+          inset: 0;
+          background: rgba(0,0,0,0.85);
+          backdrop-filter: blur(40px);
+          z-index: 99999;
+          display: none;
+          align-items: flex-start;
+          justify-content: center;
+          padding-top: 80px;
+        }
+        .launchpad-overlay.active {
+          display: flex;
+        }
+        .launchpad-grid {
+          width: 90%;
+          max-width: 900px;
+        }
+        .launchpad-search {
+          margin-bottom: 40px;
+          text-align: center;
+        }
+        .launchpad-search input {
+          width: 400px;
+          padding: 14px 24px;
+          border-radius: 24px;
+          border: none;
+          background: rgba(255,255,255,0.1);
+          color: #fff;
+          font-size: 18px;
+          outline: none;
+          text-align: center;
+          transition: all 0.2s;
+        }
+        .launchpad-search input:focus {
+          background: rgba(255,255,255,0.15);
+          box-shadow: 0 0 0 3px rgba(0,122,255,0.3);
+        }
+        .launchpad-search input::placeholder { color: rgba(255,255,255,0.4); }
+        .launchpad-apps {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+          gap: 30px;
+          justify-items: center;
+        }
+        .lp-app {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 10px;
+          cursor: pointer;
+          transition: all 0.2s;
+          padding: 12px;
+          border-radius: 16px;
+        }
+        .lp-app:hover {
+          background: rgba(255,255,255,0.15);
+          transform: scale(1.08);
+        }
+        .lp-app.hidden {
+          display: none;
+        }
+        .lp-app img, .lp-app svg {
+          width: 72px;
+          height: 72px;
+          object-fit: contain;
+          border-radius: 16px;
+        }
+        .lp-app span {
+          color: #fff;
+          font-size: 13px;
+          text-align: center;
+          text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        }
+      `;
+      document.head.appendChild(style);
+    }
+
+    function filterLaunchpad(query) {
+      query = query.toLowerCase().trim();
+      const apps = document.querySelectorAll('.lp-app');
+      apps.forEach(app => {
+        const name = app.querySelector('span').textContent.toLowerCase();
+        app.classList.toggle('hidden', query && !name.includes(query));
+      });
+    }
+
+    // ═══ SPOTLIGHT SEARCH ═══
+    function openSpotlightSearch() {
+      const overlay = document.createElement('div');
+      overlay.id = 'spotlight-overlay';
+      overlay.className = 'spotlight-overlay';
+      overlay.onclick = function(e) {
+        if (e.target === overlay) closeSpotlight();
+      };
+      overlay.innerHTML = `
+        <div class="spotlight-container">
+          <div class="spotlight-search">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/>
+              <path d="M21 21l-4.35-4.35"/>
+            </svg>
+            <input type="text" id="spotlight-input" placeholder="Search apps, files, and more..." 
+              oninput="filterSpotlight(this.value)" onkeydown="handleSpotlightKey(event)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" 
+              style="cursor:pointer" onclick="closeSpotlight()">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </div>
+          <div class="spotlight-results" id="spotlight-results">
+            <div class="spotlight-category">Applications</div>
+            <div class="spotlight-item" onclick="toggleWindow('finder'); closeSpotlight()">
+              <img src="https://cdn.jim-nielsen.com/macos/512/finder-2025-11-13.png">Finder
+            </div>
+            <div class="spotlight-item" onclick="toggleWindow('about'); closeSpotlight()">
+              <img src="https://cdn.jim-nielsen.com/macos/512/cleanmaster-remove-junk-files-2026-01-05.png?rf=1024">About Me
+            </div>
+            <div class="spotlight-item" onclick="toggleWindow('skills'); closeSpotlight()">
+              <img src="https://cdn.jim-nielsen.com/macos/512/bit-slicer-2025-12-08.png?rf=1024">Skills
+            </div>
+            <div class="spotlight-item" onclick="toggleWindow('terminal'); closeSpotlight()">
+              <img src="https://cdn.jim-nielsen.com/macos/512/terminal-2025-11-14.png?rf=1024">Terminal
+            </div>
+            <div class="spotlight-item" onclick="toggleWindow('safari'); closeSpotlight()">
+              <img src="https://cdn.jim-nielsen.com/macos/512/safari-2025-11-14.png?rf=1024">Safari
+            </div>
+            <div class="spotlight-item" onclick="toggleWindow('certs'); closeSpotlight()">
+              <img src="https://cdn.jim-nielsen.com/macos/512/bluenote-2014-09-23.png?rf=512">Certifications
+            </div>
+            <div class="spotlight-item" onclick="toggleWindow('experience'); closeSpotlight()">
+              <img src="https://cdn.jim-nielsen.com/macos/512/expenses-spending-tracker-2025-04-26.png?rf=1024">Experience
+            </div>
+            <div class="spotlight-category">Web Links</div>
+            <div class="spotlight-item" onclick="window.open('https://www.linkedin.com/in/rabiulislam32','_blank'); closeSpotlight()">
+              <img src="https://img.icons8.com/?size=100&id=nTY9sWZezkri&format=png&color=000000">LinkedIn
+            </div>
+            <div class="spotlight-item" onclick="window.open('https://github.com/rabiulhasann','_blank'); closeSpotlight()">
+              <img src="https://cdn.jim-nielsen.com/macos/512/github-desktop-2021-05-20.png?rf=1024">GitHub
+            </div>
+            <div class="spotlight-item" onclick="window.open('https://x.com/rabiul_hasann','_blank'); closeSpotlight()">
+              <img src="https://img.icons8.com/?size=100&id=oaaSr6h7kwm6&format=png&color=000000">X / Twitter
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(overlay);
+      addSpotlightStyles();
+      document.getElementById('spotlight-input').focus();
+      spotlightSelected = -1;
+    }
+
+    function closeSpotlight() {
+      const overlay = document.getElementById('spotlight-overlay');
+      if (overlay) overlay.remove();
+    }
+
+    function addSpotlightStyles() {
+      const style = document.createElement('style');
+      style.textContent = `
+        .spotlight-overlay {
+          position: fixed;
+          inset: 0;
+          background: rgba(0,0,0,0.6);
+          backdrop-filter: blur(20px);
+          z-index: 999999;
+          display: flex;
+          align-items: flex-start;
+          justify-content: center;
+          padding-top: 15vh;
+        }
+        .spotlight-container {
+          width: 600px;
+          max-width: 90vw;
+        }
+        .spotlight-search {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          background: rgba(40,40,40,0.95);
+          border-radius: 24px;
+          padding: 12px 20px;
+          box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+          border: 1px solid rgba(255,255,255,0.1);
+        }
+        .spotlight-search svg { color: rgba(255,255,255,0.5); flex-shrink: 0; }
+        .spotlight-search input {
+          flex: 1;
+          background: transparent;
+          border: none;
+          color: #fff;
+          font-size: 18px;
+          outline: none;
+        }
+        .spotlight-search input::placeholder { color: rgba(255,255,255,0.4); }
+        .spotlight-results {
+          background: rgba(30,30,30,0.95);
+          border-radius: 16px;
+          margin-top: 8px;
+          padding: 8px 0;
+          box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+          display: none;
+        }
+        .spotlight-results.show { display: block; }
+        .spotlight-category {
+          padding: 8px 16px 4px;
+          font-size: 11px;
+          font-weight: 600;
+          color: rgba(255,255,255,0.4);
+          text-transform: uppercase;
+        }
+        .spotlight-item {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 10px 16px;
+          cursor: pointer;
+          color: #fff;
+          font-size: 14px;
+          transition: background 0.15s;
+        }
+        .spotlight-item:hover, .spotlight-item.selected {
+          background: rgba(0,122,255,0.4);
+        }
+        .spotlight-item img {
+          width: 28px;
+          height: 28px;
+          object-fit: contain;
+          border-radius: 6px;
+        }
+      `;
+      document.head.appendChild(style);
+    }
+
+    function filterSpotlight(query) {
+      const results = document.getElementById('spotlight-results');
+      if (!results) return;
+      query = query.toLowerCase().trim();
+      
+      if (query) {
+        results.classList.add('show');
+        const items = results.querySelectorAll('.spotlight-item');
+        items.forEach(item => {
+          const text = item.textContent.toLowerCase();
+          item.classList.toggle('hidden', !text.includes(query));
+        });
+      } else {
+        results.classList.remove('show');
+      }
+      spotlightSelected = -1;
+    }
+
+    let spotlightSelected = -1;
+    function handleSpotlightKey(e) {
+      const results = document.getElementById('spotlight-results');
+      if (!results) return;
+      const items = Array.from(results.querySelectorAll('.spotlight-item:not(.hidden)'));
+      
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        spotlightSelected = Math.min(spotlightSelected + 1, items.length - 1);
+        updateSpotlightSelection(items);
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        spotlightSelected = Math.max(spotlightSelected - 1, 0);
+        updateSpotlightSelection(items);
+      } else if (e.key === 'Enter' && spotlightSelected >= 0) {
+        e.preventDefault();
+        items[spotlightSelected].click();
+      } else if (e.key === 'Escape') {
+        closeSpotlight();
+      }
+    }
+
+    function updateSpotlightSelection(items) {
+      items.forEach((item, i) => item.classList.toggle('selected', i === spotlightSelected));
+    }
+
+    function bringToFront(id) {
+      const w = document.getElementById('win-' + id);
+      if (w) {
+        w.style.zIndex = ++zIndex;
+      }
     }
 
     function maximizeWindow(id) {
       document.getElementById('win-' + id).classList.toggle('maximized');
     }
 
-    function bringToFront(id) {
-      const w = document.getElementById('win-' + id);
-      zIndex++;
-      w.style.zIndex = zIndex;
-      document.querySelectorAll('.window').forEach(w => w.classList.remove('active'));
-      w.classList.add('active');
-    }
-
-    function updateDock() {
-      document.querySelectorAll('.dock-item[onclick*="toggleWindow"]').forEach(item => {
-        const m = item.getAttribute('onclick').match(/toggleWindow\('(\w+)'\)/);
-        if (m) {
-          const w = document.getElementById('win-' + m[1]);
-          item.classList.toggle('open', w && !w.classList.contains('hidden'));
-        }
-      });
-    }
+    function updateDock() { }
 
     document.querySelectorAll('.window').forEach(w => {
       w.addEventListener('mousedown', () => bringToFront(w.id.replace('win-', '')));
@@ -4235,7 +6036,20 @@ Host is up (<span class="t-green">0.0012s latency</span>).
       }
     };
 
-    function initTerminal() {
+function initTerminal() {
+      // Add ASCII art banner
+      const asciiArt = `<span class="t-green">██████╗░░█████╗░██████╗░██╗██╗░░░██╗██╗░░░░░  ██╗░░██╗░█████╗░░██████╗░█████╗░███╗░░██╗
+██╔══██╗██╔══██╗██╔══██╗██║██║░░░██║██║░░░░░  ██║░░██║██╔══██╗██╔════╝██╔══██╗████╗░██║
+██████╔╝███████║██████╦╝██║██║░░░██║██║░░░░░  ███████║███████║╚█████╗░███████║██╔██╗██║
+██╔══██╗██╔══██║██╔══██╗██║██║░░░██║██║░░░░░  ██╔══██║██╔══██║░╚═══██╗██╔══██║██║╚████║
+██║░░██║██║░░██║██████╦╝██║╚██████╔╝███████╗  ██║░░██║██║░░██║██████╔╝██║░░██║██║░╚███║
+╚═╝░░╚═╝╚═╝░░╚═╝╚═════╝░╚═╝░╚═════╝░╚══════╝  ╚═╝░░╚═╝╚═╝░░╚═╝╚═════╝░╚═╝░░╚═╝╚═╝░░╚══╝</span>
+<span class="t-yellow">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+<span class="t-dim">Welcome to Rabiul's Terminal v1.0</span>
+<span class="t-cyan">Type 'help' to see available commands</span>
+<span class="t-dim"></span>`;
+      
+      addOutput(asciiArt);
       addPrompt();
       termEl.addEventListener('keydown', handleTerminalInput);
       termEl.focus();
@@ -4418,16 +6232,12 @@ Host is up (<span class="t-green">0.0012s latency</span>).
     }
 
     // ═══ INIT ═══
-    const savedTheme = localStorage.getItem('portfolio-theme') || 'midnight';
+    const savedTheme = localStorage.getItem('portfolio-theme') || 'light';
     setTheme(savedTheme);
 
-    const savedWallpaper = localStorage.getItem('portfolio-wallpaper') || 'neural';
-    currentWallpaper = savedWallpaper;
-    wallpapers[savedWallpaper].init();
-
     // ═══ CUSTOM CURSOR ═══
-    (function() {
-      const dot  = document.getElementById('cursor-dot');
+    (function () {
+      const dot = document.getElementById('cursor-dot');
       const ring = document.getElementById('cursor-ring');
       if (!dot || !ring) return;
 
@@ -4439,7 +6249,7 @@ Host is up (<span class="t-green">0.0012s latency</span>).
         mx = e.clientX;
         my = e.clientY;
         dot.style.left = mx + 'px';
-        dot.style.top  = my + 'px';
+        dot.style.top = my + 'px';
       });
 
       // Smooth ring lerp
@@ -4447,7 +6257,7 @@ Host is up (<span class="t-green">0.0012s latency</span>).
         rx += (mx - rx) * 0.12;
         ry += (my - ry) * 0.12;
         ring.style.left = rx + 'px';
-        ring.style.top  = ry + 'px';
+        ring.style.top = ry + 'px';
         rafId = requestAnimationFrame(animateRing);
       }
       animateRing();
@@ -4463,19 +6273,19 @@ Host is up (<span class="t-green">0.0012s latency</span>).
 
       // Click flash
       document.addEventListener('mousedown', () => document.body.classList.add('cursor-click'));
-      document.addEventListener('mouseup',   () => document.body.classList.remove('cursor-click'));
+      document.addEventListener('mouseup', () => document.body.classList.remove('cursor-click'));
 
       // Update cursor color when theme changes
       const origSetTheme = window.setTheme;
       if (origSetTheme) {
-        window.setTheme = function(t) {
+        window.setTheme = function (t) {
           origSetTheme(t);
           // CSS vars cascade automatically — no extra work needed
         };
       }
     })();
     // ═══ STATS PANEL DRAG ═══
-    (function() {
+    (function () {
       const panel = document.getElementById('stats-panel');
       const titlebar = document.getElementById('stats-titlebar');
       let dragging = false, ox = 0, oy = 0;
@@ -4525,17 +6335,27 @@ Host is up (<span class="t-green">0.0012s latency</span>).
       <div class="mob-nav-btn" onclick="mobOpen('certs')"><span class="mob-icon">🏆</span>Certs</div>
       <div class="mob-nav-btn" onclick="mobOpen('activitylog')"><span class="mob-icon">📋</span>Log</div>
       <div class="mob-nav-btn" onclick="mobOpen('terminal')"><span class="mob-icon">💻</span>Terminal</div>
-      <div class="mob-nav-btn" onclick="openPdfViewer('https://drive.google.com/file/d/1T8deP1xUOqYUfwuXnGSGU5sAO-vJMHlj/preview','Resume — Rabiul Hasan.pdf','https://drive.google.com/file/d/1T8deP1xUOqYUfwuXnGSGU5sAO-vJMHlj/view?usp=sharing'); closeMobileDrawer()"><span class="mob-icon">📄</span>Resume</div>
-      <div class="mob-nav-btn" onclick="window.open('https://www.linkedin.com/in/rabiulislam32','_blank'); closeMobileDrawer()"><span class="mob-icon">🔗</span>LinkedIn</div>
+      <div class="mob-nav-btn"
+        onclick="openPdfViewer('https://drive.google.com/file/d/1T8deP1xUOqYUfwuXnGSGU5sAO-vJMHlj/preview','Resume — Rabiul Hasan.pdf','https://drive.google.com/file/d/1T8deP1xUOqYUfwuXnGSGU5sAO-vJMHlj/view?usp=sharing'); closeMobileDrawer()">
+        <span class="mob-icon">📄</span>Resume
+      </div>
+      <div class="mob-nav-btn"
+        onclick="window.open('https://www.linkedin.com/in/rabiulislam32','_blank'); closeMobileDrawer()"><span
+          class="mob-icon">🔗</span>LinkedIn</div>
     </div>
 
     <div class="mob-drawer-title">Theme</div>
     <div class="mob-theme-grid">
-      <div class="mob-theme-btn" style="background:linear-gradient(135deg,#000,#001100);color:#00ff41" onclick="mobSetTheme('cyber')" data-theme-btn="cyber">Cyber</div>
-      <div class="mob-theme-btn" style="background:linear-gradient(135deg,#f0f0f0,#d0d0d0);color:#1a1a1a" onclick="mobSetTheme('light')" data-theme-btn="light">Light</div>
-      <div class="mob-theme-btn" style="background:linear-gradient(135deg,#0a1628,#1b263b);color:#00d4ff" onclick="mobSetTheme('ocean')" data-theme-btn="ocean">Ocean</div>
-      <div class="mob-theme-btn" style="background:linear-gradient(135deg,#1a0a1a,#2d1b2d);color:#ff6b9d" onclick="mobSetTheme('sunset')" data-theme-btn="sunset">Sunset</div>
-      <div class="mob-theme-btn active-theme" style="background:linear-gradient(135deg,#0d0d1a,#1a1a2e);color:#a78bfa" onclick="mobSetTheme('midnight')" data-theme-btn="midnight">Night</div>
+      <div class="mob-theme-btn" style="background:linear-gradient(135deg,#1a1a1a,#2a2a2a);color:#a855f7"
+        onclick="mobSetTheme('dark')" data-theme-btn="dark">Dark</div>
+      <div class="mob-theme-btn" style="background:linear-gradient(135deg,#f5f5f7,#d1d1d6);color:#7c3aed"
+        onclick="mobSetTheme('light')" data-theme-btn="light">Light</div>
+      <div class="mob-theme-btn" style="background:linear-gradient(135deg,#0a0a0f,#1a1a25);color:#c084fc"
+        onclick="mobSetTheme('ocean')" data-theme-btn="ocean">Ocean</div>
+      <div class="mob-theme-btn" style="background:linear-gradient(135deg,#1c1c1e,#2c2c30);color:#fc61c7"
+        onclick="mobSetTheme('sonoma')" data-theme-btn="sonoma">Sonoma</div>
+      <div class="mob-theme-btn active-theme" style="background:linear-gradient(135deg,#101115,#202028);color:#ff9f0a"
+        onclick="mobSetTheme('ventura')" data-theme-btn="ventura">Ventura</div>
     </div>
   </div>
 
@@ -4574,7 +6394,7 @@ Host is up (<span class="t-green">0.0012s latency</span>).
     }
 
     // Touch drag support for windows on mobile
-    (function() {
+    (function () {
       document.querySelectorAll('.title-bar').forEach(tb => {
         let startX, startY, winStartX, winStartY, touching = false;
 
