@@ -5,6 +5,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CYBER-OPS // RABIUL HASAN</title>
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2032%2032%27%3E%3Crect%20width%3D%2732%27%20height%3D%2732%27%20rx%3D%274%27%20fill%3D%27%23000%27%2F%3E%3Crect%20x%3D%273%27%20y%3D%276%27%20width%3D%2726%27%20height%3D%2720%27%20rx%3D%271%27%20fill%3D%27none%27%20stroke%3D%27%2300ff9c%27%20stroke-width%3D%272%27%2F%3E%3Cpath%20d%3D%27M9%2012%20L14%2017%20L9%2022%27%20fill%3D%27none%27%20stroke%3D%27%2300ff9c%27%20stroke-width%3D%272%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%2F%3E%3Crect%20x%3D%2716%27%20y%3D%2719%27%20width%3D%278%27%20height%3D%273%27%20fill%3D%27%2300ff9c%27%2F%3E%3C%2Fsvg%3E">
+  <link rel="apple-touch-icon"
+    href="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20180%20180%27%3E%3Crect%20width%3D%27180%27%20height%3D%27180%27%20rx%3D%2724%27%20fill%3D%27%23000%27%2F%3E%3Crect%20x%3D%2718%27%20y%3D%2736%27%20width%3D%27144%27%20height%3D%27108%27%20rx%3D%276%27%20fill%3D%27none%27%20stroke%3D%27%2300ff9c%27%20stroke-width%3D%2710%27%2F%3E%3Cpath%20d%3D%27M50%2066%20L78%2090%20L50%20114%27%20fill%3D%27none%27%20stroke%3D%27%2300ff9c%27%20stroke-width%3D%2710%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%2F%3E%3Crect%20x%3D%2788%27%20y%3D%27104%27%20width%3D%2746%27%20height%3D%2716%27%20fill%3D%27%2300ff9c%27%2F%3E%3C%2Fsvg%3E">
   <link
     href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700;800&family=Share+Tech+Mono&family=Orbitron:wght@500;700;900&display=swap"
     rel="stylesheet">
@@ -4066,6 +4070,14 @@
       line-height: 1.4
     }
 
+    /* ════════════════════════════════════════
+       RESPONSIVE BREAKPOINTS
+       ≥1100  desktop / laptop       (3-col)
+       860-1099 tablet landscape      (compact 3-col)
+       600-859  tablet portrait       (1-col, side panels hidden)
+       420-599  large phone           (compact topbar, stack FAB)
+       ≤419  small phone              (minimal UI)
+       ════════════════════════════════════════ */
     @media(max-width:1100px) {
       #ops {
         grid-template-columns: 200px 1fr 230px;
@@ -4092,7 +4104,9 @@
       }
 
       .theme-bar button {
-        padding: 2px 4px
+        padding: 2px 4px;
+        min-width: 28px;
+        min-height: 28px
       }
 
       .b-hints {
@@ -4106,6 +4120,80 @@
       .tb-threat {
         display: none
       }
+
+      .ov-win {
+        width: 96vw;
+        height: 88vh;
+        max-height: none;
+        border-radius: 4px
+      }
+
+      .ov-body {
+        padding: 8px
+      }
+
+      .chat-fab {
+        bottom: 50px;
+        right: 14px;
+        padding: 10px 14px
+      }
+
+      .fab-label {
+        display: none
+      }
+
+      .chat-fab::after {
+        content: '✦';
+        font-size: 18px
+      }
+
+      .cine-scene h1 {
+        font-size: 22px !important
+      }
+
+      .cine-scene h2 {
+        font-size: 13px !important
+      }
+
+      .cine-scene p {
+        font-size: 10px !important;
+        padding: 0 20px;
+        text-align: center
+      }
+
+      .mitre-win {
+        max-width: 100%
+      }
+
+      .mitre-toolbar {
+        padding: 8px;
+        gap: 6px
+      }
+
+      .mitre-filter {
+        padding: 5px 9px;
+        font-size: 9px
+      }
+
+      .mitre-grid {
+        padding: 8px;
+        gap: 4px
+      }
+
+      .mitre-col {
+        flex: 0 0 96px
+      }
+
+      .mitre-cell {
+        min-height: 22px;
+        padding: 2px 4px;
+        font-size: 8px
+      }
+
+      .mitre-col-hdr {
+        font-size: 9px;
+        padding: 6px 4px
+      }
     }
 
     @media(max-width:600px) {
@@ -4117,6 +4205,112 @@
 
       .tb-clock {
         font-size: 9px
+      }
+
+      #bottom {
+        padding: 6px 8px;
+        font-size: 11px
+      }
+
+      #term-input {
+        font-size: 13px
+      }
+
+      .ov-titlebar {
+        padding: 6px 10px;
+        font-size: 10px
+      }
+
+      .ov-close {
+        font-size: 9px;
+        padding: 4px 8px
+      }
+
+      .chat-overlay {
+        width: 100vw;
+        height: 100vh;
+        max-width: none;
+        max-height: none;
+        border-radius: 0
+      }
+
+      .chat-overlay .ov-win {
+        width: 100%;
+        height: 100%
+      }
+    }
+
+    @media(max-width:420px) {
+
+      #ops {
+        grid-template-rows: 36px 1fr 30px
+      }
+
+      .tb-logo {
+        width: 18px;
+        height: 18px
+      }
+
+      .tb-title {
+        font-size: 8px;
+        letter-spacing: 0.5px
+      }
+
+      .tb-clock {
+        font-size: 8px
+      }
+
+      .theme-bar {
+        top: 42px;
+        right: 4px;
+        padding: 2px 4px
+      }
+
+      .theme-bar button {
+        padding: 1px 3px;
+        font-size: 8px;
+        min-width: 22px;
+        min-height: 22px
+      }
+
+      .ach-badge {
+        font-size: 9px;
+        padding: 2px 5px
+      }
+
+      .chat-fab {
+        bottom: 44px;
+        right: 8px;
+        padding: 8px
+      }
+
+      .ov-win {
+        width: 100vw;
+        height: 100vh;
+        max-height: none;
+        border-radius: 0;
+        border: none
+      }
+
+      .mitre-grid {
+        flex-direction: column;
+        overflow-x: hidden
+      }
+
+      .mitre-col {
+        flex: 0 0 auto;
+        width: 100%
+      }
+
+      .mitre-col-hdr {
+        text-align: left;
+        padding: 8px 10px
+      }
+
+      .mitre-cell {
+        min-height: 28px;
+        padding: 4px 8px;
+        font-size: 10px
       }
     }
 
@@ -5113,6 +5307,14 @@
     }
     themeBtns.forEach(b => b.addEventListener('click', () => setTheme(b.dataset.theme)));
     setTheme(localStorage.getItem('cyTheme') || 'terminal');
+
+    /* ════════════════════════════════════════
+       RIGHT-CLICK LOCKDOWN
+       ════════════════════════════════════════ */
+    document.addEventListener('contextmenu', function (e) {
+      e.preventDefault();
+      if (typeof toast === 'function') toast('⚠ CONTEXT MENU DISABLED', 'Inspection not permitted on this terminal.');
+    });
 
     /* ════════════════════════════════════════
        TOASTS
